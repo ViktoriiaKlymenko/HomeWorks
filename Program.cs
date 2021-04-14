@@ -6,7 +6,7 @@ namespace FoodDeliveryTask
 {
     internal class HomeWork
     {
-        private static IEnumerable<decimal> PricesToUSD(IEnumerable<decimal> prices, IEnumerable<string> currencies)
+        private static IEnumerable<decimal> NormalizeCurrencies(IEnumerable<decimal> prices, IEnumerable<string> currencies)
         {
             var currenciesList = currencies.ToList();
             var discountedPricesList = prices.ToList();
@@ -21,35 +21,26 @@ namespace FoodDeliveryTask
             }
             return discountedPricesList;
         }
-        private static IEnumerable<string> NormalizeCurrencies(IEnumerable<string> currencies)
-        {
-            var currenciesList = currencies.ToList();
-            var ienumerableCurrencies = currencies.GetEnumerator();
 
-            for (int i = 0; i < currenciesList.Count(); i++)
-            {
-                if (currenciesList[i] is not "USD")
-                {
-                    currenciesList[i] = "USD";
-                }
-            }
-            return currenciesList;
-        }
-        private static IEnumerable<string> SplitStreetName(IEnumerable<string> destinations)
+        private static IEnumerable<string> GetStreetName(IEnumerable<string> destinations)
         {
             var streetNames = new List<string>();
             var destinationList = destinations.ToList();
 
-            for (int i = 0; i < destinationList.Count(); i++)
+            foreach (var destination in destinationList)
             {
-                streetNames.Add(destinationList[i].Substring(4, destinationList[i].Split(",")[0].Length - 4));
+                var streetNameCut = destination.Split(new Char[] { ',' })[0];
+                var stringToDelete = streetNameCut.Substring(0, streetNameCut.IndexOf(" ") + 1);
+                char[] charsToDelete = stringToDelete.ToCharArray();
+                streetNameCut = streetNameCut.Trim(charsToDelete);
+                streetNames.Add(streetNameCut);
             }
             return streetNames;
         }
-        private static IEnumerable<decimal> StreetNameDiscount(IEnumerable<string> streetNames, IEnumerable<decimal> prices)
+
+        private static IEnumerable<decimal> ApplyStreetNameDiscount(IEnumerable<string> streetNames, IEnumerable<decimal> prices)
         {
             int i = 0;
-            var streetNamesList = streetNames.ToList();
             var discountedPrices = prices.ToList();
             var ienumStreetNames = streetNames.GetEnumerator();
 
@@ -69,7 +60,7 @@ namespace FoodDeliveryTask
             return discountedPrices;
         }
 
-        private static IEnumerable<decimal> SameStreetDiscount(IEnumerable<string> streetNames, IEnumerable<decimal> prices)
+        private static IEnumerable<decimal> ApplySameStreetDiscount(IEnumerable<string> streetNames, IEnumerable<decimal> prices)
         {
             var discountedPricesList = prices.ToList();
             var streetNamesList = streetNames.ToList();
@@ -83,25 +74,28 @@ namespace FoodDeliveryTask
             }
             return discountedPricesList;
         }
-        private static IEnumerable<decimal> DiscountForKids(IEnumerable<int> infantsIds, IEnumerable<int> childrenIds, IEnumerable<decimal> discountedPrices)
+
+        private static IEnumerable<decimal> ApplyDiscountForKids(
+                                                     IEnumerable<int> infantsIds,
+                                                     IEnumerable<int> childrenIds,
+                                                     IEnumerable<decimal> prices)
         {
             var infantsIdsList = infantsIds.ToList();
             var childrenIdsList = childrenIds.ToList();
-            var discountedPricesList = discountedPrices.ToList();
+            var discountedPrices = prices.ToList();
 
-            for (int i = 0; i < infantsIdsList.Count(); i++)
+            foreach (var id in infantsIdsList)
             {
-                discountedPricesList[infantsIdsList[i]] *= Convert.ToDecimal(0.50);
+                discountedPrices[id] -= discountedPrices[id] / 100 * 50;
             }
-
-            for (int i = 0; i < childrenIdsList.Count(); i++)
+            foreach (var id in childrenIdsList)
             {
-                discountedPricesList[childrenIdsList[i]] *= Convert.ToDecimal(0.75);
+                discountedPrices[id] -= discountedPrices[id] / 100 * 25;
             }
-            return discountedPricesList;
+            return discountedPrices;
         }
 
-        private static bool DataAmountValidator(int destinations, int clients, int currencies, int prices)
+        private static bool ValidateDataAmount(int destinations, int clients, int currencies, int prices)
         {
             if (destinations == clients && clients == currencies && currencies == prices)
             {
@@ -109,6 +103,7 @@ namespace FoodDeliveryTask
             }
             return false;
         }
+
         private static decimal GetFullPrice(
                                     IEnumerable<string> destinations,
                                     IEnumerable<string> clients,
@@ -118,22 +113,21 @@ namespace FoodDeliveryTask
                                     IEnumerable<string> currencies)
         {
             decimal fullPrice = default;
-            var streetNames = SplitStreetName(destinations).ToList();
+            var streetNames = GetStreetName(destinations).ToList();
             var discountedPrice = prices.ToList();
             var clientsList = clients.ToList();
             var currenciesList = currencies.ToList();
             var destinationList = destinations.ToList();
 
-            if (!DataAmountValidator(destinationList.Count, clientsList.Count, currenciesList.Count, discountedPrice.Count))
+            if (!ValidateDataAmount(destinationList.Count, clientsList.Count, currenciesList.Count, discountedPrice.Count))
             {
                 return 0;
             }
 
-            PricesToUSD(prices, currencies);
-            NormalizeCurrencies(currencies);
-            discountedPrice = StreetNameDiscount(streetNames, discountedPrice).ToList();
-            discountedPrice = DiscountForKids(infantsIds, childrenIds, discountedPrice).ToList();
-            discountedPrice = SameStreetDiscount(streetNames, discountedPrice).ToList();
+            NormalizeCurrencies(prices, currencies);
+            discountedPrice = ApplyStreetNameDiscount(streetNames, discountedPrice).ToList();
+            discountedPrice = ApplyDiscountForKids(infantsIds, childrenIds, discountedPrice).ToList();
+            discountedPrice = ApplySameStreetDiscount(streetNames, discountedPrice).ToList();
 
             for (int i = 0; i < discountedPrice.Count(); i++)
             {
