@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    abstract public class Pastry // contains a description of pastries that provider will offer
+    public class Pastry // contains a description of pastries that provider will offer
     {
         private Guid PastryId { get; set; }
         public string PastryName { get; set; }

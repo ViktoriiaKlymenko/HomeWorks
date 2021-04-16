@@ -9,5 +9,6 @@ namespace PastriesDeliveryTypeSystem
     class EndUserOrder : Consumer // intended for work with end-user
     {
         private Guid OrderId { get; set; }
+        public Pastry Pastry { get; set; }
     }
 }

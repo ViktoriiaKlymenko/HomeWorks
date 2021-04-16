@@ -9,5 +9,6 @@ namespace PastriesDeliveryTypeSystem
     class BusinessClientOrder : Consumer // intended for work with business
     {
         private Guid OrderId { get; set; }
+        public Pastry Pastry { get; set; }
     }
 }
