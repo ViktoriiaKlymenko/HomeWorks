@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    class ProviderOffer : Provider // this class describes an offer of provider's product
+    /// <summary>
+    /// Contains all methods intended for work with a provider's offers.
+    /// </summary>
+    public class ProviderOffer : Provider
     {
         public Pastry Pastry { get; set; }
         public int ProductAmount { get; set; }
@@ -14,15 +17,5 @@ namespace PastriesDeliveryTypeSystem
         public int FiveUnitsDiscont { get; set; }
         public int TenUnitsDiscount { get; set; }
         public int FiftyUnitsDiscount { get; set; }
-
-
-        public ProviderOffer(int productAmount, int fiveUnitsDiscont, int tenUnitsDiscount, int fiftyUnitsDiscount, Pastry pastry)
-        {           
-            this.ProductAmount = productAmount;
-            this.FiveUnitsDiscont = fiveUnitsDiscont;
-            this.TenUnitsDiscount = tenUnitsDiscount;
-            this.FiftyUnitsDiscount = fiftyUnitsDiscount;
-            this.Pastry = pastry;
-        }
     }
 }

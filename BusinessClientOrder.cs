@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    class BusinessClientOrder : Consumer // intended for work with business
+    /// <summary>
+    /// Contains all methods intended for working with a business client's order.
+    /// </summary>
+    public class BusinessClientOrder : Consumer
     {
-        private Guid OrderId { get; set; }
+        private Guid Id { get; set; }
         public Pastry Pastry { get; set; }
     }
 }

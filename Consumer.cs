@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    public class Consumer // contains main data that must be known about every consumer that will order
-    {
-       
+    /// <summary>
+    /// Contains all methods intended for working with a consumer.
+    /// </summary>
+    public class Consumer
+    {       
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string Adress { get; set; }
-        public string[] PaymentMethod { get; set; } = { "Cash", "Card", "Mobile payment" };
+        public enum PaymentMethod { Cash, Card, Smartphone };
 
     }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-
-        }
-    }
+   
 }

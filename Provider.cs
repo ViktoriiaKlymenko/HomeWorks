@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    public class Provider// this class describes main data that must be known about a provider who posts it's product
+    /// <summary>
+    /// Contains all methods intended for work with providers of a delivery service.
+    /// </summary>
+    public class Provider
     {
-        public string ProviderName { get; set; }
+        public string Name { get; set; }
         public string Adress { get; set; }
         public string PhoneNumber { get; set; }
-
     }
 }

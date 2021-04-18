@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace PastriesDeliveryTypeSystem
 {
-    public class Pastry // contains a description of pastries that provider will offer
+    /// <summary>
+    /// Contains all methods for working with a pastry delivery service.
+    /// </summary>
+    public class Pastry
     {
-        private Guid PastryId { get; set; }
-        public string PastryName { get; set; }
-        public string PastryType { get; set; }
-        public double PastryWeight { get; set; }
-        public string[] PastryConsist { get; set; }
-        public decimal PastryPrice { get; set; }
-        public string[] PastryFeedbacks { get; set; }
+        private Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public double Weight { get; set; }
+        public string[] Consist { get; set; }
+        public decimal Price { get; set; }
+        public string[] Feedbacks { get; set; }
     }
 
 }
