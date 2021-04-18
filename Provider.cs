@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PastriesDeliveryTypeSystem
 {
     /// <summary>
-    /// Contains all methods intended for work with providers of a delivery service.
+    /// Intended for work with providers of a delivery service.
     /// </summary>
     public class Provider
     {

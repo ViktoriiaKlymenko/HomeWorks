@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PastriesDeliveryTypeSystem
 {
     /// <summary>
-    /// Contains all methods intended for working with an end-user's order.
+    /// Intended for working with an end-user's order.
     /// </summary>
     public class EndUserOrder : Consumer 
     {

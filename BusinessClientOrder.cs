@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PastriesDeliveryTypeSystem
 {
     /// <summary>
-    /// Contains all methods intended for working with a business client's order.
+    /// Intended for working with a business client's order.
     /// </summary>
     public class BusinessClientOrder : Consumer
     {

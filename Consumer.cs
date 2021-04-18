@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace PastriesDeliveryTypeSystem
 {
     /// <summary>
-    /// Contains all methods intended for working with a consumer.
+    /// Intended for working with a consumer.
     /// </summary>
     public class Consumer
-    {       
+    {
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string Adress { get; set; }
-        public enum PaymentMethod { Cash, Card, Smartphone };
+        public PaymentMethod Method { get; set; }
 
     }
-   
+
 }
