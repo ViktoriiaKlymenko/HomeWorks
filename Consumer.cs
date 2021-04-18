@@ -15,8 +15,6 @@ namespace PastriesDeliveryTypeSystem
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string Adress { get; set; }
-        public PaymentMethod Method { get; set; }
-
     }
-
+    public enum PaymentMethod { Cash, Card, Smartphone }
 }
