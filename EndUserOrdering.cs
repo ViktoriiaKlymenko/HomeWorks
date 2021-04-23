@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 namespace PastriesDeliveryTypeSystem
 {
     /// <summary>
-    /// Intended for working with a business client's order.
+    /// Intended for working with an end-user's order.
     /// </summary>
-    public class BusinessClientOrder : Consumer
+
+    public class EndUserOrder : Consumer, IEndUserOrder
     {
-        public static void RegisterPastryFromOrder(string nameAndAmount)
+        public void RegisterPastryFromOrder(string nameAndAmount)
         {
-            var amount = nameAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0];
-            var name = nameAndAmount.Trim(amount.ToCharArray());
-            name = name.Trim(' ');
+            var amountOrder = nameAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0];
+            var nameOrder = nameAndAmount.Trim(amountOrder.ToCharArray());
+            nameOrder = nameOrder.Trim(' ');
 
             var names = AvailableProducts.Name.ToList();
             var adresses = AvailableProducts.Adress.ToList();
@@ -26,24 +27,14 @@ namespace PastriesDeliveryTypeSystem
             var consists = AvailableProducts.Consist.ToList();
             var prices = AvailableProducts.Price.ToList();
             var amounts = AvailableProducts.Amount.ToList();
-            var twentyunitsdiscount = AvailableProducts.TwentyUnitsDiscount.ToList();
-            var fiftyunitsdiscount = AvailableProducts.FiftyUnitsDiscount.ToList();
-            var hundredunitsdiscount = AvailableProducts.HundredUnitsDiscount.ToList();
 
             for (int i = 0; i < names.Count; i++)
             {
-                if (string.Compare(productNames[i], name) == 0)
+                if (string.Compare(productNames[i], nameOrder) == 0)
                 {
-                    BusinessClientOrdersCollector.AddPastryToOrders(
-                                                            names[i], 
-                                                            types[i], 
-                                                            prices[i], 
-                                                            amounts[i], 
-                                                            twentyunitsdiscount[i], 
-                                                            fiftyunitsdiscount[i], 
-                                                            hundredunitsdiscount[i]);
+                    EndUserOrdersCollector.AddPastryToOrders(names[i], types[i], prices[i], amounts[i]);
 
-                    if (Convert.ToInt32(amount) == amounts[i])
+                    if (Convert.ToInt32(amountOrder) == amounts[i])
                     {
                         names.RemoveAt(i);
                         adresses.RemoveAt(i);
@@ -54,13 +45,10 @@ namespace PastriesDeliveryTypeSystem
                         consists.RemoveAt(i);
                         prices.RemoveAt(i);
                         amounts.RemoveAt(i);
-                        twentyunitsdiscount.RemoveAt(i);
-                        fiftyunitsdiscount.RemoveAt(i);
-                        hundredunitsdiscount.RemoveAt(i);
                     }
                     else
                     {
-                        amounts[i] -= Convert.ToInt32(amount);
+                        amounts[i] -= Convert.ToInt32(amountOrder);
                     }
                     AvailableProducts.Name = names;
                     AvailableProducts.Type = types;
@@ -68,14 +56,11 @@ namespace PastriesDeliveryTypeSystem
                     AvailableProducts.Consist = consists;
                     AvailableProducts.Price = prices;
                     AvailableProducts.Amount = amounts;
-                    AvailableProducts.TwentyUnitsDiscount = twentyunitsdiscount;
-                    AvailableProducts.FiftyUnitsDiscount = fiftyunitsdiscount;
-                    AvailableProducts.HundredUnitsDiscount = hundredunitsdiscount;
                 }
             }
         }
 
-        internal static void RegisterPersonalData(BusinessClientOrder newOrder)
+        public static void RegisterPersonalData(EndUserOrder newOrder)
         {
             Console.Write("Your name: ");
             newOrder.Name = Console.ReadLine();
@@ -85,7 +70,7 @@ namespace PastriesDeliveryTypeSystem
             newOrder.PhoneNumber = Console.ReadLine();
             Console.Write("Delivery adress: ");
             newOrder.Adress = Console.ReadLine();
-            BusinessClientOrdersCollector.AddPersonalDataToOrders(newOrder);
+            EndUserOrdersCollector.AddPersonalDataToOrders(newOrder);
         }
     }
 }
