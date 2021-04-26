@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastriesDeliveryTypeSystem
+namespace PastriesDelivery
 {
-    interface IEndUserOrder
+    public abstract class Consumer
     {
-        public void RegisterPastryFromOrder(string pastry);
+        
     }
 }
