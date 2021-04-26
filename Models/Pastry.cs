@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastriesDeliveryTypeSystem
+namespace PastriesDelivery
 {
     /// <summary>
-    /// Intended for working with a pastry delivery service.
+    /// This class describes pastry.
     /// </summary>
     public class Pastry
     {
-        private Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public double Weight { get; set; }
-        public string[] Consist { get; set; }
+        public int Weight { get; set; }
         public decimal Price { get; set; }
-        public string[] Feedbacks { get; set; }
+        public int Amount { get; set; }
+       
     }
-
 }
