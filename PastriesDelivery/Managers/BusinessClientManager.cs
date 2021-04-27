@@ -9,7 +9,7 @@ namespace PastriesDelivery
     /// <summary>
     /// This class contains methods intended for work with business client.
     /// </summary>
-    class BusinessClientManager : IOrderMaker
+    public class BusinessClientManager : IOrderMaker
     {
         public bool CheckForDataPrescence()
         {

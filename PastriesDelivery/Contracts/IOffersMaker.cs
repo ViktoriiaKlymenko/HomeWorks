@@ -8,8 +8,7 @@ namespace PastriesDelivery
 {
     public interface IOffersMaker
     {
-        void AddNewOffer(Pastry product);
-       
+        void AddNewOffer(Pastry product);      
         string ConfirmOffer();
         void AcceptData(Pastry product);
     }
