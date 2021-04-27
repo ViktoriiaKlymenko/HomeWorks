@@ -9,7 +9,7 @@ namespace PastriesDelivery
     /// <summary>
     /// This class contains business client's main information.
     /// </summary>
-    public class BusinessClient : Consumer
+    public class BusinessClient
     {
         static public int Id { get; set; } = 1;
         static public string Name { get; set; } = "Client name";

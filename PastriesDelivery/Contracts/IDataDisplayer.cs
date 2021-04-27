@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-    interface IDataDisplayer
+    public interface IDataDisplayer
     {
-        public void DisplayAvailableProducts();
-        public void DisplayProviderData();
+        void DisplayAvailableProducts();
+        void DisplayProviderData();
     }
 }

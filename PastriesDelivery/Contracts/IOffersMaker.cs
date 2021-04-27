@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-    interface IOffersMaker
+    public interface IOffersMaker
     {
-        public void AddNewOffer(Pastry product);
+        void AddNewOffer(Pastry product);
        
-        public string ConfirmOffer();
-        public void AcceptData(Pastry product);
+        string ConfirmOffer();
+        void AcceptData(Pastry product);
     }
 }

@@ -15,14 +15,14 @@ namespace PastriesDelivery
                 {
                     var manager = new ProviderManager();
                     Messenger.SendOfferRequirments();
-                    var product = new Pastry();
+                    var pastry = new Pastry();
                     try
                     {
-                        manager.AcceptData(product);
+                        manager.AcceptData(pastry);
                         var answer = manager.ConfirmOffer();
                         if (answer is "yes")
                         {
-                            manager.AddNewOffer(product);
+                            manager.AddNewOffer(pastry);
                         }
                     }
                     catch (FormatException)

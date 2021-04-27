@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-    interface IOrderMaker
+    public interface IOrderMaker
     {
         void ChooseProduct(string idAndAmount);
-        public string ConfirmOrder();
+        string ConfirmOrder();
     }
 }

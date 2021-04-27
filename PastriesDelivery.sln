@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastriesDelivery", "PastriesDelivery\PastriesDelivery.csproj", "{06539A63-7F81-4819-9C88-ADC2EDE132BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PastriesDelivery", "PastriesDelivery\PastriesDelivery.csproj", "{06539A63-7F81-4819-9C88-ADC2EDE132BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodDeliveryTask", "FoodDeliveryTask\FoodDeliveryTask.csproj", "{3C1F6673-27C8-4A11-8A38-5154438DDDC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{06539A63-7F81-4819-9C88-ADC2EDE132BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06539A63-7F81-4819-9C88-ADC2EDE132BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06539A63-7F81-4819-9C88-ADC2EDE132BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C1F6673-27C8-4A11-8A38-5154438DDDC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1F6673-27C8-4A11-8A38-5154438DDDC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1F6673-27C8-4A11-8A38-5154438DDDC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1F6673-27C8-4A11-8A38-5154438DDDC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
