@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
     /// <summary>
     /// This class describes methods intended for work with business client interface.
     /// </summary>
-    class BusinessClientUI : ConsumerUI, IDataDisplayer
+    internal class BusinessClientUI : ConsumerUI, IDataDisplayer
     {
+        private readonly AvailableProducts _availableProducts;
+        public BusinessClientUI(AvailableProducts availableProducts)
+        {
+            _availableProducts = availableProducts;
+        }
         public void DisplayAvailableProducts()
         {
-            foreach (var product in AvailableProducts.Products)
+            foreach (var product in _availableProducts.Products)
             {
                 Console.WriteLine("Pastry Id: " + product.Id);
                 Console.WriteLine("Pastry name: " + product.Name);
@@ -22,8 +23,8 @@ namespace PastriesDelivery
                 Console.WriteLine("Pastry weight: " + product.Price + " USD");
                 Console.WriteLine("Pastry weight: " + product.Amount);
             }
-
         }
+
         public void DisplayProviderData()
         {
             Console.WriteLine("Company name: " + Provider.Name);

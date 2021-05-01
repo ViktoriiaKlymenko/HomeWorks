@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -11,13 +7,14 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessClientStorage
     {
-        private static List<Pastry> products = new List<Pastry>();
-        public static List<Pastry> Products
+        private List<Pastry> products = new List<Pastry>();
+
+        public List<Pastry> Products
         {
             get { return products; }
             set { }
         }
-        public static BusinessClient User { get; }
 
+        public BusinessClient User { get; }
     }
 }

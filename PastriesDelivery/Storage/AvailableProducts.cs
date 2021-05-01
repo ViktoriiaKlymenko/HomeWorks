@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
     /// <summary>
     /// This class keeps list of available products in delivery service.
     /// </summary>
-    static public class AvailableProducts
+    public class AvailableProducts
     {
-        private static List<Pastry> products = new List<Pastry>();
-        public static List<Pastry> Products
+        private List<Pastry> products = new List<Pastry>();
+
+        public List<Pastry> Products
         {
             get { return products; }
             set { }
         }
-        public static Provider Provider { get; }
 
+        public Provider Provider { get; }
     }
 }

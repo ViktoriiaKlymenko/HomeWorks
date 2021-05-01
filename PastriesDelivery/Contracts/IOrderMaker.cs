@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     public interface IOrderMaker
     {
-        void ChooseProduct(string idAndAmount);
+        Pastry ChooseProduct(string idAndAmount);
+        public bool CheckForDataPrescence();
         string ConfirmOrder();
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
@@ -11,28 +7,29 @@ namespace PastriesDelivery
     /// </summary>
     public class ProviderManager : IOffersMaker
     {
-        public void AddNewOffer(Pastry product)
+        public AvailableProducts AddNewOffer(AvailableProducts availableProducts, Pastry product)
         {
-            AvailableProducts.Products.Add(product);
+            availableProducts.Products.Add(product);
             Messenger.ShowOfferAcceptedMessage();
-
+            return availableProducts;
         }
 
-        public void AcceptData(Pastry product)
+        public AvailableProducts AcceptData(AvailableProducts availableProducts, Pastry pastry)
         {
             int id = 0;
             Console.WriteLine();
-            product.Id = SetId(id) + 1;
-            product.Name = Console.ReadLine();
-            product.Type = Console.ReadLine();
-            product.Weight = Convert.ToInt32(Console.ReadLine());
-            product.Price = Convert.ToDecimal(Console.ReadLine());
-            product.Amount = Convert.ToInt32(Console.ReadLine());
+            pastry.Id = SetId(id, availableProducts) + 1;
+            pastry.Name = Console.ReadLine();
+            pastry.Type = Console.ReadLine();
+            pastry.Weight = Convert.ToInt32(Console.ReadLine());
+            pastry.Price = Convert.ToDecimal(Console.ReadLine());
+            pastry.Amount = Convert.ToInt32(Console.ReadLine());
+            return availableProducts;
         }
 
-        private static int SetId(int i)
+        private static int SetId(int i, AvailableProducts availableProducts)
         {
-            foreach (var product in AvailableProducts.Products)
+            foreach (var product in availableProducts.Products)
             {
                 if (i < product.Id)
                 {

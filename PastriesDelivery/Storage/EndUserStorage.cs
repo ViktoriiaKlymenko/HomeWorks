@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
     /// <summary>
     /// This class keeps orders of end-user.
     /// </summary>
-    class EndUserStorage
+    public class EndUserStorage
     {
-        private static List<Pastry> products = new List<Pastry>();
-        public static List<Pastry> Products
+        private List<Pastry> products = new List<Pastry>();
+
+        public List<Pastry> Products
         {
             get { return products; }
             set { }
         }
-        public static EndUser User { get; }
+
+        public EndUser User { get; }
     }
 }

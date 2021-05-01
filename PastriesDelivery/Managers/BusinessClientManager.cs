@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
@@ -11,50 +8,48 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessClientManager : IOrderMaker
     {
+        private readonly AvailableProducts _availableProducts;
+        public BusinessClientManager(AvailableProducts availableProducts)
+        {
+            _availableProducts = availableProducts;
+        }
         public bool CheckForDataPrescence()
         {
-            if (AvailableProducts.Products.Count is 0)
+            if (_availableProducts.Products.Count is 0)
             {
                 return false;
             }
             return true;
         }
 
-        public void ChooseProduct(string idAndAmount)
+        public Pastry ChooseProduct(string idAndAmount)
         {
-            try
+            var pastry = new Pastry();
+            var id = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0]);
+            var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
+
+            foreach (var product in _availableProducts.Products.ToList<Pastry>())
             {
-                var id = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0]);
-                var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
-
-                foreach (var product in AvailableProducts.Products.ToList<Pastry>())
+                if (amount > product.Amount && id == product.Id)
                 {
-                    if (amount > product.Amount && id == product.Id)
-                    {
-                        Messenger.ShowUnavailableAmountMessage();
-                        continue;
+                    Messenger.ShowUnavailableAmountMessage();
+                    continue;
+                }
+                if (id == product.Id)
+                {
+                    pastry = product;
 
+                    if (amount == product.Amount)
+                    {
+                        _availableProducts.Products.RemoveAll(product => product.Id == id);
                     }
-                    if (id == product.Id)
+                    if (amount < product.Amount)
                     {
-                        SendOrderToStorage(product);
-                        if (amount == product.Amount)
-                        {
-                            AvailableProducts.Products.RemoveAll(product => product.Id == id);
-                        }
-                        if (amount < product.Amount)
-                        {
-                            product.Amount -= amount;
-
-                        }
-
+                        product.Amount -= amount;
                     }
                 }
             }
-            catch(FormatException)
-            {
-                Messenger.ShowWrongDataMessage();
-            }
+            return pastry;
         }
 
         public string ConfirmOrder()
@@ -64,12 +59,13 @@ namespace PastriesDelivery
             return answer;
         }
 
-        private static void SendOrderToStorage(Pastry product)
+        public BusinessClientStorage SendOrderToStorage(BusinessClientStorage businessClientStudent, Pastry product)
         {
             product.Price *= product.Amount;
             ApplyDiscount(product);
-            BusinessClientStorage.Products.Add(product);
+            businessClientStudent.Products.Add(product);
             Messenger.ShowOrderAcceptedMessage();
+            return businessClientStudent;
         }
 
         private static Pastry ApplyDiscount(Pastry product)

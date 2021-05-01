@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-    class EndUserUI : ConsumerUI, IDataDisplayer
+    /// <summary>
+    /// This class describes methods intended for work with end-user interface.
+    /// </summary>
+    internal class EndUserUI : ConsumerUI, IDataDisplayer
     {
-        /// <summary>
-        /// This class describes methods intended for work with end-user interface.
-        /// </summary>
+        private readonly AvailableProducts _availableProducts;
+        public EndUserUI(AvailableProducts availableProducts)
+        {
+            _availableProducts = availableProducts;
+        }       
+
         public void DisplayAvailableProducts()
         {
-            foreach (var product in AvailableProducts.Products)
+
+            foreach (var product in _availableProducts.Products)
             {
                 Console.WriteLine("Pastry Id: " + product.Id);
                 Console.WriteLine("Pastry name: " + product.Name);

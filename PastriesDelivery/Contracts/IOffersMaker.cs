@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     public interface IOffersMaker
     {
-        void AddNewOffer(Pastry product);      
+        AvailableProducts AddNewOffer(AvailableProducts availableProducts, Pastry pastry);
         string ConfirmOffer();
-        void AcceptData(Pastry product);
+        AvailableProducts AcceptData(AvailableProducts availableProducts, Pastry pastry);
     }
 }

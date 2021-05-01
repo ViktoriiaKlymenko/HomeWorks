@@ -1,14 +1,16 @@
-﻿using PastriesDelivery;
-using System;
+﻿using System;
 
 namespace PastriesDelivery
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            var availableProducts = new AvailableProducts();
+            var endUserStorage = new EndUserStorage();
+            var businessClientStorage = new BusinessClientStorage();
             while (true)
-            { 
+            {
                 Messenger.GreetUser();
                 var user = UserUI.DetectUser();
                 if (user is "provider")
@@ -18,11 +20,11 @@ namespace PastriesDelivery
                     var pastry = new Pastry();
                     try
                     {
-                        manager.AcceptData(pastry);
+                        manager.AcceptData(availableProducts, pastry);
                         var answer = manager.ConfirmOffer();
                         if (answer is "yes")
                         {
-                            manager.AddNewOffer(pastry);
+                            manager.AddNewOffer(availableProducts, pastry);
                         }
                     }
                     catch (FormatException)
@@ -33,12 +35,12 @@ namespace PastriesDelivery
 
                 if (user is "end-user")
                 {
-                    var manager = new EndUserManager();
+                    var manager = new EndUserManager(availableProducts);
                     Messenger.ShowAvailableProductsMessage();
                     bool result = manager.CheckForDataPrescence();
                     if (result is true)
                     {
-                        var displayer = new EndUserUI();
+                        var displayer = new EndUserUI(availableProducts);
                         displayer.DisplayProviderData();
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
@@ -46,7 +48,15 @@ namespace PastriesDelivery
                         var answer = manager.ConfirmOrder();
                         if (answer is "yes")
                         {
-                            manager.ChooseProduct(idAndAmount);
+                            try
+                            {
+                                var pastry = manager.ChooseProduct(idAndAmount);
+                                endUserStorage = manager.SendOrderToStorage(endUserStorage, pastry);
+                            }
+                            catch (FormatException)
+                            {
+                                Messenger.ShowWrongDataMessage();
+                            }
                         }
                     }
                     if (result is false)
@@ -57,12 +67,12 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
-                    var manager = new BusinessClientManager();
+                    var manager = new BusinessClientManager(availableProducts);
                     Messenger.ShowAvailableProductsMessage();
                     bool result = manager.CheckForDataPrescence();
                     if (result is true)
                     {
-                        var displayer = new BusinessClientUI();
+                        var displayer = new BusinessClientUI(availableProducts);
                         displayer.DisplayProviderData();
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
@@ -70,7 +80,15 @@ namespace PastriesDelivery
                         var answer = manager.ConfirmOrder();
                         if (answer is "yes")
                         {
-                            manager.ChooseProduct(idAndAmount);
+                            try
+                            {
+                                var pastry = manager.ChooseProduct(idAndAmount);
+                                businessClientStorage = manager.SendOrderToStorage(businessClientStorage, pastry);
+                            }
+                            catch (FormatException)
+                            {
+                                Messenger.ShowWrongDataMessage();
+                            }
                         }
                     }
                     if (result is false)

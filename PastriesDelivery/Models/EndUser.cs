@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains end-user's main information.
@@ -15,6 +9,5 @@ namespace PastriesDelivery
         static public string Name { get; set; } = "Client name";
         static public string Adress { get; set; } = "Client adress";
         static public string PhoneNumber { get; set; } = "+380XXXXXXXXX";
-
     }
 }
