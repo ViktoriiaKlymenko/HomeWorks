@@ -1,35 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
-    /// <summary>
-    /// This class contains methods intended for work with provider.
-    /// </summary>
-    public class ProviderManager : IOffersMaker
+    public class ProviderUI
     {
-        public AvailableProducts AddNewOffer(AvailableProducts availableProducts, Pastry product)
+        private readonly static IList<Pastry> _availableProducts = new List<Pastry>();
+
+        public ProviderUI(Storage storage)
         {
-            availableProducts.Products.Add(product);
-            Messenger.ShowOfferAcceptedMessage();
-            return availableProducts;
+            for (int i = 0; i < storage.Pastries.Count; i++)
+            {
+                if (storage.Type[i] == StorageType.AvailableProducts)
+                {
+                    _availableProducts.Add(storage.Pastries[i]);
+                }
+            }
         }
 
-        public AvailableProducts AcceptData(AvailableProducts availableProducts, Pastry pastry)
+        public Pastry AcceptData(Pastry pastry)
         {
             int id = 0;
             Console.WriteLine();
-            pastry.Id = SetId(id, availableProducts) + 1;
+            pastry.Id = SetId(id) + 1;
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
             pastry.Weight = Convert.ToInt32(Console.ReadLine());
             pastry.Price = Convert.ToDecimal(Console.ReadLine());
             pastry.Amount = Convert.ToInt32(Console.ReadLine());
-            return availableProducts;
+
+            return pastry;
         }
 
-        private static int SetId(int i, AvailableProducts availableProducts)
+        private static int SetId(int i)
         {
-            foreach (var product in availableProducts.Products)
+            foreach (var product in _availableProducts)
             {
                 if (i < product.Id)
                 {

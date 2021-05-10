@@ -1,20 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
     /// <summary>
     /// This class describes methods intended for work with business client interface.
     /// </summary>
-    internal class BusinessClientUI : ConsumerUI, IDataDisplayer
+    internal class BusinessClientUI : IDataDisplayer
     {
-        private readonly AvailableProducts _availableProducts;
-        public BusinessClientUI(AvailableProducts availableProducts)
+        private readonly IList<Pastry> _availableProducts = new List<Pastry>();
+
+        public BusinessClientUI(IStorage storage)
         {
-            _availableProducts = availableProducts;
+            _availableProducts = new List<Pastry>();
+            for (int i = 0; i < storage.Pastries.Count; i++)
+            {
+                if (storage.Type[i] == StorageType.AvailableProducts)
+                {
+                    _availableProducts.Add(storage.Pastries[i]);
+                }
+            }
         }
+
         public void DisplayAvailableProducts()
         {
-            foreach (var product in _availableProducts.Products)
+            foreach (var product in _availableProducts)
             {
                 Console.WriteLine("Pastry Id: " + product.Id);
                 Console.WriteLine("Pastry name: " + product.Name);
@@ -25,15 +35,29 @@ namespace PastriesDelivery
             }
         }
 
-        public void DisplayProviderData()
+        public static string GetAddress()
         {
-            Console.WriteLine("Company name: " + Provider.Name);
-            Console.WriteLine("Company adress: " + Provider.Adress);
-            Console.WriteLine("Company phone number: " + Provider.PhoneNumber);
-            Console.WriteLine("There are discounts for you.");
-            Console.WriteLine("20+ units discount is " + Provider.twentyUnitsDiscount + "%");
-            Console.WriteLine("50+ units discount is " + Provider.fiftyUnitsDiscount + "%");
-            Console.WriteLine("100+ units discount is " + Provider.hundredUnitsDiscount + "%");
+            string address;
+            address = Console.ReadLine();
+            return address;
+        }
+
+        public static string GetPhoneNumber()
+        {
+            string phoneNumber;
+            phoneNumber = Console.ReadLine();
+            return phoneNumber;
+        }
+
+        public static string GetOrder()
+        {
+            return Console.ReadLine();
+        }
+
+        public string ConfirmOrder()
+        {
+            var answer = Console.ReadLine();
+            return answer;
         }
     }
 }

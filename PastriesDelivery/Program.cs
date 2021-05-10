@@ -6,25 +6,41 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
-            var availableProducts = new AvailableProducts();
-            var endUserStorage = new EndUserStorage();
-            var businessClientStorage = new BusinessClientStorage();
+            var storage = new Storage();
             while (true)
             {
+                static string DetectUser()
+                {
+                    return Console.ReadLine();
+                }
                 Messenger.GreetUser();
-                var user = UserUI.DetectUser();
+
+                var user = DetectUser();
+
                 if (user is "provider")
                 {
-                    var manager = new ProviderManager();
-                    Messenger.SendOfferRequirments();
                     var pastry = new Pastry();
+                    var manager = new BusinessProviderManager();
+                    var User = new User()
+                    {
+                        Name = "Some Name",
+                        Type = UserType.Provider,
+                        PhoneNumber = "+380XXXXXXXXX",
+                        Address = "Some adress"
+                    };
+
+                    Messenger.SendOfferRequirments();
+
                     try
                     {
-                        manager.AcceptData(availableProducts, pastry);
-                        var answer = manager.ConfirmOffer();
+                        var providerUI = new ProviderUI(storage);
+                        pastry = providerUI.AcceptData(pastry);
+                        var answer = providerUI.ConfirmOffer();
+
                         if (answer is "yes")
                         {
-                            manager.AddNewOffer(availableProducts, pastry);
+                            storage = manager.AddNewOffer(storage, pastry, User);
+                            Messenger.ShowOfferAcceptedMessage();
                         }
                     }
                     catch (FormatException)
@@ -33,25 +49,40 @@ namespace PastriesDelivery
                     }
                 }
 
-                if (user is "end-user")
+                if (user is "consumer")
                 {
-                    var manager = new EndUserManager(availableProducts);
+                    var manager = new ConsumerManager(storage);
+                    var messenger = new Messenger(storage);
+                    var consumer = new User
+                    {
+                        Name = "Some name",
+                        Type = UserType.Consumer
+                    };
+
                     Messenger.ShowAvailableProductsMessage();
                     bool result = manager.CheckForDataPrescence();
                     if (result is true)
                     {
-                        var displayer = new EndUserUI(availableProducts);
-                        displayer.DisplayProviderData();
+                        var displayer = new ConsumerUI(storage);
+
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
-                        var idAndAmount = EndUserUI.GetOrder();
-                        var answer = manager.ConfirmOrder();
+                        var idAndAmount = ConsumerUI.GetOrder();
+                        Messenger.ShowConfirmMessage();
+                        var answer = displayer.ConfirmOrder();
                         if (answer is "yes")
                         {
                             try
                             {
-                                var pastry = manager.ChooseProduct(idAndAmount);
-                                endUserStorage = manager.SendOrderToStorage(endUserStorage, pastry);
+                                var pastry = manager.ChooseProduct(idAndAmount, storage);
+                                messenger.ShowUnavailableAmountMessage(idAndAmount);
+                                Messenger.ShowEnterAddressMessage();
+                                consumer.Address = ConsumerUI.GetAddress();
+                                Messenger.ShowEnterPhoneNumberMessage();
+                                consumer.PhoneNumber = ConsumerUI.GetPhoneNumber();
+                                storage = manager.SendOrderToStorage(storage, pastry);
+                                Messenger.ShowOrderAcceptedMessage();
+                                storage = manager.SendUserToStorage(storage, consumer);
                             }
                             catch (FormatException)
                             {
@@ -67,23 +98,39 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
-                    var manager = new BusinessClientManager(availableProducts);
+                    var manager = new BusinessClientManager(storage);
+                    var messenger = new Messenger(storage);
+                    var businessClient = new User()
+                    {
+                        Name = "Some name",
+                        Type = UserType.BusinessClient
+                    };
+
                     Messenger.ShowAvailableProductsMessage();
+
                     bool result = manager.CheckForDataPrescence();
                     if (result is true)
                     {
-                        var displayer = new BusinessClientUI(availableProducts);
-                        displayer.DisplayProviderData();
+                        var displayer = new BusinessClientUI(storage);
+
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
-                        var answer = manager.ConfirmOrder();
+                        Messenger.ShowConfirmMessage();
+                        var answer = displayer.ConfirmOrder();
                         if (answer is "yes")
                         {
                             try
                             {
-                                var pastry = manager.ChooseProduct(idAndAmount);
-                                businessClientStorage = manager.SendOrderToStorage(businessClientStorage, pastry);
+                                var pastry = manager.ChooseProduct(idAndAmount, storage);
+                                messenger.ShowUnavailableAmountMessage(idAndAmount);
+                                Messenger.ShowEnterAddressMessage();
+                                businessClient.Address = BusinessClientUI.GetAddress();
+                                Messenger.ShowEnterPhoneNumberMessage();
+                                businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
+                                storage = manager.SendOrderToStorage(storage, pastry);
+                                Messenger.ShowOrderAcceptedMessage();
+                                storage = manager.SendUserToStorage(storage, businessClient);
                             }
                             catch (FormatException)
                             {

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PastriesDelivery
 {
     /// <summary>
-    /// This class contains methods intended for work with business client.
+    /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class BusinessClientManager : IOrderMaker
+    public class ConsumerManager : IOrderMaker
     {
-        private readonly IList<Pastry> _availableProducts = new List<Pastry>();
+        private readonly IList<Pastry> _availableProducts;
 
-        public BusinessClientManager(IStorage storage)
+        public ConsumerManager(IStorage storage)
         {
             _availableProducts = new List<Pastry>();
             for (int i = 0; i < storage.Pastries.Count; i++)
@@ -24,7 +25,7 @@ namespace PastriesDelivery
 
         public bool CheckForDataPrescence()
         {
-            if (_availableProducts.Count is 0)
+            if (_availableProducts.Count == 0)
             {
                 return false;
             }
@@ -66,35 +67,18 @@ namespace PastriesDelivery
             }
         }
 
-        public Storage SendOrderToStorage(Storage businessClientStorage, Pastry pastry)
+        public Storage SendOrderToStorage(Storage storage, Pastry pastry)
         {
-            pastry.Price *= pastry.Amount;
-            ApplyDiscount(pastry);
-            businessClientStorage.Pastries.Add(pastry);
-            return businessClientStorage;
+            storage.Pastries.Add(pastry);
+            storage.Type.Add(StorageType.UserOrders);
+
+            return storage;
         }
 
-        public Storage SendUserToStorage(Storage businessClientStorage, User businessClient)
+        public Storage SendUserToStorage(Storage storage, User consumer)
         {
-            businessClientStorage.Users.Add(businessClient);
-            return businessClientStorage;
-        }
-
-        private static Pastry ApplyDiscount(Pastry product)
-        {
-            if (product.Amount > 19 && product.Amount < 50)
-            {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.TwentyUnits;
-            }
-            if (product.Amount > 49 && product.Amount < 100)
-            {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.FiftyUnits;
-            }
-            if (product.Amount > 99)
-            {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.HundredUnits;
-            }
-            return product;
+            storage.Users.Add(consumer);
+            return storage;
         }
     }
 }
