@@ -124,9 +124,9 @@ namespace PastriesDelivery
                             {
                                 var pastry = manager.ChooseProduct(idAndAmount, storage);
                                 messenger.ShowUnavailableAmountMessage(idAndAmount);
-                                Messenger.ShowEnterAddressMessage();
+                                
                                 businessClient.Address = BusinessClientUI.GetAddress();
-                                Messenger.ShowEnterPhoneNumberMessage();
+                                
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 storage = manager.SendOrderToStorage(storage, pastry);
                                 Messenger.ShowOrderAcceptedMessage();
