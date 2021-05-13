@@ -4,7 +4,7 @@ namespace PastriesDelivery
 {
     public interface IRegexPatterns
     {
-        List<string> Addresses { get; }
-        List<string> PhoneNumbers { get; }
+        string Addresses { get; }
+        string PhoneNumbers { get; }
     }
 }
