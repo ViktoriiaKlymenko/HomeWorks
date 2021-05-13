@@ -132,7 +132,10 @@ namespace PastriesDelivery
                                 
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 
+<<<<<<< HEAD
 >>>>>>> bcfe49a (Regular expressions were added.)
+=======
+>>>>>>> 61f99beb31d3b6f08db95674f92687d6844b8fc8
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SendOrderToStorage(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
