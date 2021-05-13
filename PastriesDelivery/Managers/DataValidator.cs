@@ -13,26 +13,20 @@ namespace PastriesDelivery
 
         public bool ValidateAddress(string address)
         {
-            foreach (var pattern in _patterns.Addresses)
+            var regex = new Regex(_patterns.Addresses);
+            if (regex.IsMatch(address))
             {
-                var regex = new Regex(pattern);
-                if (regex.IsMatch(address))
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
 
         public bool ValidatePhoneNumber(string phoneNumber)
         {
-            foreach (var pattern in _patterns.PhoneNumbers)
+            var regex = new Regex(_patterns.PhoneNumbers);
+            if (regex.IsMatch(phoneNumber))
             {
-                var regex = new Regex(pattern);
-                if (regex.IsMatch(phoneNumber))
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
