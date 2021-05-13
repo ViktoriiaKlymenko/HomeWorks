@@ -43,14 +43,26 @@ namespace PastriesDelivery
         public static string GetAddress()
         {
             string address;
-            address = Console.ReadLine();
+            var patterns = new RegexPatterns();
+            var dataValidator = new DataValidator(patterns);
+            do
+            {
+                Messenger.ShowEnterAddressMessage();
+                address = Console.ReadLine();
+            } while (!dataValidator.ValidateAddress(address));
             return address;
         }
 
         public static string GetPhoneNumber()
         {
             string phoneNumber;
-            phoneNumber = Console.ReadLine();
+            var patterns = new RegexPatterns();
+            var dataValidator = new DataValidator(patterns);
+            do
+            {
+                Messenger.ShowEnterPhoneNumberMessage();
+                phoneNumber = Console.ReadLine();
+            } while (!dataValidator.ValidateAddress(phoneNumber));
             return phoneNumber;
         }
 

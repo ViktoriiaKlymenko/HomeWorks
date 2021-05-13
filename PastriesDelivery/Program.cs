@@ -122,9 +122,17 @@ namespace PastriesDelivery
                         {
                             try
                             {
+<<<<<<< HEAD
                                 var pastry = manager.ChooseProduct(id, amount);
                                 messenger.ShowUnavailableAmountMessage(id, amount);
                                 businessClient.Address = BusinessClientUI.GetAddress();
+=======
+                                var pastry = manager.ChooseProduct(idAndAmount, storage);
+                                messenger.ShowUnavailableAmountMessage(idAndAmount);
+                                
+                                businessClient.Address = BusinessClientUI.GetAddress();
+                                
+>>>>>>> bcfe49a (Regular expressions were added.)
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SendOrderToStorage(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
