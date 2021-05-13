@@ -5,12 +5,18 @@
     /// </summary>
     public class BusinessProviderManager : IOffersMaker
     {
-        public Storage AddNewOffer(Storage storage, Pastry pastry, User user)
+        private readonly IStorage _storage;
+
+        public BusinessProviderManager(IStorage storage)
         {
-            storage.Pastries.Add(pastry);
-            storage.Type.Add(StorageType.AvailableProducts);
-            storage.Users.Add(user);
-            return storage;
+            _storage = storage;
+        }
+
+        public void AddNewOffer(Pastry pastry, User user)
+        {
+            _storage.Pastries.Add(pastry);
+            _storage.Type.Add(StorageType.AvailableProducts);
+            _storage.Users.Add(user);
         }
     }
 }

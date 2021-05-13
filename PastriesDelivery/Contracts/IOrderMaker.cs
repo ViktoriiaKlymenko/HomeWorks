@@ -2,7 +2,7 @@
 {
     public interface IOrderMaker
     {
-        Pastry ChooseProduct(string idAndAmount, Storage storage);
+        Pastry ChooseProduct(int id, int amount);
 
         bool CheckForDataPrescence();
     }

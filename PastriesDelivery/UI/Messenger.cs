@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PastriesDelivery
 {
@@ -9,18 +7,11 @@ namespace PastriesDelivery
     /// </summary>
     public class Messenger
     {
-        private readonly IList<Pastry> _availableProducts;
+        private readonly IStorage _storage;
 
         public Messenger(IStorage storage)
         {
-            _availableProducts = new List<Pastry>();
-            for (int i = 0; i < storage.Pastries.Count; i++)
-            {
-                if (storage.Type[i] == StorageType.AvailableProducts)
-                {
-                    _availableProducts.Add(storage.Pastries[i]);
-                }
-            }
+            _storage = storage;
         }
 
         public static void GreetUser()
@@ -58,13 +49,12 @@ namespace PastriesDelivery
             Console.WriteLine("Please confirm (yes/no): ");
         }
 
-        internal void ShowUnavailableAmountMessage(string idAndAmount)
+        internal void ShowUnavailableAmountMessage(int id, int amount)
         {
-            var id = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0]);
-            var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
-            foreach (var product in _availableProducts.ToList<Pastry>())
+            for (int i = 0; i < _storage.Pastries.Count; i++)
             {
-                if (amount > product.Amount && id == product.Id)
+                var pastry = _storage.Pastries[i];
+                if (amount > pastry.Amount && id == pastry.Id)
                 {
                     Console.WriteLine("Unavailable amount of product! Try again!");
                     continue;

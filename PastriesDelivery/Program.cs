@@ -20,7 +20,7 @@ namespace PastriesDelivery
                 if (user is "provider")
                 {
                     var pastry = new Pastry();
-                    var manager = new BusinessProviderManager();
+                    var manager = new BusinessProviderManager(storage);
                     var User = new User()
                     {
                         Name = "Some Name",
@@ -39,7 +39,7 @@ namespace PastriesDelivery
 
                         if (answer is "yes")
                         {
-                            storage = manager.AddNewOffer(storage, pastry, User);
+                            manager.AddNewOffer(pastry, User);
                             Messenger.ShowOfferAcceptedMessage();
                         }
                     }
@@ -68,17 +68,17 @@ namespace PastriesDelivery
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = ConsumerUI.GetOrder();
+                        var id = ConsumerUI.ExtractId(idAndAmount);
+                        var amount = ConsumerUI.ExtractAmount(idAndAmount);
                         Messenger.ShowConfirmMessage();
                         var answer = displayer.ConfirmOrder();
                         if (answer is "yes")
                         {
                             try
                             {
-                                var pastry = manager.ChooseProduct(idAndAmount, storage);
-                                messenger.ShowUnavailableAmountMessage(idAndAmount);
-                                Messenger.ShowEnterAddressMessage();
+                                var pastry = manager.ChooseProduct(id, amount);
+                                messenger.ShowUnavailableAmountMessage(id, amount);
                                 consumer.Address = ConsumerUI.GetAddress();
-                                Messenger.ShowEnterPhoneNumberMessage();
                                 consumer.PhoneNumber = ConsumerUI.GetPhoneNumber();
                                 storage = manager.SendOrderToStorage(storage, pastry);
                                 Messenger.ShowOrderAcceptedMessage();
@@ -112,25 +112,32 @@ namespace PastriesDelivery
                     if (result is true)
                     {
                         var displayer = new BusinessClientUI(storage);
-
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
+                        var id = BusinessClientUI.ExtractId(idAndAmount);
+                        var amount = BusinessClientUI.ExtractAmount(idAndAmount);
                         Messenger.ShowConfirmMessage();
                         var answer = displayer.ConfirmOrder();
                         if (answer is "yes")
                         {
                             try
                             {
+<<<<<<< Updated upstream
                                 var pastry = manager.ChooseProduct(idAndAmount, storage);
                                 messenger.ShowUnavailableAmountMessage(idAndAmount);
                                 Messenger.ShowEnterAddressMessage();
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 Messenger.ShowEnterPhoneNumberMessage();
+=======
+                                var pastry = manager.ChooseProduct(id, amount);
+                                messenger.ShowUnavailableAmountMessage(id, amount);
+                                businessClient.Address = BusinessClientUI.GetAddress();
+>>>>>>> Stashed changes
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
-                                storage = manager.SendOrderToStorage(storage, pastry);
+                                manager.SendOrderToStorage(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
-                                storage = manager.SendUserToStorage(storage, businessClient);
+                                manager.SendUserToStorage(businessClient);
                             }
                             catch (FormatException)
                             {

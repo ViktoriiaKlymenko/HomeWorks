@@ -1,62 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with business client.
     /// </summary>
     public class BusinessClientManager : IOrderMaker
     {
-        private readonly IList<Pastry> _availableProducts = new List<Pastry>();
+        private readonly IStorage _storage;
 
         public BusinessClientManager(IStorage storage)
         {
-            _availableProducts = new List<Pastry>();
-            for (int i = 0; i < storage.Pastries.Count; i++)
-            {
-                if (storage.Type[i] == StorageType.AvailableProducts)
-                {
-                    _availableProducts.Add(storage.Pastries[i]);
-                }
-            }
+            _storage = storage;
         }
 
         public bool CheckForDataPrescence()
         {
-            if (_availableProducts.Count is 0)
+            if (_storage.Pastries.Count is 0)
             {
                 return false;
             }
             return true;
         }
 
-        public Pastry ChooseProduct(string idAndAmount, Storage storage)
+        public Pastry ChooseProduct(int id, int amount)
         {
             var pastry = new Pastry();
-            var id = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0]);
-            var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
-
-            foreach (var product in _availableProducts)
+            for (int i = 0; i < _storage.Pastries.Count; i++)
             {
-                if (id == product.Id)
+                if (_storage.Type[i] == StorageType.AvailableProducts)
                 {
-                    pastry = product;
-                    RemoveFromAvailableProducts(amount, product, storage);
+                    var product = _storage.Pastries[i];
+
+                    if (id == product.Id)
+                    {
+                        pastry = product;
+                        RemoveFromAvailableProducts(amount, product);
+                    }
                 }
             }
             return pastry;
         }
 
-        private void RemoveFromAvailableProducts(int amount, Pastry product, Storage storage)
+        private void RemoveFromAvailableProducts(int amount, Pastry product)
         {
-            foreach (var pastry in storage.Pastries)
+            foreach (var pastry in _storage.Pastries)
             {
                 if (pastry == product)
                 {
                     if (amount == product.Amount)
                     {
-                        storage.Pastries.Remove(product);
+                        _storage.Pastries.Remove(product);
                     }
                     if (amount < product.Amount)
                     {
@@ -66,35 +58,34 @@ namespace PastriesDelivery
             }
         }
 
-        public Storage SendOrderToStorage(Storage businessClientStorage, Pastry pastry)
+        public void SendOrderToStorage(Pastry pastry)
         {
             pastry.Price *= pastry.Amount;
             ApplyDiscount(pastry);
-            businessClientStorage.Pastries.Add(pastry);
-            return businessClientStorage;
+            _storage.Pastries.Add(pastry);
+            _storage.Type.Add(StorageType.UserOrders);
         }
 
-        public Storage SendUserToStorage(Storage businessClientStorage, User businessClient)
+        public void SendUserToStorage(User businessClient)
         {
-            businessClientStorage.Users.Add(businessClient);
-            return businessClientStorage;
+            _storage.Users.Add(businessClient);
         }
 
-        private static Pastry ApplyDiscount(Pastry product)
+        private static Pastry ApplyDiscount(Pastry pastry)
         {
-            if (product.Amount > 19 && product.Amount < 50)
+            if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.TwentyUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
             }
-            if (product.Amount > 49 && product.Amount < 100)
+            if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.FiftyUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
             }
-            if (product.Amount > 99)
+            if (pastry.Amount > 99)
             {
-                product.Price -= product.Price / 100 * (int)DiscountPercents.HundredUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
             }
-            return product;
+            return pastry;
         }
     }
 }
