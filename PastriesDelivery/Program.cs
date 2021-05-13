@@ -51,6 +51,7 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
+                    var displayer = new ConsumerUI(storage);
                     var manager = new ConsumerManager(storage);
                     var messenger = new Messenger(storage);
                     var consumer = new User
@@ -59,12 +60,10 @@ namespace PastriesDelivery
                         Type = UserType.Consumer
                     };
 
-                    var displayer = new ConsumerUI(storage);
                     Messenger.ShowAvailableProductsMessage();
                     bool result = displayer.CheckForDataPrescence();
-
                     if (result is true)
-                    {
+                    {                     
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = ConsumerUI.GetOrder();
@@ -98,6 +97,7 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
+                    var displayer = new BusinessClientUI(storage);
                     var manager = new BusinessClientManager(storage);
                     var messenger = new Messenger(storage);
                     var businessClient = new User()
@@ -107,10 +107,10 @@ namespace PastriesDelivery
                     };
 
                     Messenger.ShowAvailableProductsMessage();
-                    var displayer = new BusinessClientUI(storage);
+
                     bool result = displayer.CheckForDataPrescence();
                     if (result is true)
-                    {
+                    {                      
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
@@ -122,20 +122,11 @@ namespace PastriesDelivery
                         {
                             try
                             {
-<<<<<<< HEAD
                                 var pastry = manager.ChooseProduct(id, amount);
                                 messenger.ShowUnavailableAmountMessage(id, amount);
-                                businessClient.Address = BusinessClientUI.GetAddress();
-=======
-                                var pastry = manager.ChooseProduct(idAndAmount, storage);
-                                messenger.ShowUnavailableAmountMessage(idAndAmount);
                                 
                                 businessClient.Address = BusinessClientUI.GetAddress();
-                                
-<<<<<<< HEAD
->>>>>>> bcfe49a (Regular expressions were added.)
-=======
->>>>>>> 61f99beb31d3b6f08db95674f92687d6844b8fc8
+                                Messenger.ShowEnterPhoneNumberMessage();
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SendOrderToStorage(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
