@@ -12,15 +12,6 @@
             _storage = storage;
         }
 
-        public bool CheckForDataPrescence()
-        {
-            if (_storage.Pastries.Count == 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public Pastry ChooseProduct(int id, int amount)
         {
             var pastry = new Pastry();

@@ -14,6 +14,15 @@ namespace PastriesDelivery
             _storage = storage;
         }
 
+        public bool CheckForDataPrescence()
+        {
+            if (_storage.Pastries.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void DisplayAvailableProducts()
         {
             for (int i = 0; i < _storage.Pastries.Count; i++)
@@ -41,17 +50,7 @@ namespace PastriesDelivery
         public static string GetPhoneNumber()
         {
             string phoneNumber;
-<<<<<<< Updated upstream
             phoneNumber = Console.ReadLine();
-=======
-            var patterns = new RegexPatterns();
-            var dataValidator = new DataValidator(patterns);
-            do
-            {
-                Messenger.ShowEnterPhoneNumberMessage();
-                phoneNumber = Console.ReadLine();
-            } while (!dataValidator.ValidatePhoneNumber(phoneNumber));
->>>>>>> Stashed changes
             return phoneNumber;
         }
 

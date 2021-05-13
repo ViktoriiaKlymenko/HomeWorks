@@ -59,12 +59,12 @@ namespace PastriesDelivery
                         Type = UserType.Consumer
                     };
 
+                    var displayer = new ConsumerUI(storage);
                     Messenger.ShowAvailableProductsMessage();
-                    bool result = manager.CheckForDataPrescence();
+                    bool result = displayer.CheckForDataPrescence();
+
                     if (result is true)
                     {
-                        var displayer = new ConsumerUI(storage);
-
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = ConsumerUI.GetOrder();
@@ -107,11 +107,10 @@ namespace PastriesDelivery
                     };
 
                     Messenger.ShowAvailableProductsMessage();
-
-                    bool result = manager.CheckForDataPrescence();
+                    var displayer = new BusinessClientUI(storage);
+                    bool result = displayer.CheckForDataPrescence();
                     if (result is true)
                     {
-                        var displayer = new BusinessClientUI(storage);
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
@@ -123,17 +122,9 @@ namespace PastriesDelivery
                         {
                             try
                             {
-<<<<<<< Updated upstream
-                                var pastry = manager.ChooseProduct(idAndAmount, storage);
-                                messenger.ShowUnavailableAmountMessage(idAndAmount);
-                                Messenger.ShowEnterAddressMessage();
-                                businessClient.Address = BusinessClientUI.GetAddress();
-                                Messenger.ShowEnterPhoneNumberMessage();
-=======
                                 var pastry = manager.ChooseProduct(id, amount);
                                 messenger.ShowUnavailableAmountMessage(id, amount);
                                 businessClient.Address = BusinessClientUI.GetAddress();
->>>>>>> Stashed changes
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SendOrderToStorage(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
