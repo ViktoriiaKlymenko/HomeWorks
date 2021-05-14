@@ -60,11 +60,15 @@ namespace PastriesDelivery
 
                     Messenger.ShowAvailableProductsMessage();
 <<<<<<< HEAD
+<<<<<<< HEAD
                     bool result = manager.CheckForDataPrescence();
 
 =======
                     bool result = displayer.CheckForDataPrescence();
 >>>>>>> 36b025b (Last fixes.)
+=======
+                    bool result = displayer.CheckForDataPrescence();
+>>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
                     if (result is true)
                     {
                         displayer.DisplayAvailableProducts();
@@ -116,9 +120,12 @@ namespace PastriesDelivery
 
                     Messenger.ShowAvailableProductsMessage();
 <<<<<<< HEAD
+<<<<<<< HEAD
                     var displayer = new BusinessClientUI(storage);
                     bool result = manager.CheckForDataPrescence();
 =======
+=======
+>>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
 
                     bool result = displayer.CheckForDataPrescence();
 >>>>>>> 36b025b (Last fixes.)
@@ -145,7 +152,10 @@ namespace PastriesDelivery
 
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 Messenger.ShowEnterPhoneNumberMessage();
+<<<<<<< HEAD
 >>>>>>> 36b025b (Last fixes.)
+=======
+>>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SaveOrder(pastry);
                                 Messenger.ShowOrderAcceptedMessage();

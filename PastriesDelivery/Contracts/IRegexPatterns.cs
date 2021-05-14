@@ -4,6 +4,7 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         string Addresses { get; }
         string PhoneNumbers { get; }
 =======
@@ -14,5 +15,9 @@
         string Addresses { get; }
         string PhoneNumbers { get; }
 >>>>>>> 61f99be (Regular expressions were united.)
+=======
+        string Addresses { get; }
+        string PhoneNumbers { get; }
+>>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
     }
 }
