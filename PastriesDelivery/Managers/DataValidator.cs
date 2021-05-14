@@ -38,7 +38,7 @@ namespace PastriesDelivery
 
         public bool ValidatePhoneNumber(string phoneNumber)
         {
-            var regex = new Regex(_patterns.PhoneNumbers);
+                var regex = new Regex(_patterns.PhoneNumbers);
             if (regex.IsMatch(phoneNumber))
             {
                 return true;
