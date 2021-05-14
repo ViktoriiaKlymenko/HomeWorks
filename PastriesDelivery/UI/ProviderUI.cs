@@ -13,7 +13,6 @@ namespace PastriesDelivery
 
         public Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
         {
-            var validator = new DataValidator();
             Console.WriteLine();
             pastry.Id = manager.SetId()+1;
             pastry.Name = Console.ReadLine();
@@ -24,17 +23,17 @@ namespace PastriesDelivery
             do
             {
                 weight = Console.ReadLine();
-            } while (!validator.ValidateIsDigit(weight));
+            } while (!DataValidator.ValidateIsDigit(weight));
             pastry.Weight = Convert.ToInt32(weight);
             do
             {
                 price = Console.ReadLine();
-            } while (!validator.ValidateIsDigit(price));
+            } while (!DataValidator.ValidateIsDigit(price));
             pastry.Price = Convert.ToDecimal(price);
             do
             {
                 amount = Console.ReadLine();
-            } while (!validator.ValidateIsDigit(amount));
+            } while (!DataValidator.ValidateIsDigit(amount));
             pastry.Amount = Convert.ToInt32(amount);
             return pastry;
         }

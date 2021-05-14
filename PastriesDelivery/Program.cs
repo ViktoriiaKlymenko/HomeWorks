@@ -126,12 +126,7 @@ namespace PastriesDelivery
                             try
                             {
                                 pastry = manager.ChooseProduct(id, amount);
-                                result = manager.CheckAmount(id, amount);
-                                if (result is false)
-                                {
-                                    messenger.ShowUnavailableAmountMessage(id, amount);
-                                    continue;
-                                }
+                                messenger.ShowUnavailableAmountMessage(id, amount);
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SaveOrder(pastry);
