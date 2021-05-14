@@ -12,6 +12,15 @@
             _storage = storage;
         }
 
+        public bool CheckForDataPrescence()
+        {
+            if (_storage.Pastries.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public Pastry ChooseProduct(int id, int amount)
         {
             var pastry = new Pastry();
@@ -29,6 +38,19 @@
                 }
             }
             return pastry;
+        }
+
+        internal bool CheckAmount(int id, int amount)
+        {
+            for (int i = 0; i < _storage.Pastries.Count; i++)
+            {
+                var pastry = _storage.Pastries[i];
+                if (amount > pastry.Amount && id == pastry.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void RemoveFromAvailableProducts(int amount, Pastry product)
@@ -49,18 +71,16 @@
             }
         }
 
-        public Storage SendOrderToStorage(Storage storage, Pastry pastry)
+        public void SaveOrder(Pastry pastry)
         {
             pastry.Price *= pastry.Amount;
-            storage.Pastries.Add(pastry);
-            storage.Type.Add(StorageType.UserOrders);
-            return storage;
+            _storage.Pastries.Add(pastry);
+            _storage.Type.Add(StorageType.UserOrders);
         }
 
-        public Storage SendUserToStorage(Storage storage, User consumer)
+        public void SaveUser(User consumer)
         {
-            storage.Users.Add(consumer);
-            return storage;
+            _storage.Users.Add(consumer);
         }
     }
 }

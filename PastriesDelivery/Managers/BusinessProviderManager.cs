@@ -12,6 +12,24 @@
             _storage = storage;
         }
 
+        public int SetId()
+        {
+            int id = default;
+            for (int i = 0; i < _storage.Pastries.Count; i++)
+            {
+                if (_storage.Type[i] == StorageType.AvailableProducts)
+                {
+                    var pastry = _storage.Pastries[i];
+
+                    if (i < pastry.Id)
+                    {
+                        id = pastry.Id;
+                    }
+                }
+            }
+            return id;
+        }
+
         public void AddNewOffer(Pastry pastry, User user)
         {
             _storage.Pastries.Add(pastry);

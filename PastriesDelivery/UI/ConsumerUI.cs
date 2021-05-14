@@ -14,15 +14,6 @@ namespace PastriesDelivery
             _storage = storage;
         }
 
-        public bool CheckForDataPrescence()
-        {
-            if (_storage.Pastries.Count == 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public void DisplayAvailableProducts()
         {
             for (int i = 0; i < _storage.Pastries.Count; i++)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -12,34 +11,32 @@ namespace PastriesDelivery
             _storage = storage;
         }
 
-        public Pastry AcceptData(Pastry pastry)
+        public Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
         {
+            var validator = new DataValidator();
             Console.WriteLine();
-            pastry.Id = SetId() + 1;
+            pastry.Id = manager.SetId()+1;
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
-            pastry.Weight = Convert.ToInt32(Console.ReadLine());
-            pastry.Price = Convert.ToDecimal(Console.ReadLine());
-            pastry.Amount = Convert.ToInt32(Console.ReadLine());
-            return pastry;
-        }
-
-        private int SetId()
-        {
-            int id = default;
-            for (int i = 0; i < _storage.Pastries.Count; i++)
+            string weight;
+            string price;
+            string amount;
+            do
             {
-                if (_storage.Type[i] == StorageType.AvailableProducts)
-                {
-                    var pastry = _storage.Pastries[i];
-
-                    if (i < pastry.Id)
-                    {
-                        id = pastry.Id;
-                    }
-                }
-            }
-            return id;
+                weight = Console.ReadLine();
+            } while (!validator.ValidateIsDigit(weight));
+            pastry.Weight = Convert.ToInt32(weight);
+            do
+            {
+                price = Console.ReadLine();
+            } while (!validator.ValidateIsDigit(price));
+            pastry.Price = Convert.ToDecimal(price);
+            do
+            {
+                amount = Console.ReadLine();
+            } while (!validator.ValidateIsDigit(amount));
+            pastry.Amount = Convert.ToInt32(amount);
+            return pastry;
         }
 
         public string ConfirmOffer()

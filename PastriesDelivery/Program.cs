@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -6,20 +7,17 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+            var pastry = new Pastry();
             var storage = new Storage();
+            var pastries = new List<Pastry>();
             while (true)
             {
-                static string DetectUser()
-                {
-                    return Console.ReadLine();
-                }
                 Messenger.GreetUser();
 
-                var user = DetectUser();
+                var user = Console.ReadLine();
 
                 if (user is "provider")
                 {
-                    var pastry = new Pastry();
                     var manager = new BusinessProviderManager(storage);
                     var User = new User()
                     {
@@ -34,7 +32,7 @@ namespace PastriesDelivery
                     try
                     {
                         var providerUI = new ProviderUI(storage);
-                        pastry = providerUI.AcceptData(pastry);
+                        pastry = providerUI.AcceptData(manager, pastry);
                         var answer = providerUI.ConfirmOffer();
 
                         if (answer is "yes")
@@ -52,7 +50,7 @@ namespace PastriesDelivery
                 if (user is "consumer")
                 {
                     var manager = new ConsumerManager(storage);
-                    var messenger = new Messenger(storage);
+                    var messenger = new Messenger();
                     var consumer = new User
                     {
                         Name = "Some name",
@@ -61,7 +59,7 @@ namespace PastriesDelivery
 
                     var displayer = new ConsumerUI(storage);
                     Messenger.ShowAvailableProductsMessage();
-                    bool result = displayer.CheckForDataPrescence();
+                    bool result = manager.CheckForDataPrescence();
 
                     if (result is true)
                     {
@@ -76,13 +74,18 @@ namespace PastriesDelivery
                         {
                             try
                             {
-                                var pastry = manager.ChooseProduct(id, amount);
-                                messenger.ShowUnavailableAmountMessage(id, amount);
+                                pastry = manager.ChooseProduct(id, amount);
+                                result = manager.CheckAmount(id, amount);
+                                if (result is false)
+                                {
+                                    messenger.ShowUnavailableAmountMessage(id, amount);
+                                    continue;
+                                }
                                 consumer.Address = ConsumerUI.GetAddress();
                                 consumer.PhoneNumber = ConsumerUI.GetPhoneNumber();
-                                storage = manager.SendOrderToStorage(storage, pastry);
+                                manager.SaveOrder(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
-                                storage = manager.SendUserToStorage(storage, consumer);
+                                manager.SaveUser(consumer);
                             }
                             catch (FormatException)
                             {
@@ -99,7 +102,7 @@ namespace PastriesDelivery
                 if (user is "business client")
                 {
                     var manager = new BusinessClientManager(storage);
-                    var messenger = new Messenger(storage);
+                    var messenger = new Messenger();
                     var businessClient = new User()
                     {
                         Name = "Some name",
@@ -108,7 +111,7 @@ namespace PastriesDelivery
 
                     Messenger.ShowAvailableProductsMessage();
                     var displayer = new BusinessClientUI(storage);
-                    bool result = displayer.CheckForDataPrescence();
+                    bool result = manager.CheckForDataPrescence();
                     if (result is true)
                     {
                         displayer.DisplayAvailableProducts();
@@ -122,13 +125,18 @@ namespace PastriesDelivery
                         {
                             try
                             {
-                                var pastry = manager.ChooseProduct(id, amount);
-                                messenger.ShowUnavailableAmountMessage(id, amount);
+                                pastry = manager.ChooseProduct(id, amount);
+                                result = manager.CheckAmount(id, amount);
+                                if (result is false)
+                                {
+                                    messenger.ShowUnavailableAmountMessage(id, amount);
+                                    continue;
+                                }
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
-                                manager.SendOrderToStorage(pastry);
+                                manager.SaveOrder(pastry);
                                 Messenger.ShowOrderAcceptedMessage();
-                                manager.SendUserToStorage(businessClient);
+                                manager.SaveUser(businessClient);
                             }
                             catch (FormatException)
                             {

@@ -7,13 +7,6 @@ namespace PastriesDelivery
     /// </summary>
     public class Messenger
     {
-        private readonly IStorage _storage;
-
-        public Messenger(IStorage storage)
-        {
-            _storage = storage;
-        }
-
         public static void GreetUser()
         {
             Console.WriteLine("Hello. Please, indicate who are you: provider, consumer or business client.");
@@ -51,15 +44,7 @@ namespace PastriesDelivery
 
         internal void ShowUnavailableAmountMessage(int id, int amount)
         {
-            for (int i = 0; i < _storage.Pastries.Count; i++)
-            {
-                var pastry = _storage.Pastries[i];
-                if (amount > pastry.Amount && id == pastry.Id)
-                {
-                    Console.WriteLine("Unavailable amount of product! Try again!");
-                    continue;
-                }
-            }
+            Console.WriteLine("Unavailable amount of product! Try again!");
         }
 
         internal static void ShowOrderAcceptedMessage()

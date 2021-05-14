@@ -12,6 +12,28 @@
             _storage = storage;
         }
 
+        public bool CheckForDataPrescence()
+        {
+            if (_storage.Pastries.Count == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        internal bool CheckAmount(int id, int amount)
+        {
+            for (int i = 0; i < _storage.Pastries.Count; i++)
+            {
+                var pastry = _storage.Pastries[i];
+                if (amount > pastry.Amount && id == pastry.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public Pastry ChooseProduct(int id, int amount)
         {
             var pastry = new Pastry();
@@ -49,7 +71,7 @@
             }
         }
 
-        public void SendOrderToStorage(Pastry pastry)
+        public void SaveOrder(Pastry pastry)
         {
             pastry.Price *= pastry.Amount;
             ApplyDiscount(pastry);
@@ -57,7 +79,7 @@
             _storage.Type.Add(StorageType.UserOrders);
         }
 
-        public void SendUserToStorage(User businessClient)
+        public void SaveUser(User businessClient)
         {
             _storage.Users.Add(businessClient);
         }
