@@ -14,6 +14,7 @@ namespace PastriesDelivery
 
         public static bool ValidateIsDigit(string param)
         {
+<<<<<<< HEAD
             foreach (var ch in param)
             {
                 if (!Char.IsDigit(ch))
@@ -21,6 +22,12 @@ namespace PastriesDelivery
                     Console.Write("not digit");
                     return false;
                 }
+=======
+            var regex = new Regex(_patterns.Addresses);
+            if (regex.IsMatch(address))
+            {
+                return true;
+>>>>>>> 61f99be (Regular expressions were united.)
             }
             Console.Write("digit");
             return true;
@@ -38,7 +45,11 @@ namespace PastriesDelivery
 
         public bool ValidatePhoneNumber(string phoneNumber)
         {
+<<<<<<< HEAD
                 var regex = new Regex(_patterns.PhoneNumbers);
+=======
+            var regex = new Regex(_patterns.PhoneNumbers);
+>>>>>>> 61f99be (Regular expressions were united.)
             if (regex.IsMatch(phoneNumber))
             {
                 return true;
