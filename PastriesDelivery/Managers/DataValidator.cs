@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-﻿using System;
-=======
->>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
-﻿using System.Text.RegularExpressions;
+using System;
+using System.Text.RegularExpressions;
 
 namespace PastriesDelivery
 {
@@ -15,10 +12,8 @@ namespace PastriesDelivery
             _patterns = patterns;
         }
 
-<<<<<<< HEAD
         public static bool ValidateIsDigit(string param)
         {
-<<<<<<< HEAD
             foreach (var ch in param)
             {
                 if (!Char.IsDigit(ch))
@@ -26,19 +21,11 @@ namespace PastriesDelivery
                     Console.Write("not digit");
                     return false;
                 }
-=======
-            var regex = new Regex(_patterns.Addresses);
-            if (regex.IsMatch(address))
-            {
-                return true;
->>>>>>> 61f99be (Regular expressions were united.)
             }
             Console.Write("digit");
             return true;
         }
 
-=======
->>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
         public bool ValidateAddress(string address)
         {
             var regex = new Regex(_patterns.Addresses);
@@ -51,15 +38,7 @@ namespace PastriesDelivery
 
         public bool ValidatePhoneNumber(string phoneNumber)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                var regex = new Regex(_patterns.PhoneNumbers);
-=======
             var regex = new Regex(_patterns.PhoneNumbers);
->>>>>>> 61f99be (Regular expressions were united.)
-=======
-            var regex = new Regex(_patterns.PhoneNumbers);
->>>>>>> 9a903c7fb2ffea3e48b25be51423fdb81311199c
             if (regex.IsMatch(phoneNumber))
             {
                 return true;
