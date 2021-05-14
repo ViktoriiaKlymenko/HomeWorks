@@ -66,7 +66,7 @@ namespace PastriesDelivery
                     bool result = displayer.CheckForDataPrescence();
 >>>>>>> 36b025b (Last fixes.)
                     if (result is true)
-                    {                     
+                    {
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = ConsumerUI.GetOrder();
@@ -123,7 +123,7 @@ namespace PastriesDelivery
                     bool result = displayer.CheckForDataPrescence();
 >>>>>>> 36b025b (Last fixes.)
                     if (result is true)
-                    {                      
+                    {
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
@@ -142,7 +142,7 @@ namespace PastriesDelivery
 =======
                                 var pastry = manager.ChooseProduct(id, amount);
                                 messenger.ShowUnavailableAmountMessage(id, amount);
-                                
+
                                 businessClient.Address = BusinessClientUI.GetAddress();
                                 Messenger.ShowEnterPhoneNumberMessage();
 >>>>>>> 36b025b (Last fixes.)
