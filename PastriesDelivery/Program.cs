@@ -49,6 +49,7 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
+                    var displayer = new ConsumerUI(storage);
                     var manager = new ConsumerManager(storage);
                     var messenger = new Messenger();
                     var consumer = new User
@@ -57,12 +58,15 @@ namespace PastriesDelivery
                         Type = UserType.Consumer
                     };
 
-                    var displayer = new ConsumerUI(storage);
                     Messenger.ShowAvailableProductsMessage();
+<<<<<<< HEAD
                     bool result = manager.CheckForDataPrescence();
 
+=======
+                    bool result = displayer.CheckForDataPrescence();
+>>>>>>> 36b025b (Last fixes.)
                     if (result is true)
-                    {
+                    {                     
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = ConsumerUI.GetOrder();
@@ -101,6 +105,7 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
+                    var displayer = new BusinessClientUI(storage);
                     var manager = new BusinessClientManager(storage);
                     var messenger = new Messenger();
                     var businessClient = new User()
@@ -110,10 +115,15 @@ namespace PastriesDelivery
                     };
 
                     Messenger.ShowAvailableProductsMessage();
+<<<<<<< HEAD
                     var displayer = new BusinessClientUI(storage);
                     bool result = manager.CheckForDataPrescence();
+=======
+
+                    bool result = displayer.CheckForDataPrescence();
+>>>>>>> 36b025b (Last fixes.)
                     if (result is true)
-                    {
+                    {                      
                         displayer.DisplayAvailableProducts();
                         Messenger.SendOrderRequirments();
                         var idAndAmount = BusinessClientUI.GetOrder();
@@ -125,9 +135,17 @@ namespace PastriesDelivery
                         {
                             try
                             {
+<<<<<<< HEAD
                                 pastry = manager.ChooseProduct(id, amount);
                                 messenger.ShowUnavailableAmountMessage(id, amount);
                                 businessClient.Address = BusinessClientUI.GetAddress();
+=======
+                                var pastry = manager.ChooseProduct(id, amount);
+                                messenger.ShowUnavailableAmountMessage(id, amount);
+                                
+                                businessClient.Address = BusinessClientUI.GetAddress();
+                                Messenger.ShowEnterPhoneNumberMessage();
+>>>>>>> 36b025b (Last fixes.)
                                 businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
                                 manager.SaveOrder(pastry);
                                 Messenger.ShowOrderAcceptedMessage();

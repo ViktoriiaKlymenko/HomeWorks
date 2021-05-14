@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     public interface IRegexPatterns
     {
