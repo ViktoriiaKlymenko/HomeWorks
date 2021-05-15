@@ -1,88 +1,26 @@
-﻿namespace PastriesDelivery
+﻿using System.Linq;
+
+namespace PastriesDelivery
 {
     /// <summary>
-    /// This class contains methods intended for work with business client.
+    /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class BusinessClientManager : IOrderMaker
+    public class BusinessClientManager : СustomerManager, IOrderMaker
     {
-        private readonly IStorage _storage;
+        private readonly IStorage _userOrders;
 
-        public BusinessClientManager(IStorage storage)
+        public BusinessClientManager(IStorage availableProducts, IStorage userOrders) : base(availableProducts, userOrders)
         {
-            _storage = storage;
+            _userOrders = userOrders;
         }
 
-        public bool CheckForDataPrescence()
-        {
-            if (_storage.Pastries.Count == 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        internal bool CheckAmount(int id, int amount)
-        {
-            for (int i = 0; i < _storage.Pastries.Count; i++)
-            {
-                var pastry = _storage.Pastries[i];
-                if (amount > pastry.Amount && id == pastry.Id)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public Pastry ChooseProduct(int id, int amount)
-        {
-            var pastry = new Pastry();
-            for (int i = 0; i < _storage.Pastries.Count; i++)
-            {
-                if (_storage.Type[i] == StorageType.AvailableProducts)
-                {
-                    var product = _storage.Pastries[i];
-
-                    if (id == product.Id)
-                    {
-                        pastry = product;
-                        RemoveFromAvailableProducts(amount, product);
-                    }
-                }
-            }
-            return pastry;
-        }
-
-        private void RemoveFromAvailableProducts(int amount, Pastry product)
-        {
-            foreach (var pastry in _storage.Pastries)
-            {
-                if (pastry == product)
-                {
-                    if (amount == product.Amount)
-                    {
-                        _storage.Pastries.Remove(product);
-                    }
-                    if (amount < product.Amount)
-                    {
-                        pastry.Amount -= amount;
-                    }
-                }
-            }
-        }
-
-        public void SaveOrder(Pastry pastry)
+        public override void  SaveOrder(Pastry pastry)
         {
             pastry.Price *= pastry.Amount;
             ApplyDiscount(pastry);
-            _storage.Pastries.Add(pastry);
-            _storage.Type.Add(StorageType.UserOrders);
+            _userOrders.Pastries.Add(pastry);
         }
 
-        public void SaveUser(User businessClient)
-        {
-            _storage.Users.Add(businessClient);
-        }
 
         private static Pastry ApplyDiscount(Pastry pastry)
         {

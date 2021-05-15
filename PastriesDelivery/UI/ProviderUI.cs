@@ -4,37 +4,24 @@ namespace PastriesDelivery
 {
     public class ProviderUI
     {
-        private readonly IStorage _storage;
-
-        public ProviderUI(IStorage storage)
-        {
-            _storage = storage;
-        }
-
         public Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
         {
             Console.WriteLine();
-            pastry.Id = manager.SetId()+1;
+            pastry.Id = manager.SetId() + 1;
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
-            string weight;
-            string price;
-            string amount;
             do
             {
-                weight = Console.ReadLine();
-            } while (!DataValidator.ValidateIsDigit(weight));
-            pastry.Weight = Convert.ToInt32(weight);
+                pastry.Weight = DataValidator.ValidateIsDigit(Console.ReadLine());
+            } while (pastry.Weight == default);
             do
             {
-                price = Console.ReadLine();
-            } while (!DataValidator.ValidateIsDigit(price));
-            pastry.Price = Convert.ToDecimal(price);
+                pastry.Price = DataValidator.ValidateIsDigit(Console.ReadLine());
+            } while (pastry.Price == default);
             do
             {
-                amount = Console.ReadLine();
-            } while (!DataValidator.ValidateIsDigit(amount));
-            pastry.Amount = Convert.ToInt32(amount);
+                pastry.Amount = DataValidator.ValidateIsDigit(Console.ReadLine());
+            } while (pastry.Amount == default);
             return pastry;
         }
 
