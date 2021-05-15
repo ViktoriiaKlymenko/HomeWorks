@@ -7,6 +7,11 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+            var logger = new Logger()
+            {
+                Path = @"C:\files\logger_" + DateTime.Now.ToString("dd.MM.yyyy")
+            };
+
             var pastry = new Pastry();
             var storage = new Storage();
             var pastries = new List<Pastry>();
