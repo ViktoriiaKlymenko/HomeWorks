@@ -4,19 +4,13 @@ namespace PastriesDelivery
 {
     public class DataValidator
     {
-        public bool ValidateIsDigit(string param)
+        public int ValidateIsDigit(string param)
         {
-            foreach (var ch in param)
+            if (Int32.TryParse(param, out int result))
             {
-                if (!Char.IsDigit(ch))
-                {
-                    Console.Write("not digit");
-                    return false;
-                    
-                }
+                return result;
             }
-            Console.Write("digit");
-            return true;
+            return default;
         }
     }
 }

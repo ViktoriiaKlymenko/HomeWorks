@@ -7,27 +7,23 @@ namespace PastriesDelivery
     /// </summary>
     internal class BusinessClientUI : IDataDisplayer
     {
-        private readonly IStorage _storage;
+        private readonly IStorage _availableProducts;
 
-        public BusinessClientUI(IStorage storage)
+        public BusinessClientUI(IStorage availableProducts)
         {
-            _storage = storage;
+            _availableProducts = availableProducts;
         }
 
         public void DisplayAvailableProducts()
         {
-            for (int i = 0; i < _storage.Pastries.Count; i++)
+            foreach (var pastry in _availableProducts.Pastries)
             {
-                if (_storage.Type[i] == StorageType.AvailableProducts)
-                {
-                    var pastry = _storage.Pastries[i];
-                    Console.WriteLine("Pastry Id: " + pastry.Id);
-                    Console.WriteLine("Pastry name: " + pastry.Name);
-                    Console.WriteLine("Pastry weight: " + pastry.Type);
-                    Console.WriteLine("Pastry weight: " + pastry.Weight + " gr");
-                    Console.WriteLine("Pastry weight: " + pastry.Price + " USD");
-                    Console.WriteLine("Pastry weight: " + pastry.Amount);
-                }
+                Console.WriteLine("Pastry Id: " + pastry.Id);
+                Console.WriteLine("Pastry name: " + pastry.Name);
+                Console.WriteLine("Pastry weight: " + pastry.Type);
+                Console.WriteLine("Pastry weight: " + pastry.Weight + " gr");
+                Console.WriteLine("Pastry weight: " + pastry.Price + " USD");
+                Console.WriteLine("Pastry weight: " + pastry.Amount);
             }
         }
 
@@ -66,6 +62,11 @@ namespace PastriesDelivery
         {
             var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
             return amount;
+        }
+
+        internal static string GetUserName()
+        {
+            return Console.ReadLine();
         }
     }
 }
