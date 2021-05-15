@@ -24,7 +24,7 @@ namespace PastriesDelivery
 
         public static void ShowAvailableProductsMessage()
         {
-            Console.WriteLine("Available products:");
+            Console.WriteLine("Available products: ");
         }
 
         internal static void ShowOfferAcceptedMessage()
@@ -42,7 +42,7 @@ namespace PastriesDelivery
             Console.WriteLine("Please confirm (yes/no): ");
         }
 
-        internal void ShowUnavailableAmountMessage(int id, int amount)
+        internal static void ShowUnavailableAmountMessage()
         {
             Console.WriteLine("Unavailable amount of product! Try again!");
         }
@@ -59,12 +59,17 @@ namespace PastriesDelivery
 
         internal static void ShowEnterAddressMessage()
         {
-            Console.Write("Please, enter your adress.");
+            Console.Write("Please, enter your adress: ");
         }
 
         internal static void ShowEnterPhoneNumberMessage()
         {
-            Console.Write("Please, enter your phone number.");
+            Console.Write("Please, enter your phone number: ");
+        }
+
+        internal static void ShowEnterNameMessage()
+        {
+            Console.Write("Please, enter your name and surname: ");
         }
     }
 }

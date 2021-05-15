@@ -12,18 +12,13 @@ namespace PastriesDelivery
             _patterns = patterns;
         }
 
-        public static bool ValidateIsDigit(string param)
+        public static int ValidateIsDigit(string param)
         {
-            foreach (var ch in param)
+            if (Int32.TryParse(param, out int result))
             {
-                if (!Char.IsDigit(ch))
-                {
-                    Console.Write("not digit");
-                    return false;
-                }
+                return result;
             }
-            Console.Write("digit");
-            return true;
+            return default;
         }
 
         public bool ValidateAddress(string address)

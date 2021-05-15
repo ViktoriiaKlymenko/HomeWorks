@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -7,14 +6,30 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+<<<<<<< HEAD
             var logger = new Logger()
             {
                 Path = @"C:\files\logger_" + DateTime.Now.ToString("dd.MM.yyyy")
             };
 
+=======
+            bool result;
+>>>>>>> f539a49 (Adding changes.)
             var pastry = new Pastry();
-            var storage = new Storage();
-            var pastries = new List<Pastry>();
+           
+            var availableProducts = new Storage()
+            {
+                Type = StorageType.AvailableProducts
+            };
+
+            var userOrders = new Storage()
+            {
+                Type = StorageType.UserOrders
+            };
+
+            var providerManager = new BusinessProviderManager(availableProducts);
+            var consumerManager = new ConsumerManager(availableProducts, userOrders);
+            var businessClientManager = new BusinessClientManager(availableProducts, userOrders);
             while (true)
             {
                 Messenger.GreetUser();
@@ -23,7 +38,6 @@ namespace PastriesDelivery
 
                 if (user is "provider")
                 {
-                    var manager = new BusinessProviderManager(storage);
                     var User = new User()
                     {
                         Name = "Some Name",
@@ -34,37 +48,28 @@ namespace PastriesDelivery
 
                     Messenger.SendOfferRequirments();
 
-                    try
-                    {
-                        var providerUI = new ProviderUI(storage);
-                        pastry = providerUI.AcceptData(manager, pastry);
-                        var answer = providerUI.ConfirmOffer();
+                    var providerUI = new ProviderUI();
+                    pastry = providerUI.AcceptData(providerManager, pastry);
+                    var answer = providerUI.ConfirmOffer();
 
-                        if (answer is "yes")
-                        {
-                            manager.AddNewOffer(pastry, User);
-                            Messenger.ShowOfferAcceptedMessage();
-                        }
-                    }
-                    catch (FormatException)
+                    if (answer is "yes")
                     {
-                        Messenger.ShowWrongDataMessage();
+                        providerManager.AddNewOffer(pastry, User);
+                        Messenger.ShowOfferAcceptedMessage();
                     }
                 }
 
                 if (user is "consumer")
                 {
-                    var displayer = new ConsumerUI(storage);
-                    var manager = new ConsumerManager(storage);
-                    var messenger = new Messenger();
+                   
                     var consumer = new User
                     {
-                        Name = "Some name",
                         Type = UserType.Consumer
                     };
 
+                    var displayer = new ConsumerUI(availableProducts);
                     Messenger.ShowAvailableProductsMessage();
-                    bool result = manager.CheckForDataPrescence();
+                    result = consumerManager.CheckForDataPrescence();
 
                     if (result is true)
                     {
@@ -79,25 +84,25 @@ namespace PastriesDelivery
                         {
                             try
                             {
-                                pastry = manager.ChooseProduct(id, amount);
-                                result = manager.CheckAmount(id, amount);
-                                if (result is false)
-                                {
-                                    messenger.ShowUnavailableAmountMessage(id, amount);
-                                    continue;
-                                }
-                                consumer.Address = ConsumerUI.GetAddress();
-                                consumer.PhoneNumber = ConsumerUI.GetPhoneNumber();
-                                manager.SaveOrder(pastry);
-                                Messenger.ShowOrderAcceptedMessage();
-                                manager.SaveUser(consumer);
+                                pastry = consumerManager.ChooseProduct(id, amount);
                             }
-                            catch (FormatException)
+                            catch (ArgumentOutOfRangeException)
                             {
-                                Messenger.ShowWrongDataMessage();
+                                Messenger.ShowUnavailableAmountMessage();
+                                continue;
                             }
+                            Messenger.ShowEnterAddressMessage();
+                            consumer.Address = BusinessClientUI.GetAddress();
+                            Messenger.ShowEnterPhoneNumberMessage();
+                            consumer.PhoneNumber = BusinessClientUI.GetPhoneNumber();
+                            Messenger.ShowEnterNameMessage();
+                            consumer.Name = BusinessClientUI.GetUserName();
+                            consumerManager.SaveOrder(pastry);
+                            Messenger.ShowOrderAcceptedMessage();
+                            consumerManager.SaveUser(consumer);
                         }
                     }
+
                     if (result is false)
                     {
                         Messenger.ShowNoProductsMessage();
@@ -106,17 +111,15 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
-                    var displayer = new BusinessClientUI(storage);
-                    var manager = new BusinessClientManager(storage);
-                    var messenger = new Messenger();
+                    
                     var businessClient = new User()
                     {
-                        Name = "Some name",
                         Type = UserType.BusinessClient
                     };
 
                     Messenger.ShowAvailableProductsMessage();
-                    bool result = manager.CheckForDataPrescence();
+                    var displayer = new BusinessClientUI(availableProducts);
+                    result = businessClientManager.CheckForDataPrescence();
                     if (result is true)
                     {
                         displayer.DisplayAvailableProducts();
@@ -130,22 +133,22 @@ namespace PastriesDelivery
                         {
                             try
                             {
-                                pastry = manager.ChooseProduct(id, amount);
-                                messenger.ShowUnavailableAmountMessage(id, amount);
-                                businessClient.Address = BusinessClientUI.GetAddress();
-                                pastry = manager.ChooseProduct(id, amount);
-                                messenger.ShowUnavailableAmountMessage(id, amount);
-                                businessClient.Address = BusinessClientUI.GetAddress();
-                                Messenger.ShowEnterPhoneNumberMessage();
-                                businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
-                                manager.SaveOrder(pastry);
-                                Messenger.ShowOrderAcceptedMessage();
-                                manager.SaveUser(businessClient);
+                                pastry = businessClientManager.ChooseProduct(id, amount);
                             }
-                            catch (FormatException)
+                            catch (ArgumentOutOfRangeException)
                             {
-                                Messenger.ShowWrongDataMessage();
+                                Messenger.ShowUnavailableAmountMessage();
+                                continue;
                             }
+                            Messenger.ShowEnterAddressMessage();
+                            businessClient.Address = BusinessClientUI.GetAddress();
+                            Messenger.ShowEnterPhoneNumberMessage();
+                            businessClient.PhoneNumber = BusinessClientUI.GetPhoneNumber();
+                            Messenger.ShowEnterNameMessage();
+                            businessClient.Name = BusinessClientUI.GetUserName();
+                            businessClientManager.SaveOrder(pastry);
+                            Messenger.ShowOrderAcceptedMessage();
+                            businessClientManager.SaveUser(businessClient);
                         }
                     }
                     if (result is false)
