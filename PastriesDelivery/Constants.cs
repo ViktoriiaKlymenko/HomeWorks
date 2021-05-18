@@ -19,4 +19,15 @@
         FiftyUnits = 3,
         HundredUnits = 4
     }
+
+    public enum ActionType
+    {
+        deleted,
+        added,
+        increased,
+        decreased,
+
+    }
+
+    
 }

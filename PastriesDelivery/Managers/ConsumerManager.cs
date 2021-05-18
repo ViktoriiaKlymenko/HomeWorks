@@ -9,11 +9,13 @@ namespace PastriesDelivery
     {
         private readonly IStorage _availableProducts;
         private readonly IStorage _userOrders;
+        private readonly ILogger _logger;
 
-        public ConsumerManager(IStorage availableProducts, IStorage userOrders) : base(availableProducts, userOrders)
+        public ConsumerManager(IStorage availableProducts, IStorage userOrders, ILogger logger) : base(availableProducts, userOrders, logger)
         {
             _availableProducts = availableProducts;
             _userOrders = userOrders;
+            _logger = logger;
         }
     }
 }

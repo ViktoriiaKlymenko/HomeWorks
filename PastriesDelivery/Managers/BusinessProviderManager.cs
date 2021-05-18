@@ -8,10 +8,12 @@ namespace PastriesDelivery
     public class BusinessProviderManager : IOffersMaker
     {
         private readonly IStorage _availableProducts;
+        private readonly ILogger _logger;
 
-        public BusinessProviderManager(IStorage availableProducts)
+        public BusinessProviderManager(IStorage availableProducts, ILogger logger)
         {
             _availableProducts = availableProducts;
+            _logger = logger;
         }
 
         public int SetId()
@@ -27,6 +29,7 @@ namespace PastriesDelivery
         public void AddNewOffer(Pastry pastry, User user)
         {
             _availableProducts.Pastries.Add(pastry);
+            _logger.LogChanges(StorageType.AvailableProducts, pastry.GetType(), pastry.ToString(), "was added");
             _availableProducts.Users.Add(user);
         }
     }

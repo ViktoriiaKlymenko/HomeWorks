@@ -58,7 +58,7 @@ namespace PastriesDelivery
             return Console.ReadLine();
         }
 
-        public string ConfirmOrder()
+        public static string ConfirmOrder()
         {
             var answer = Console.ReadLine();
             return answer;

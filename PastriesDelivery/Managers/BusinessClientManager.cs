@@ -8,10 +8,12 @@ namespace PastriesDelivery
     public class BusinessClientManager : СustomerManager, IOrderMaker
     {
         private readonly IStorage _userOrders;
+        private readonly ILogger _logger;
 
-        public BusinessClientManager(IStorage availableProducts, IStorage userOrders) : base(availableProducts, userOrders)
+        public BusinessClientManager(IStorage availableProducts, IStorage userOrders, ILogger logger) : base(availableProducts, userOrders, logger)
         {
             _userOrders = userOrders;
+            _logger = logger;
         }
 
         public override void  SaveOrder(Pastry pastry)

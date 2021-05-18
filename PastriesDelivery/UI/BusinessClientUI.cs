@@ -34,7 +34,6 @@ namespace PastriesDelivery
             var dataValidator = new DataValidator(patterns);
             do
             {
-                Messenger.ShowEnterAddressMessage();
                 address = Console.ReadLine();
             } while (!dataValidator.ValidateAddress(address));
             return address;
@@ -47,9 +46,8 @@ namespace PastriesDelivery
             var dataValidator = new DataValidator(patterns);
             do
             {
-                Messenger.ShowEnterPhoneNumberMessage();
                 phoneNumber = Console.ReadLine();
-            } while (!dataValidator.ValidateAddress(phoneNumber));
+            } while (dataValidator.ValidatePhoneNumber(phoneNumber));
             return phoneNumber;
         }
 

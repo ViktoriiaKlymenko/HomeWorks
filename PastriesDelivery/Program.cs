@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace PastriesDelivery
 {
@@ -6,17 +7,16 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
-<<<<<<< HEAD
             var logger = new Logger()
             {
-                Path = @"C:\files\logger_" + DateTime.Now.ToString("dd.MM.yyyy")
+                FileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt"
             };
 
-=======
+            logger.CreateFile(DateTime.Now.ToString("dd.MM.yyyy") + " logging data.");
+
             bool result;
->>>>>>> f539a49 (Adding changes.)
             var pastry = new Pastry();
-           
+
             var availableProducts = new Storage()
             {
                 Type = StorageType.AvailableProducts
@@ -27,13 +27,12 @@ namespace PastriesDelivery
                 Type = StorageType.UserOrders
             };
 
-            var providerManager = new BusinessProviderManager(availableProducts);
-            var consumerManager = new ConsumerManager(availableProducts, userOrders);
-            var businessClientManager = new BusinessClientManager(availableProducts, userOrders);
+            var providerManager = new BusinessProviderManager(availableProducts, logger);
+            var consumerManager = new ConsumerManager(availableProducts, userOrders, logger);
+            var businessClientManager = new BusinessClientManager(availableProducts, userOrders, logger);
             while (true)
             {
                 Messenger.GreetUser();
-
                 var user = Console.ReadLine();
 
                 if (user is "provider")
@@ -45,13 +44,10 @@ namespace PastriesDelivery
                         PhoneNumber = "+380XXXXXXXXX",
                         Address = "Some adress"
                     };
-
                     Messenger.SendOfferRequirments();
-
                     var providerUI = new ProviderUI();
-                    pastry = providerUI.AcceptData(providerManager, pastry);
+                    pastry = providerUI.AcceptData(providerManager);
                     var answer = providerUI.ConfirmOffer();
-
                     if (answer is "yes")
                     {
                         providerManager.AddNewOffer(pastry, User);
@@ -61,16 +57,13 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
-                   
                     var consumer = new User
                     {
                         Type = UserType.Consumer
                     };
-
                     var displayer = new ConsumerUI(availableProducts);
                     Messenger.ShowAvailableProductsMessage();
                     result = consumerManager.CheckForDataPrescence();
-
                     if (result is true)
                     {
                         displayer.DisplayAvailableProducts();
@@ -79,7 +72,7 @@ namespace PastriesDelivery
                         var id = ConsumerUI.ExtractId(idAndAmount);
                         var amount = ConsumerUI.ExtractAmount(idAndAmount);
                         Messenger.ShowConfirmMessage();
-                        var answer = displayer.ConfirmOrder();
+                        var answer = ConsumerUI.ConfirmOrder();
                         if (answer is "yes")
                         {
                             try
@@ -102,7 +95,6 @@ namespace PastriesDelivery
                             consumerManager.SaveUser(consumer);
                         }
                     }
-
                     if (result is false)
                     {
                         Messenger.ShowNoProductsMessage();
@@ -111,12 +103,10 @@ namespace PastriesDelivery
 
                 if (user is "business client")
                 {
-                    
                     var businessClient = new User()
                     {
                         Type = UserType.BusinessClient
                     };
-
                     Messenger.ShowAvailableProductsMessage();
                     var displayer = new BusinessClientUI(availableProducts);
                     result = businessClientManager.CheckForDataPrescence();

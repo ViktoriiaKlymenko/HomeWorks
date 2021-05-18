@@ -10,11 +10,12 @@ namespace PastriesDelivery
     {
         private readonly IStorage _availableProducts;
         private readonly IStorage _userOrders;
-
-        public СustomerManager(IStorage availableProducts, IStorage userOrders)
+        private readonly ILogger _logger;
+        public СustomerManager(IStorage availableProducts, IStorage userOrders, ILogger logger)
         {
             _availableProducts = availableProducts;
             _userOrders = userOrders;
+            _logger = logger;
         }
         public Pastry ChooseProduct(int id, int amount)
         {
@@ -22,11 +23,13 @@ namespace PastriesDelivery
             if (amount < pastry.Amount)
             {
                 _availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id).Amount -= amount;
+                _logger.LogChanges(StorageType.AvailableProducts, pastry.GetType(), pastry.ToString(), "amount was decreased");
                 return pastry;
             }
             if (pastry.Amount == amount)
             {
                 _availableProducts.Pastries.Remove(_availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id));
+                _logger.LogChanges(StorageType.AvailableProducts, pastry.GetType(), pastry.ToString(), "was deleted");
                 return pastry;
             }
 
@@ -50,11 +53,14 @@ namespace PastriesDelivery
         {
             pastry.Price *= pastry.Amount;
             _userOrders.Pastries.Add(pastry);
+           _logger.LogChanges(StorageType.UserOrders, pastry.GetType(), pastry.ToString(), "was added");
+            
         }
 
         public void SaveUser(User user)
         {
             _userOrders.Users.Add(user);
+            _logger.LogChanges(StorageType.UserOrders, user.GetType(), user.ToString(), "was added");
         }
     }
 }

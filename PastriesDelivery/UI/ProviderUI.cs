@@ -4,10 +4,10 @@ namespace PastriesDelivery
 {
     public class ProviderUI
     {
-        public Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
+        public Pastry AcceptData(BusinessProviderManager manager)
         {
-            Console.WriteLine();
-            pastry.Id = manager.SetId() + 1;
+            var pastry = new Pastry();
+            pastry.Id = manager.SetId();
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
             do
