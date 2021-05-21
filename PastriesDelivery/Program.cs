@@ -7,6 +7,7 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+
             var logger = new Logger()
             {
                 FileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt"
@@ -17,15 +18,18 @@ namespace PastriesDelivery
             bool result;
             var pastry = new Pastry();
 
-            var availableProducts = new Storage()
+            var availableProductsSerializer = new StorageSerializer()
             {
-                Type = StorageType.AvailableProducts
+                FileName = "availableProductsSerialized.json"
             };
 
-            var userOrders = new Storage()
+            var userOrdersSerializer = new StorageSerializer()
             {
-                Type = StorageType.UserOrders
+                FileName = "userOrdersSerialized.json"
             };
+
+            var availableProducts = availableProductsSerializer.ExtractFomJsonFile();
+            var userOrders = userOrdersSerializer.ExtractFomJsonFile();
 
             var providerManager = new BusinessProviderManager(availableProducts, logger);
             var consumerManager = new ConsumerManager(availableProducts, userOrders, logger);
@@ -42,7 +46,7 @@ namespace PastriesDelivery
                         Name = "Some Name",
                         Type = UserType.Provider,
                         PhoneNumber = "+380XXXXXXXXX",
-                        Address = "Some adress"
+                        Address = "Some address"
                     };
                     Messenger.SendOfferRequirments();
                     var providerUI = new ProviderUI();
@@ -52,6 +56,7 @@ namespace PastriesDelivery
                     {
                         providerManager.AddNewOffer(pastry, User);
                         Messenger.ShowOfferAcceptedMessage();
+
                     }
                 }
 
@@ -146,6 +151,9 @@ namespace PastriesDelivery
                         Messenger.ShowNoProductsMessage();
                     }
                 }
+
+                availableProductsSerializer.SaveToJsonFile(availableProducts);
+                userOrdersSerializer.SaveToJsonFile(userOrders);
             }
         }
     }
