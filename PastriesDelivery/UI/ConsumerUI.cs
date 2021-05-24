@@ -7,66 +7,26 @@ namespace PastriesDelivery
     /// </summary>
     internal class ConsumerUI : IDataDisplayer
     {
-        private readonly IStorage _availableProducts;
+        protected ICustomerManager Manager { get; }
 
-        public ConsumerUI(IStorage availableProducts)
+        public ConsumerUI(ICustomerManager manager)
         {
-            _availableProducts = availableProducts;
+            Manager = manager;
         }
 
         public void DisplayAvailableProducts()
         {
-            foreach (var pastry in _availableProducts.Pastries)
+            var products = Manager.ExtractProducts();
+
+            foreach (var product in products)
             {
-                Console.WriteLine("Pastry Id: " + pastry.Id);
-                Console.WriteLine("Pastry name: " + pastry.Name);
-                Console.WriteLine("Pastry type: " + pastry.Type);
-                Console.WriteLine("Pastry weight: " + pastry.Weight + " gr");
-                Console.WriteLine("Pastry price: " + pastry.Price + " USD");
-                Console.WriteLine("Pastry amount: " + pastry.Amount);
+                Console.WriteLine("Pastry Id: " + product.Pastry.Id);
+                Console.WriteLine("Pastry name: " + product.Pastry.Name);
+                Console.WriteLine("Pastry type: " + product.Pastry.Type);
+                Console.WriteLine("Pastry weight: " + product.Pastry.Weight + " gr");
+                Console.WriteLine("Pastry price: " + product.Pastry.Price + " USD");
+                Console.WriteLine("Pastry amount: " + product.Pastry.Amount);
             }
-        }
-
-        public static string GetAddress()
-        {
-            string address;
-            address = Console.ReadLine();
-            return address;
-        }
-
-        public static string GetPhoneNumber()
-        {
-            string phoneNumber;
-            phoneNumber = Console.ReadLine();
-            return phoneNumber;
-        }
-
-        public static string GetOrder()
-        {
-            return Console.ReadLine();
-        }
-
-        public string ConfirmOrder()
-        {
-            var answer = Console.ReadLine();
-            return answer;
-        }
-
-        internal static int ExtractId(string idAndAmount)
-        {
-            var id = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[0]);
-            return id;
-        }
-
-        internal static int ExtractAmount(string idAndAmount)
-        {
-            var amount = Convert.ToInt32(idAndAmount.Split(" ", StringSplitOptions.RemoveEmptyEntries)[1]);
-            return amount;
-        }
-
-        internal static string GetUserName()
-        {
-            return Console.ReadLine();
         }
     }
 }

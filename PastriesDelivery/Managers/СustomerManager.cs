@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
     public class СustomerManager
     {
-        private readonly IStorage _availableProducts;
-        private readonly IStorage _userOrders;
+        protected IStorage Storage { get; }
 
-        public СustomerManager(IStorage availableProducts, IStorage userOrders)
+        public СustomerManager(IStorage storage)
         {
-            _availableProducts = availableProducts;
-            _userOrders = userOrders;
+            Storage = storage;
         }
+
         public Pastry ChooseProduct(int id, int amount)
         {
-            var pastry = _availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id);
+            var availableProducts = ExtractProducts();
+            var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
             if (amount < pastry.Amount)
             {
-                _availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id).Amount -= amount;
+                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
                 return pastry;
             }
             if (pastry.Amount == amount)
             {
-                _availableProducts.Pastries.Remove(_availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id));
+                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
                 return pastry;
             }
 
@@ -39,22 +37,22 @@ namespace PastriesDelivery
 
         public bool CheckForDataPrescence()
         {
-            if (_availableProducts.Pastries.Count is 0)
+            if (Storage.Products.Count is 0)
             {
                 return false;
             }
             return true;
         }
 
-        public virtual void SaveOrder(Pastry pastry)
+        public virtual void CreateOrder(Pastry pastry, User user)
         {
-            pastry.Price *= pastry.Amount;
-            _userOrders.Pastries.Add(pastry);
+            Storage.Orders.Add(new Order(pastry, user, pastry.Price * pastry.Amount));
         }
 
-        public void SaveUser(User user)
+        public List<Product> ExtractProducts()
         {
-            _userOrders.Users.Add(user);
+            var storage = Storage.Products;
+            return storage;
         }
     }
 }

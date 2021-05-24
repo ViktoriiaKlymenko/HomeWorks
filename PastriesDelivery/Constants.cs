@@ -1,16 +1,9 @@
 ﻿namespace PastriesDelivery
 {
-    public enum StorageType
-    {
-        AvailableProducts,
-        UserOrders
-    }
-
-    public enum UserType
+    public enum Role
     {
         Provider,
-        BusinessClient,
-        Consumer
+        Сustomer
     }
 
     public enum DiscountPercents

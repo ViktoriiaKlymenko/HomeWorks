@@ -1,26 +1,19 @@
-﻿using System.Linq;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class BusinessClientManager : СustomerManager, IOrderMaker
+    public class BusinessClientManager : СustomerManager, ICustomerManager
     {
-        private readonly IStorage _userOrders;
-
-        public BusinessClientManager(IStorage availableProducts, IStorage userOrders) : base(availableProducts, userOrders)
+        public BusinessClientManager(IStorage storage) : base(storage)
         {
-            _userOrders = userOrders;
         }
 
-        public override void  SaveOrder(Pastry pastry)
+        public override void CreateOrder(Pastry pastry, User user)
         {
-            pastry.Price *= pastry.Amount;
-            ApplyDiscount(pastry);
-            _userOrders.Pastries.Add(pastry);
+            pastry = ApplyDiscount(pastry);
+            Storage.Orders.Add(new Order(pastry, user, pastry.Price * pastry.Amount));
         }
-
 
         private static Pastry ApplyDiscount(Pastry pastry)
         {

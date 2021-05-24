@@ -1,19 +1,12 @@
-﻿using System.Linq;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class ConsumerManager : СustomerManager, IOrderMaker
+    public class ConsumerManager : СustomerManager, ICustomerManager
     {
-        private readonly IStorage _availableProducts;
-        private readonly IStorage _userOrders;
-
-        public ConsumerManager(IStorage availableProducts, IStorage userOrders) : base(availableProducts, userOrders)
+        public ConsumerManager(IStorage storage) : base(storage)
         {
-            _availableProducts = availableProducts;
-            _userOrders = userOrders;
         }
     }
 }
