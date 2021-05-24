@@ -46,7 +46,7 @@ namespace PastriesDelivery
                     {
                         Role = Role.Сustomer
                     };
-                    var displayer = new ConsumerUI(consumerManager);
+                    var displayer = new CustomerUI(consumerManager);
                     Messenger.ShowAvailableProductsMessage();
                     result = consumerManager.CheckForDataPrescence();
                     if (result is true)
@@ -104,7 +104,7 @@ namespace PastriesDelivery
                         Role = Role.Сustomer
                     };
                     Messenger.ShowAvailableProductsMessage();
-                    var displayer = new BusinessClientUI(businessClientManager);
+                    var displayer = new CustomerUI(businessClientManager);
                     result = businessClientManager.CheckForDataPrescence();
                     if (result is true)
                     {
