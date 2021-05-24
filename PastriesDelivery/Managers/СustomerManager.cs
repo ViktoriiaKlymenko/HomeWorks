@@ -46,7 +46,8 @@ namespace PastriesDelivery
 
         public virtual void CreateOrder(Pastry pastry, User user)
         {
-            Storage.Orders.Add(new Order(pastry, user, pastry.Price * pastry.Amount));
+            var totalPrice = pastry.Price * pastry.Amount;
+            Storage.Orders.Add(new Order(pastry, user, totalPrice));
         }
 
         public List<Product> ExtractProducts()
