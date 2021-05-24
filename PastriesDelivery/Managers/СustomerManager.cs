@@ -48,8 +48,13 @@ namespace PastriesDelivery
 
         public virtual void SaveOrder(Pastry pastry)
         {
+<<<<<<< HEAD
             pastry.Price *= pastry.Amount;
             _userOrders.Pastries.Add(pastry);
+=======
+            var totalPrice = pastry.Price * pastry.Amount;
+            Storage.Orders.Add(new Order(pastry, user, totalPrice));
+>>>>>>> 532ba61 (Mistakes were fixed.)
         }
 
         public void SaveUser(User user)

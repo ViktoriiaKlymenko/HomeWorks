@@ -16,6 +16,7 @@ namespace PastriesDelivery
 
         public override void  SaveOrder(Pastry pastry)
         {
+<<<<<<< HEAD
             pastry.Price *= pastry.Amount;
             ApplyDiscount(pastry);
             _userOrders.Pastries.Add(pastry);
@@ -23,20 +24,28 @@ namespace PastriesDelivery
 
 
         private static Pastry ApplyDiscount(Pastry pastry)
+=======
+            var totalPrice = ApplyDiscount(pastry);
+            Storage.Orders.Add(new Order(pastry, user, totalPrice));
+        }
+
+        private decimal ApplyDiscount(Pastry pastry)
+>>>>>>> 532ba61 (Mistakes were fixed.)
         {
+            decimal totalPrice = default;
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
             }
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
             }
             if (pastry.Amount > 99)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
             }
-            return pastry;
+            return totalPrice;
         }
     }
 }
