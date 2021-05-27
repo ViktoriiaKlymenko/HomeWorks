@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace PastriesDelivery
 {
@@ -9,9 +8,13 @@ namespace PastriesDelivery
         {
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
-
+            var logger = new Logger
+            {
+                FileName = "logger" + DateTime.Now.ToString("dd:MM:yyyy")
+            };
             while (true)
             {
+                logger.CreateFile();
                 Messenger.GreetUser();
                 var user = Console.ReadLine();
 
@@ -23,7 +26,6 @@ namespace PastriesDelivery
                 if (user is "consumer")
                 {
                     WorkWithConsumer(pastry, storage);
-
                 }
 
                 if (user is "business client")
@@ -135,7 +137,6 @@ namespace PastriesDelivery
                     {
                         Messenger.ShowUnavailableAmountMessage();
                     }
-
                 }
             }
 
@@ -180,7 +181,6 @@ namespace PastriesDelivery
                     amount = res;
                     return amount;
                 }
-
             } while (amount == default);
 
             return amount;
@@ -199,7 +199,6 @@ namespace PastriesDelivery
                     id = res;
                     return id;
                 }
-
             } while (id == default);
 
             return id;

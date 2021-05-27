@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 
 namespace PastriesDelivery
@@ -11,7 +10,6 @@ namespace PastriesDelivery
         {
             _patterns = patterns;
         }
-
 
         public bool ValidateAddress(string address)
         {

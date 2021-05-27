@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
     public class СustomerManager
     {
         protected IStorage Storage { get; }
+        protected ILogger Logger { get; }
 
         public СustomerManager(IStorage storage)
         {
@@ -28,12 +27,14 @@ namespace PastriesDelivery
             if (amount < pastry.Amount)
             {
                 Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                Logger.LogChanges($"{amount} units of {pastry.ToString()} were removed from available products.");
                 return pastry;
             }
 
             if (pastry.Amount == amount)
             {
                 Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
+                Logger.LogChanges($"{pastry.ToString()} was removed from available products.");
                 return pastry;
             }
 
@@ -49,6 +50,7 @@ namespace PastriesDelivery
         {
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            Logger.LogChanges($"{pastry.ToString()} and {user.ToString()} were added to orders.");
         }
 
         public List<Product> ExtractProducts()
