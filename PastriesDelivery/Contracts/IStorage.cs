@@ -4,8 +4,7 @@ namespace PastriesDelivery
 {
     public interface IStorage
     {
-        List<Pastry> Pastries { get; set; }
-        StorageType Type { get; set; }
-        List<User> Users { get; set; }
+        List<Product> Products { get; set; }
+        List<Order> Orders { get; set; }
     }
 }

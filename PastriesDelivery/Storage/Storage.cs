@@ -4,14 +4,13 @@ namespace PastriesDelivery
 {
     public class Storage : IStorage
     {
-        public StorageType Type { get; set; }
-        public List<Pastry> Pastries { get; set; }
-        public List<User> Users { get; set; }
+        public List<Product> Products { get; set; }
+        public List<Order> Orders { get; set; }
 
         public Storage()
         {
-            Pastries = new List<Pastry>();
-            Users = new List<User>();
+            Products = new List<Product>();
+            Orders = new List<Order>();
         }
     }
 }

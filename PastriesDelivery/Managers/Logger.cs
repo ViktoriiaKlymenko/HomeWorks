@@ -7,7 +7,7 @@ namespace PastriesDelivery
     {
         public string FileName { get; set; }
 
-        public void LogChanges(StorageType storageType, Type className, string changedProperties, string message)
+        public void LogChanges(Type className, string changedProperties, string message)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + FileName;
 
