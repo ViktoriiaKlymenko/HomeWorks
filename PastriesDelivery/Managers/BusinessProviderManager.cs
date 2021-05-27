@@ -17,10 +17,12 @@ namespace PastriesDelivery
         public int SetId()
         {
             int id = default;
-            if (_storage.Products.Count is not 0)
+
+            if (_storage.Products.Any())
             {
                 return id = _storage.Products.Max(products => products.Pastry.Id) + 1;
             }
+
             return id;
         }
 

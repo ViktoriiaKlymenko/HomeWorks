@@ -17,31 +17,30 @@ namespace PastriesDelivery
         {
             var availableProducts = ExtractProducts();
             var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
-            if (amount < pastry.Amount)
-            {
-                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                return pastry;
-            }
-            if (pastry.Amount == amount)
-            {
-                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
-                return pastry;
-            }
 
             if (amount > pastry.Amount || amount <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            if (amount < pastry.Amount)
+            {
+                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                return pastry;
+            }
+
+            if (pastry.Amount == amount)
+            {
+                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
+                return pastry;
+            }    
+            
             return pastry;
         }
 
         public bool CheckForDataPrescence()
         {
-            if (Storage.Products.Count is 0)
-            {
-                return false;
-            }
-            return true;
+            return Storage.Products.Count is not 0;
         }
 
         public virtual void CreateOrder(Pastry pastry, User user)
