@@ -1,66 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
     public class СustomerManager
     {
-        private readonly IStorage _availableProducts;
-        private readonly IStorage _userOrders;
-        private readonly ILogger _logger;
-        public СustomerManager(IStorage availableProducts, IStorage userOrders, ILogger logger)
+        protected IStorage Storage { get; }
+
+        public СustomerManager(IStorage storage)
         {
-            _availableProducts = availableProducts;
-            _userOrders = userOrders;
-            _logger = logger;
+            Storage = storage;
         }
+
         public Pastry ChooseProduct(int id, int amount)
         {
-            var pastry = _availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id);
-            if (amount < pastry.Amount)
-            {
-                _availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id).Amount -= amount;
-                _logger.LogChanges(StorageType.AvailableProducts, pastry.GetType(), pastry.ToString(), "amount was decreased");
-                return pastry;
-            }
-            if (pastry.Amount == amount)
-            {
-                _availableProducts.Pastries.Remove(_availableProducts.Pastries.FirstOrDefault(pastry => pastry.Id == id));
-                _logger.LogChanges(StorageType.AvailableProducts, pastry.GetType(), pastry.ToString(), "was deleted");
-                return pastry;
-            }
+            var availableProducts = ExtractProducts();
+            var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
 
             if (amount > pastry.Amount || amount <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
+
+            if (amount < pastry.Amount)
+            {
+                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                return pastry;
+            }
+
+            if (pastry.Amount == amount)
+            {
+                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
+                return pastry;
+            }
+
             return pastry;
         }
 
         public bool CheckForDataPrescence()
         {
-            if (_availableProducts.Pastries.Count is 0)
-            {
-                return false;
-            }
-            return true;
+            return Storage.Products.Count is not 0;
         }
 
-        public virtual void SaveOrder(Pastry pastry)
+        public virtual void CreateOrder(Pastry pastry, User user)
         {
-            pastry.Price *= pastry.Amount;
-            _userOrders.Pastries.Add(pastry);
-           _logger.LogChanges(StorageType.UserOrders, pastry.GetType(), pastry.ToString(), "was added");
-            
+            var totalPrice = pastry.Price * pastry.Amount;
+            Storage.Orders.Add(new Order(pastry, user, totalPrice));
         }
 
-        public void SaveUser(User user)
+        public List<Product> ExtractProducts()
         {
-            _userOrders.Users.Add(user);
-            _logger.LogChanges(StorageType.UserOrders, user.GetType(), user.ToString(), "was added");
+            var storage = Storage.Products;
+            return storage;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 
 namespace PastriesDelivery
@@ -10,15 +9,6 @@ namespace PastriesDelivery
         public DataValidator(IRegexPatterns patterns)
         {
             _patterns = patterns;
-        }
-
-        public static int ValidateIsDigit(string param)
-        {
-            if (Int32.TryParse(param, out int result))
-            {
-                return result;
-            }
-            return default;
         }
 
         public bool ValidateAddress(string address)

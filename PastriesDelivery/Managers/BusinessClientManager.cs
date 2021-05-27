@@ -1,44 +1,40 @@
-﻿using System.Linq;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class BusinessClientManager : СustomerManager, IOrderMaker
+    public class BusinessClientManager : СustomerManager, ICustomerManager
     {
-        private readonly IStorage _userOrders;
-        private readonly ILogger _logger;
-
-        public BusinessClientManager(IStorage availableProducts, IStorage userOrders, ILogger logger) : base(availableProducts, userOrders, logger)
+        public BusinessClientManager(IStorage storage) : base(storage)
         {
-            _userOrders = userOrders;
-            _logger = logger;
         }
 
-        public override void  SaveOrder(Pastry pastry)
+        public override void CreateOrder(Pastry pastry, User user)
         {
-            pastry.Price *= pastry.Amount;
-            ApplyDiscount(pastry);
-            _userOrders.Pastries.Add(pastry);
+            var totalPrice = ApplyDiscount(pastry);
+            Storage.Orders.Add(new Order(pastry, user, totalPrice));
         }
 
-
-        private static Pastry ApplyDiscount(Pastry pastry)
+        private decimal ApplyDiscount(Pastry pastry)
         {
+            decimal totalPrice = default;
+
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
             }
+
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
             }
+
             if (pastry.Amount > 99)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
             }
-            return pastry;
+
+            return totalPrice;
         }
     }
 }
