@@ -24,8 +24,11 @@ namespace PastriesDelivery
             using var file = new FileStream(path, FileMode.OpenOrCreate);
             using var stream = new StreamReader(file, Encoding.UTF8);
             var storage = stream.ReadToEnd();
+            if (String.IsNullOrEmpty(storage))
+            {
+                return new Storage();
+            }
             return JsonSerializer.Deserialize<Storage>(storage);
-
         }
     }
 }

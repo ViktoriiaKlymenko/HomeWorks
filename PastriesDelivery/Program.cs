@@ -9,34 +9,40 @@ namespace PastriesDelivery
             Pastry pastry = new Pastry();
             var storageSerializer = new StorageSerializer
             {
-                FileName = "serialized_storage"
+                FileName = "serialized_storage.json"
             };
             var storage = storageSerializer.ExtractFomJsonFile();
+            var logger = new Logger
+            {
+                FileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt"
+            };
 
             while (true)
             {
+                logger.CreateFile();
                 Messenger.GreetUser();
                 var user = Console.ReadLine();
 
                 if (user is "provider")
                 {
-                    WorkWithProvider(pastry, storage);
+                    WorkWithProvider(pastry, storage, logger);
                 }
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage);
+                    WorkWithConsumer(pastry, storage, logger);
 
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage);
+                    WorkWithBusinessClient(pastry, storage, logger);
                 }
+                storageSerializer.SaveToJsonFile(storage);
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage)
+        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger)
         {
             var providerManager = new BusinessProviderManager(storage);
             var provider = new User
@@ -59,11 +65,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage)
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage);
+            var consumerManager = new ConsumerManager(storage, logger);
             var consumer = new User
             {
                 Role = Role.Сustomer
@@ -104,11 +110,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage)
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage);
+            var businessClientManager = new BusinessClientManager(storage, logger);
             var businessClient = new User
             {
                 Role = Role.Сustomer

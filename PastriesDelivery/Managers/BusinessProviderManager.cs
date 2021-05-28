@@ -20,7 +20,7 @@ namespace PastriesDelivery
 
             if (_storage.Products.Any())
             {
-                return id = _storage.Products.Max(products => products.Pastry.Id) + 1;
+                return id = _storage.Products.Max(products => products.Pastry.Id);
             }
 
             return id;
