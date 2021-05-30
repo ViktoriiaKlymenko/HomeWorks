@@ -5,7 +5,7 @@
     /// </summary>
     public class BusinessClientManager : СustomerManager, ICustomerManager
     {
-        public BusinessClientManager(IStorage storage, ILogger logger) : base(storage, logger)
+        public BusinessClientManager(IStorage storage, ILogger logger, ICacheService cacheService) : base(storage, logger, cacheService)
         {
         }
 

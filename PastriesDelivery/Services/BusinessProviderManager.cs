@@ -9,7 +9,7 @@ namespace PastriesDelivery
     {
         private readonly IStorage _storage;
 
-        public BusinessProviderManager(IStorage storage)
+        public BusinessProviderManager(IStorage storage, ICacheService cacheService)
         {
             _storage = storage;
         }

@@ -6,12 +6,16 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
-            Pastry pastry = new Pastry();
             var storageSerializer = new StorageSerializer
             {
                 FileName = "serialized_storage.json"
             };
+
             var storage = storageSerializer.ExtractFomJsonFile();
+            object lockk = default;
+            var cacheService = new CacheService(new Cache(), lockk, storage);
+            var pastry = new Pastry();
+            
             var logger = new Logger
             {
                 FileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt"
@@ -25,26 +29,25 @@ namespace PastriesDelivery
 
                 if (user is "provider")
                 {
-                    WorkWithProvider(pastry, storage, logger);
+                    WorkWithProvider(pastry, storage, logger, cacheService);
                 }
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage, logger);
-
+                    WorkWithConsumer(pastry, storage, logger, cacheService);
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage, logger);
+                    WorkWithBusinessClient(pastry, storage, logger, cacheService);
                 }
                 storageSerializer.SaveToJsonFile(storage);
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger, CacheService cacheService)
         {
-            var providerManager = new BusinessProviderManager(storage);
+            var providerManager = new BusinessProviderManager(storage, cacheService);
             var provider = new User
             {
                 Name = "Some Name",
@@ -65,11 +68,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger, CacheService cacheService)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage, logger);
+            var consumerManager = new ConsumerManager(storage, logger, cacheService);
             var consumer = new User
             {
                 Role = Role.Сustomer
@@ -110,11 +113,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger, CacheService cacheService)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage, logger);
+            var businessClientManager = new BusinessClientManager(storage, logger, cacheService);
             var businessClient = new User
             {
                 Role = Role.Сustomer
@@ -144,7 +147,6 @@ namespace PastriesDelivery
                     {
                         Messenger.ShowUnavailableAmountMessage();
                     }
-
                 }
             }
 

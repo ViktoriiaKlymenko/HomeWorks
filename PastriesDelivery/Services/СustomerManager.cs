@@ -8,18 +8,29 @@ namespace PastriesDelivery
     {
         protected IStorage Storage { get; }
         protected ILogger Logger { get; }
+        protected ICacheService CacheService { get; }
 
-        public СustomerManager(IStorage storage, ILogger logger)
+        public СustomerManager(IStorage storage, ILogger logger, ICacheService cacheService)
         {
             Storage = storage;
             Logger = logger;
+            CacheService = cacheService;
         }
 
         public Pastry ChooseProduct(int id, int amount)
-        {
-            var availableProducts = ExtractProducts();
-            var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
+        { 
+            
+            Pastry pastry = default;
+            try 
+            { 
+                pastry = CacheService.ExtractFromCache(id, amount);
+                return pastry;
+            }
+            catch(ArgumentOutOfRangeException) { }
+            catch (NullReferenceException) { }
 
+            Product product = default;           
+            pastry = Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
             if (amount > pastry.Amount || amount <= 0)
             {
                 throw new ArgumentOutOfRangeException();
@@ -28,17 +39,19 @@ namespace PastriesDelivery
             if (amount < pastry.Amount)
             {
                 Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                product = Storage.Products.FirstOrDefault(product => product.Pastry.Id == id);
+                CacheService.SaveToCache(product);
                 Logger.LogChanges($"{amount} units of {pastry.ToString()} were removed from available products.");
                 return pastry;
             }
 
             if (pastry.Amount == amount)
             {
-                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
+                Storage.Products.Remove(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
                 Logger.LogChanges($"{pastry.ToString()} was removed from available products.");
                 return pastry;
             }
-
+            CacheService.SaveToCache(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
             return pastry;
         }
 
