@@ -64,7 +64,7 @@ namespace PastriesDelivery
             };
             var displayer = new CustomerUI(consumerManager);
             Messenger.ShowAvailableProductsMessage();
-            dataIsPresent = consumerManager.CheckForDataPrescence();
+            dataIsPresent = consumerManager.CheckForDataPresence();
 
             if (dataIsPresent)
             {
@@ -109,7 +109,7 @@ namespace PastriesDelivery
             };
             Messenger.ShowAvailableProductsMessage();
             var displayer = new CustomerUI(businessClientManager);
-            dataIsPresent = businessClientManager.CheckForDataPrescence();
+            dataIsPresent = businessClientManager.CheckForDataPresence();
 
             if (dataIsPresent)
             {
