@@ -5,6 +5,7 @@ namespace PastriesDelivery
 {
     public class DataValidator
     {
+<<<<<<< HEAD
         private readonly IRegexPatterns _patterns;
 
         public DataValidator(IRegexPatterns patterns)
@@ -23,6 +24,15 @@ namespace PastriesDelivery
         {
             var regex = new Regex(_patterns.PhoneNumbers);
             return regex.IsMatch(phoneNumber) is false;
+=======
+        public int ValidateIsDigit(string param)
+        {
+            if (Int32.TryParse(param, out int result))
+            {
+                return result;
+            }
+            return default;
+>>>>>>> 6503217 (Code was improved.)
         }
     }
 }
