@@ -21,6 +21,7 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
+<<<<<<< HEAD
                     WorkWithConsumer(pastry, storage);
 
                 }
@@ -81,6 +82,16 @@ namespace PastriesDelivery
                 if (answer is "yes")
                 {
                     try
+=======
+                    var consumer = new User
+                    {
+                        Role = Role.Сustomer
+                    };
+                    var displayer = new CustomerUI(consumerManager);
+                    Messenger.ShowAvailableProductsMessage();
+                    result = consumerManager.CheckForDataPrescence();
+                    if (result is true)
+>>>>>>> abde3cf (Code was improved.)
                     {
                         pastry = consumerManager.ChooseProduct(id, amount);
                         consumer = GetUserInformation(consumer);
@@ -123,7 +134,18 @@ namespace PastriesDelivery
 
                 if (answer is "yes")
                 {
+<<<<<<< HEAD
                     try
+=======
+                    var businessClient = new User()
+                    {
+                        Role = Role.Сustomer
+                    };
+                    Messenger.ShowAvailableProductsMessage();
+                    var displayer = new CustomerUI(businessClientManager);
+                    result = businessClientManager.CheckForDataPrescence();
+                    if (result is true)
+>>>>>>> abde3cf (Code was improved.)
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);

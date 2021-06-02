@@ -1,11 +1,8 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-=======
->>>>>>> b09788c (Code was improved.)
 
 namespace PastriesDelivery
 {
@@ -24,8 +21,4 @@ namespace PastriesDelivery
             Id = Guid.NewGuid();
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b09788c (Code was improved.)
