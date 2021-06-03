@@ -142,11 +142,19 @@ namespace PastriesDelivery
         }
 
         private static User GetUserInformation(User user)
-        {
-            Messenger.ShowEnterAddressMessage();
-            user.Address = Console.ReadLine();
-            Messenger.ShowEnterPhoneNumberMessage();
-            user.PhoneNumber = Console.ReadLine();
+        {            
+            do
+            {
+                Messenger.ShowEnterAddressMessage();
+                user.Address = Console.ReadLine();
+            } while (DataValidator.ValidateAddress(user.Address));
+
+            do
+            {
+                Messenger.ShowEnterPhoneNumberMessage();
+                user.PhoneNumber = Console.ReadLine();
+            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));          
+          
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
             return user;
