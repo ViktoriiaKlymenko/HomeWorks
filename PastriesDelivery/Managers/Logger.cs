@@ -5,7 +5,7 @@ namespace PastriesDelivery
 {
     public class Logger : ILogger
     {
-        public string FileName { get; set; }
+        private string FileName { get; set; }
 
         public void LogChanges(string message)
         {

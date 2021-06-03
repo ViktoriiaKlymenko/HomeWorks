@@ -7,19 +7,10 @@ namespace PastriesDelivery
         private static void Main(string[] args)
         {
             Pastry pastry = new Pastry();
-            var storageSerializer = new StorageSerializer
-            {
-                FileName = "serialized_storage.json"
-            };
-            var storage = storageSerializer.ExtractFomJsonFile();
-            var logger = new Logger
-            {
-                FileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt"
-            };
-
+            Storage storage = new Storage();
+            var logger = new Logger();
             while (true)
             {
-                logger.CreateFile();
                 Messenger.GreetUser();
                 var user = Console.ReadLine();
 
@@ -31,14 +22,12 @@ namespace PastriesDelivery
                 if (user is "consumer")
                 {
                     WorkWithConsumer(pastry, storage, logger);
-
                 }
 
                 if (user is "business client")
                 {
                     WorkWithBusinessClient(pastry, storage, logger);
                 }
-                storageSerializer.SaveToJsonFile(storage);
             }
         }
 
@@ -144,7 +133,6 @@ namespace PastriesDelivery
                     {
                         Messenger.ShowUnavailableAmountMessage();
                     }
-
                 }
             }
 
@@ -156,20 +144,18 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-            var regex = new RegexPatterns();
-            DataValidator dv = new DataValidator(regex);
 
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-            } while (!dv.ValidateAddress(user.Address));
+            } while (!DataValidator.ValidateAddress(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-            } while (!dv.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.ValidatePhoneNumber(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
@@ -189,7 +175,6 @@ namespace PastriesDelivery
                     amount = res;
                     return amount;
                 }
-
             } while (amount == default);
 
             return amount;
@@ -208,7 +193,6 @@ namespace PastriesDelivery
                     id = res;
                     return id;
                 }
-
             } while (id == default);
 
             return id;
