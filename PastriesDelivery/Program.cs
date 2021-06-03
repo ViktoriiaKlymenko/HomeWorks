@@ -8,36 +8,32 @@ namespace PastriesDelivery
         {
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
-            var logger = new Logger
-            {
-                FileName = "logger" + DateTime.Now.ToString("dd:MM:yyyy")
-            };
+            var logger = new Logger();
             while (true)
             {
-                logger.CreateFile();
                 Messenger.GreetUser();
                 var user = Console.ReadLine();
 
                 if (user is "provider")
                 {
-                    WorkWithProvider(pastry, storage);
+                    WorkWithProvider(pastry, storage, logger);
                 }
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage);
+                    WorkWithConsumer(pastry, storage, logger);
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage);
+                    WorkWithBusinessClient(pastry, storage, logger);
                 }
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage)
+        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger)
         {
-            var providerManager = new BusinessProviderManager(storage);
+            var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
             {
                 Name = "Some Name",
@@ -58,11 +54,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage)
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage);
+            var consumerManager = new ConsumerManager(storage, logger);
             var consumer = new User
             {
                 Role = Role.Сustomer
@@ -103,11 +99,11 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage)
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage);
+            var businessClientManager = new BusinessClientManager(storage, logger);
             var businessClient = new User
             {
                 Role = Role.Сustomer
@@ -148,20 +144,18 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-            var regex = new RegexPatterns();
-            DataValidator dv = new DataValidator(regex);
 
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-            } while (!dv.ValidateAddress(user.Address));
+            } while (!DataValidator.ValidateAddress(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-            } while (!dv.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.ValidatePhoneNumber(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();

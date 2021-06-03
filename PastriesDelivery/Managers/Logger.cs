@@ -5,9 +5,9 @@ namespace PastriesDelivery
 {
     public class Logger : ILogger
     {
-        public string FileName { get; set; }
+        private string fileName = "logger_" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt";
 
-        public void LogChanges(string message)
+        public void Log(string message)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + FileName;
 
@@ -15,13 +15,6 @@ namespace PastriesDelivery
             {
                 writer.WriteLine($"{message} [{DateTime.Now:HH:mm}]");
             }
-        }
-
-        public void CreateFile()
-        {
-            var path = AppDomain.CurrentDomain.BaseDirectory + FileName;
-
-            using (var writer = new StreamWriter(path, true)) ;
         }
     }
 }

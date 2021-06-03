@@ -5,7 +5,7 @@
     /// </summary>
     public class BusinessClientManager : СustomerManager, ICustomerManager
     {
-        public BusinessClientManager(IStorage storage) : base(storage)
+        public BusinessClientManager(IStorage storage, ILogger logger) : base(storage, logger)
         {
         }
 
@@ -21,17 +21,17 @@
 
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
             }
 
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
             }
 
             if (pastry.Amount > 99)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
+                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
             }
 
             return totalPrice;
