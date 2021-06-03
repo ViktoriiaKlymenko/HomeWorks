@@ -22,7 +22,6 @@ namespace PastriesDelivery
                 if (user is "consumer")
                 {
                     WorkWithConsumer(pastry, storage);
-
                 }
 
                 if (user is "business client")
@@ -134,7 +133,6 @@ namespace PastriesDelivery
                     {
                         Messenger.ShowUnavailableAmountMessage();
                     }
-
                 }
             }
 
