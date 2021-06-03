@@ -12,7 +12,7 @@ namespace FoodDeliveryTask
             var currenciesList = currencies.ToList();
             var discountedPricesList = prices.ToList();
 
-            for (int i = 0; i < currenciesList.Count; i++)
+            for (int i = 0; i < currenciesList.Count(); i++)
             {
                 if (currenciesList[i] is not "USD")
                 {
@@ -136,7 +136,7 @@ namespace FoodDeliveryTask
             discountedPrice = ApplyDiscountForKids(infantsIds, childrenIds, discountedPrice).ToList();
             discountedPrice = ApplySameStreetDiscount(streetNames, discountedPrice).ToList();
 
-            for (int i = 0; i < discountedPrice.Count; i++)
+            for (int i = 0; i < discountedPrice.Count(); i++)
             {
                 fullPrice += discountedPrice[i];
             }
