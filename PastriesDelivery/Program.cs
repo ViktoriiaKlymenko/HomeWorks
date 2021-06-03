@@ -144,9 +144,19 @@ namespace PastriesDelivery
         private static User GetUserInformation(User user)
         {
             Messenger.ShowEnterAddressMessage();
-            user.Address = Console.ReadLine();
+
+            do
+            {
+                user.Address = Console.ReadLine();
+            } while (DataValidator.ValidateAddress(user.Address));
+
             Messenger.ShowEnterPhoneNumberMessage();
-            user.PhoneNumber = Console.ReadLine();
+
+            do
+            {
+                user.PhoneNumber = Console.ReadLine();
+            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+            
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
             return user;
@@ -155,6 +165,7 @@ namespace PastriesDelivery
         private static int GetAmount()
         {
             int amount = default;
+
             do
             {
                 Console.Write("Please, enter amount: ");
@@ -166,12 +177,14 @@ namespace PastriesDelivery
                 }
 
             } while (amount == default);
+
             return amount;
         }
 
         private static int GetId()
         {
             int id = default;
+
             do
             {
                 Console.Write("Please, enter id: ");
@@ -183,6 +196,7 @@ namespace PastriesDelivery
                 }
 
             } while (id == default);
+
             return id;
         }
     }
