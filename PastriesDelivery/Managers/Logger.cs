@@ -9,7 +9,7 @@ namespace PastriesDelivery
 
         public void Log(string message)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory + FileName;
+            var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
 
             using (var writer = new StreamWriter(path, true))
             {
