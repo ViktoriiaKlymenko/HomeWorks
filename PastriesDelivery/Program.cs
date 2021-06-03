@@ -1,58 +1,189 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PastriesDelivery
 {
-    public class СustomerManager
+    internal class Program
     {
-        protected IStorage Storage { get; }
-
-        public СustomerManager(IStorage storage)
+        private static void Main(string[] args)
         {
-            Storage = storage;
+            Pastry pastry = new Pastry();
+            Storage storage = new Storage();
+            while (true)
+            {
+                Messenger.GreetUser();
+                var user = Console.ReadLine();
+
+                if (user is "provider")
+                {
+                    WorkWithProvider(pastry, storage);
+                }
+
+                if (user is "consumer")
+                {
+                    WorkWithConsumer(pastry, storage);
+                }
+
+                if (user is "business client")
+                {
+                    WorkWithBusinessClient(pastry, storage);
+                }
+            }
         }
 
-        public Pastry ChooseProduct(int id, int amount)
+        private static void WorkWithProvider(Pastry pastry, Storage storage)
         {
-            var availableProducts = ExtractProducts();
-            var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
-
-            if (amount > pastry.Amount || amount <= 0)
+            var providerManager = new BusinessProviderManager(storage);
+            var provider = new User
             {
-                throw new ArgumentOutOfRangeException();
+                Name = "Some Name",
+                Role = Role.Provider,
+                PhoneNumber = "+380XXXXXXXXX",
+                Address = "Some adress"
+            };
+
+            Messenger.SendOfferRequirments();
+            pastry = ProviderUI.AcceptData(providerManager, pastry);
+            Messenger.ShowConfirmMessage();
+            var answer = Console.ReadLine();
+
+            if (answer is "yes")
+            {
+                providerManager.CreateOffer(pastry, provider);
+                Messenger.ShowOfferAcceptedMessage();
+            }
+        }
+
+        private static void WorkWithConsumer(Pastry pastry, Storage storage)
+        {
+            bool dataIsPresent;
+            int id, amount;
+            var consumerManager = new ConsumerManager(storage);
+            var consumer = new User
+            {
+                Role = Role.Сustomer
+            };
+            var displayer = new CustomerUI(consumerManager);
+            Messenger.ShowAvailableProductsMessage();
+            dataIsPresent = consumerManager.CheckForDataPresence();
+
+            if (dataIsPresent)
+            {
+                displayer.DisplayAvailableProducts();
+
+                id = GetId();
+                amount = GetAmount();
+
+                Messenger.ShowConfirmMessage();
+                var answer = Console.ReadLine();
+
+                if (answer is "yes")
+                {
+                    try
+                    {
+                        pastry = consumerManager.ChooseProduct(id, amount);
+                        consumer = GetUserInformation(consumer);
+                        consumerManager.CreateOrder(pastry, consumer);
+                        Messenger.ShowOrderAcceptedMessage();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Messenger.ShowUnavailableAmountMessage();
+                    }
+                }
             }
 
-            if (amount < pastry.Amount)
+            if (!dataIsPresent)
             {
-                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                return pastry;
+                Messenger.ShowNoProductsMessage();
+            }
+        }
+
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage)
+        {
+            bool dataIsPresent;
+            int id, amount;
+            var businessClientManager = new BusinessClientManager(storage);
+            var businessClient = new User
+            {
+                Role = Role.Сustomer
+            };
+            Messenger.ShowAvailableProductsMessage();
+            var displayer = new CustomerUI(businessClientManager);
+            dataIsPresent = businessClientManager.CheckForDataPresence();
+
+            if (dataIsPresent)
+            {
+                displayer.DisplayAvailableProducts();
+                id = GetId();
+                amount = GetAmount();
+                Messenger.ShowConfirmMessage();
+                var answer = Console.ReadLine();
+
+                if (answer is "yes")
+                {
+                    try
+                    {
+                        pastry = businessClientManager.ChooseProduct(id, amount);
+                        businessClient = GetUserInformation(businessClient);
+                        businessClientManager.CreateOrder(pastry, businessClient);
+                        Messenger.ShowOrderAcceptedMessage();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Messenger.ShowUnavailableAmountMessage();
+                    }
+                }
             }
 
-            if (pastry.Amount == amount)
+            if (!dataIsPresent)
             {
-                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
-                return pastry;
+                Messenger.ShowNoProductsMessage();
             }
-
-            return pastry;
         }
 
-        public bool CheckForDataPresence()
+        private static User GetUserInformation(User user)
         {
-            return Storage.Products.Count is not 0;
+            Messenger.ShowEnterAddressMessage();
+            user.Address = Console.ReadLine();
+            Messenger.ShowEnterPhoneNumberMessage();
+            user.PhoneNumber = Console.ReadLine();
+            Messenger.ShowEnterNameMessage();
+            user.Name = Console.ReadLine();
+            return user;
         }
 
-        public virtual void CreateOrder(Pastry pastry, User user)
+        private static int GetAmount()
         {
-            var totalPrice = pastry.Price * pastry.Amount;
-            Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            int amount = default;
+            do
+            {
+                Console.Write("Please, enter amount: ");
+
+                if (int.TryParse(Console.ReadLine(), out int res))
+                {
+                    amount = res;
+                    return amount;
+                }
+
+            } while (amount == default);
+            return amount;
         }
 
-        public List<Product> ExtractProducts()
+        private static int GetId()
         {
-            var storage = Storage.Products;
-            return storage;
+            int id = default;
+            do
+            {
+                Console.Write("Please, enter id: ");
+
+                if (int.TryParse(Console.ReadLine(), out int res))
+                {
+                    id = res;
+                    return id;
+                }
+
+            } while (id == default);
+            return id;
         }
     }
 }
