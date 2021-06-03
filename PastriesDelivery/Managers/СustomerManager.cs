@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
@@ -40,7 +38,7 @@ namespace PastriesDelivery
             return pastry;
         }
 
-        public bool CheckForDataPrescence()
+        public bool CheckForDataPresence()
         {
             return Storage.Products.Count is not 0;
         }

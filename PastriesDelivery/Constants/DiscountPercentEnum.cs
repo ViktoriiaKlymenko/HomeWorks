@@ -1,6 +1,6 @@
 ﻿namespace PastriesDelivery
 {
-    public enum DiscountPercents
+    public enum DiscountPercentEnum
     {
         TwentyUnits = 2,
         FiftyUnits = 3,
