@@ -7,11 +7,11 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessProviderManager
     {
-        private readonly IStorage _availableProducts;
+        private readonly IStorage _storage;
 
-        public BusinessProviderManager(IStorage availableProducts)
+        public BusinessProviderManager(IStorage storage)
         {
-            _availableProducts = availableProducts;
+            _storage = storage;
         }
 
         public int SetId()

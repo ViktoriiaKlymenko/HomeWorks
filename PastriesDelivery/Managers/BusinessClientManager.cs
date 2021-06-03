@@ -20,28 +20,22 @@ namespace PastriesDelivery
         private decimal ApplyDiscount(Pastry pastry)
         {
             decimal totalPrice = default;
-<<<<<<< HEAD
 
-=======
->>>>>>> 532ba61 (Mistakes were fixed.)
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
             }
 
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
             }
 
             if (pastry.Amount > 99)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 532ba61 (Mistakes were fixed.)
             return totalPrice;
         }
     }

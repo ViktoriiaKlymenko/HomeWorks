@@ -1,5 +1,4 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-=======
-
-namespace PastriesDelivery
-{
-    /// <summary>
-    /// This class describes methods intended for work with consumer interface.
-    /// </summary>
->>>>>>> abde3cf (Code was improved.)
     internal class CustomerUI : IDataDisplayer
     {
         protected ICustomerManager Manager { get; }
@@ -39,8 +30,4 @@ namespace PastriesDelivery
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> abde3cf (Code was improved.)

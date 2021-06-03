@@ -21,7 +21,6 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
-<<<<<<< HEAD
                     WorkWithConsumer(pastry, storage);
 
                 }
@@ -82,16 +81,6 @@ namespace PastriesDelivery
                 if (answer is "yes")
                 {
                     try
-=======
-                    var consumer = new User
-                    {
-                        Role = Role.Сustomer
-                    };
-                    var displayer = new CustomerUI(consumerManager);
-                    Messenger.ShowAvailableProductsMessage();
-                    result = consumerManager.CheckForDataPrescence();
-                    if (result is true)
->>>>>>> abde3cf (Code was improved.)
                     {
                         pastry = consumerManager.ChooseProduct(id, amount);
                         consumer = GetUserInformation(consumer);
@@ -134,18 +123,7 @@ namespace PastriesDelivery
 
                 if (answer is "yes")
                 {
-<<<<<<< HEAD
                     try
-=======
-                    var businessClient = new User()
-                    {
-                        Role = Role.Сustomer
-                    };
-                    Messenger.ShowAvailableProductsMessage();
-                    var displayer = new CustomerUI(businessClientManager);
-                    result = businessClientManager.CheckForDataPrescence();
-                    if (result is true)
->>>>>>> abde3cf (Code was improved.)
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);
@@ -168,20 +146,17 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-            var regex = new RegexPatterns();
-            DataValidator dv = new DataValidator(regex);
-
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-            } while (!dv.ValidateAddress(user.Address));
+            } while (!DataValidator.ValidateAddress(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-            } while (!dv.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.ValidatePhoneNumber(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
