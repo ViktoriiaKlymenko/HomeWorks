@@ -6,8 +6,8 @@ namespace PastriesDelivery
 {
     public class СustomerManager
     {
-        protected IStorage Storage { get; }
-        protected ILogger Logger { get; }
+        protected readonly IStorage Storage;
+        protected readonly ILogger Logger;
 
         public СustomerManager(IStorage storage, ILogger logger)
         {

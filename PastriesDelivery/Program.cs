@@ -31,7 +31,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
         {
             var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
@@ -54,7 +54,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -99,7 +99,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
