@@ -23,7 +23,7 @@ namespace PastriesDelivery
             Pastry pastry = default;
             try 
             { 
-                pastry = CacheService.ExtractFromCache(id, amount);
+                pastry = CacheService.GetFromCache(id, amount);
                 return pastry;
             }
             catch(ArgumentOutOfRangeException) { }

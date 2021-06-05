@@ -9,29 +9,24 @@ namespace PastriesDelivery
     public class CacheService : ICacheService
     {
         private readonly ICache _cache;
-        private readonly object _lock;
         private readonly IStorage _storage;
 
 
-        public CacheService(ICache cache, object lok, IStorage storage)
+        public CacheService(ICache cache, IStorage storage)
         {
             _cache = cache;
-            _lock = lok;
             _storage = storage;
         }
 
-        public Pastry ExtractFromCache(int id, int amount)
+        public Pastry GetFromCache(int id, int amount)
         {
-            if (_cache.Products.Any())
-            {
-                var pastry = _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
+            var pastry = _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
 
-                if (amount < pastry.Amount || pastry.Amount == amount)
-                {
-                    _storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                    _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                    return pastry;
-                }
+            if (amount < pastry.Amount || pastry.Amount == amount)
+            {
+                _storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                return pastry;
             }
             throw new ArgumentOutOfRangeException();
         }
