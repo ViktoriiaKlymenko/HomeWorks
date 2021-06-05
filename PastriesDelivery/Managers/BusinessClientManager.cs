@@ -21,17 +21,17 @@
 
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
             }
 
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
             }
 
             if (pastry.Amount > 99)
             {
-                pastry.Price -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
             }
 
             return totalPrice;

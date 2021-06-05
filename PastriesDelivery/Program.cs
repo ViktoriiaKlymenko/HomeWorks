@@ -144,7 +144,7 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-
+            Messenger.ShowExitMessage();
             do
             {
                 Messenger.ShowEnterAddressMessage();
