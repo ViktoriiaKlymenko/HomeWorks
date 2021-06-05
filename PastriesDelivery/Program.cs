@@ -149,13 +149,13 @@ namespace PastriesDelivery
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-            } while (!DataValidator.ValidateAddress(user.Address));
+            } while (!DataValidator.IsValidateAddress(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-            } while (!DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.IsValidatePhoneNumber(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();

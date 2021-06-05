@@ -13,7 +13,7 @@ namespace PastriesDelivery
 
             using (var writer = new StreamWriter(path, true))
             {
-                writer.WriteLine($"{message} [{DateTime.Now:HH:mm}]");
+                writer.WriteLine($"[{DateTime.Now:HH:mm}] {message}");
             }
         }
     }
