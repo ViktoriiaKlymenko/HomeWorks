@@ -125,6 +125,10 @@ namespace PastriesDelivery
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);
+                        if(businessClient is null)
+                        {
+                            return;
+                        }
                         businessClientManager.CreateOrder(pastry, businessClient);
                         Messenger.ShowOrderAcceptedMessage();
                     }
@@ -142,17 +146,30 @@ namespace PastriesDelivery
         }
 
         private static User GetUserInformation(User user)
-        {            
+        {
+            Messenger.ShowCancelMessage();
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
+             
+                if(user.Address is "stop")
+                {
+                    return null;
+                }
+
             } while (DataValidator.ValidateAddress(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
+
+                if (user.Address is "stop")
+                {
+                    return null;
+                }
+
             } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));          
           
             Messenger.ShowEnterNameMessage();
