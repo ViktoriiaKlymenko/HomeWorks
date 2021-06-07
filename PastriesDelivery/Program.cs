@@ -8,6 +8,7 @@ namespace PastriesDelivery
         {
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
+            var logger = new Logger();
             while (true)
             {
                 Messenger.GreetUser();
@@ -15,24 +16,24 @@ namespace PastriesDelivery
 
                 if (user is "provider")
                 {
-                    WorkWithProvider(pastry, storage);
+                    WorkWithProvider(pastry, storage, logger);
                 }
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage);
+                    WorkWithConsumer(pastry, storage, logger);
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage);
+                    WorkWithBusinessClient(pastry, storage, logger);
                 }
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
         {
-            var providerManager = new BusinessProviderManager(storage);
+            var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
             {
                 Name = "Some Name",
@@ -53,18 +54,18 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage)
+        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage);
+            var consumerManager = new ConsumerManager(storage, logger);
             var consumer = new User
             {
                 Role = Role.Сustomer
             };
             var displayer = new CustomerUI(consumerManager);
             Messenger.ShowAvailableProductsMessage();
-            dataIsPresent = consumerManager.CheckForDataPresence();
+            dataIsPresent = consumerManager.CheckForDataPrescence();
 
             if (dataIsPresent)
             {
@@ -98,18 +99,18 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage)
+        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage);
+            var businessClientManager = new BusinessClientManager(storage, logger);
             var businessClient = new User
             {
                 Role = Role.Сustomer
             };
             Messenger.ShowAvailableProductsMessage();
             var displayer = new CustomerUI(businessClientManager);
-            dataIsPresent = businessClientManager.CheckForDataPresence();
+            dataIsPresent = businessClientManager.CheckForDataPrescence();
 
             if (dataIsPresent)
             {
@@ -143,10 +144,19 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-            Messenger.ShowEnterAddressMessage();
-            user.Address = Console.ReadLine();
-            Messenger.ShowEnterPhoneNumberMessage();
-            user.PhoneNumber = Console.ReadLine();
+            Messenger.ShowExitMessage();
+            do
+            {
+                Messenger.ShowEnterAddressMessage();
+                user.Address = Console.ReadLine();
+            } while (!DataValidator.IsAddressValid(user.Address));
+
+            do
+            {
+                Messenger.ShowEnterPhoneNumberMessage();
+                user.PhoneNumber = Console.ReadLine();
+            } while (!DataValidator.IsPhoneNumberValid(user.PhoneNumber));
+
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
             return user;
@@ -155,6 +165,7 @@ namespace PastriesDelivery
         private static int GetAmount()
         {
             int amount = default;
+
             do
             {
                 Console.Write("Please, enter amount: ");
@@ -164,14 +175,15 @@ namespace PastriesDelivery
                     amount = res;
                     return amount;
                 }
-
             } while (amount == default);
+
             return amount;
         }
 
         private static int GetId()
         {
             int id = default;
+
             do
             {
                 Console.Write("Please, enter id: ");
@@ -181,8 +193,8 @@ namespace PastriesDelivery
                     id = res;
                     return id;
                 }
-
             } while (id == default);
+
             return id;
         }
     }
