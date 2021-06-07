@@ -17,11 +17,6 @@ namespace PastriesDelivery
             Console.WriteLine("Enter please product data in the next format:\nName\nType\nWeight (in gr)\nPrice (in USD)\nAmount");
         }
 
-        public static void SendOrderRequirments()
-        {
-            Console.Write("Enter please id of product and it's amount: ");
-        }
-
         public static void ShowAvailableProductsMessage()
         {
             Console.WriteLine("Available products: ");
@@ -70,6 +65,11 @@ namespace PastriesDelivery
         internal static void ShowEnterNameMessage()
         {
             Console.Write("Please, enter your name and surname: ");
+        }
+
+        internal static void ShowExitMessage()
+        {
+            Console.WriteLine("If you want to stop, please enter STOP.");
         }
     }
 }

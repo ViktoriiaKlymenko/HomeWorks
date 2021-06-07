@@ -6,14 +6,12 @@ namespace PastriesDelivery
     {
         public static Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
         {
-            Console.WriteLine();
-            pastry.Id = manager.SetId() + 1;
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
+            pastry.Id = manager.SetId() + 1;
 
             do
             {
-
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
                     pastry.Weight = result;
@@ -38,7 +36,6 @@ namespace PastriesDelivery
                 {
                     pastry.Amount = result;
                 }
-
             } while (pastry.Amount == default);
 
             return pastry;

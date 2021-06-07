@@ -31,9 +31,9 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
         {
-            var providerManager = new BusinessProviderManager(storage);
+            var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
             {
                 Name = "Some Name",
@@ -54,7 +54,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -99,7 +99,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, Logger logger)
+        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -144,18 +144,18 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-
+            Messenger.ShowExitMessage();
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-            } while (!DataValidator.ValidateAddress(user.Address));
+            } while (!DataValidator.IsAddressValid(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-            } while (!DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.IsPhoneNumberValid(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
