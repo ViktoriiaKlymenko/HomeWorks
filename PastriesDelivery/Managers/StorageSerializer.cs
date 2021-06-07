@@ -5,12 +5,11 @@ using System.Text;
 
 namespace PastriesDelivery
 {
-    public class StorageSerializer
+    public static class StorageSerializer
     {
-        private string fileName = "serialized_storage.json";
+        private static string fileName = "serialized_storage.json";
 
-
-        public void SaveToJsonFile(IStorage storage)
+        public static void SaveToJsonFile(IStorage storage)
         {
             var serializedStorage = JsonSerializer.Serialize(storage);
             var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
@@ -19,7 +18,7 @@ namespace PastriesDelivery
             StreamWriter.Write(serializedStorage);
         }
 
-        public Storage ExtractFomJsonFile()
+        public static Storage ExtractFomJsonFile()
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
             using var file = new FileStream(path, FileMode.OpenOrCreate);
