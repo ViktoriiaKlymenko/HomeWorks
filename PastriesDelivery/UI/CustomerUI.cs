@@ -2,9 +2,6 @@
 
 namespace PastriesDelivery
 {
-    /// <summary>
-    /// This class describes methods intended for work with consumer interface.
-    /// </summary>
     internal class CustomerUI : IDataDisplayer
     {
         protected readonly ICustomerManager Manager;
