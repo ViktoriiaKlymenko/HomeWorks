@@ -43,10 +43,11 @@ namespace PastriesDelivery
             return Storage.Products.Count is not 0;
         }
 
-        public virtual void CreateOrder(Pastry pastry, User user)
+        public virtual Order CreateOrder(Pastry pastry, User user)
         {
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            return Storage.Orders.Last();
         }
 
         public List<Product> ExtractProducts()

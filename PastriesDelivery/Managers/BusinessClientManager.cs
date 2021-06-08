@@ -1,4 +1,6 @@
-﻿namespace PastriesDelivery
+﻿using System.Linq;
+
+namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
@@ -9,10 +11,11 @@
         {
         }
 
-        public override void CreateOrder(Pastry pastry, User user)
+        public override Order CreateOrder(Pastry pastry, User user)
         {
             var totalPrice = ApplyDiscount(pastry);
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            return Storage.Orders.Last();
         }
 
         private decimal ApplyDiscount(Pastry pastry)
