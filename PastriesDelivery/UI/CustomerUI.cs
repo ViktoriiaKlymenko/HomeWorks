@@ -11,10 +11,12 @@ namespace PastriesDelivery
         protected ICustomerManager Manager { get; }
         protected ICurrencyConverter Converter { get; }
         protected static IList<Currency> CurrenciesRate { get; set; }
+
         static CustomerUI()
         {
             CurrenciesRate = CurrencyConverter.DownloadCurrenciesRateAsync().GetAwaiter().GetResult();
         }
+
         public CustomerUI(ICustomerManager manager, ICurrencyConverter converter)
         {
             Manager = manager;
