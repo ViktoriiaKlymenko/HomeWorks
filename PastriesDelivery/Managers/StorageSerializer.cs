@@ -14,8 +14,8 @@ namespace PastriesDelivery
             var serializedStorage = JsonSerializer.Serialize(storage);
             var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
             using var file = new FileStream(path, FileMode.OpenOrCreate);
-            using var StreamWriter = new StreamWriter(file, Encoding.UTF8);
-            StreamWriter.Write(serializedStorage);
+            using var streamWriter = new StreamWriter(file, Encoding.UTF8);
+            streamWriter.Write(serializedStorage);
         }
 
         public static Storage ExtractFomJsonFile()
