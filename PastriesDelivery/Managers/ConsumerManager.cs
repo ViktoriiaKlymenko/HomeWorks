@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.

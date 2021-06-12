@@ -7,7 +7,7 @@ namespace PastriesDelivery
         private static void Main(string[] args)
         {
             Pastry pastry = new Pastry();
-            Storage storage = new Storage();
+            var storage = StorageSerializer.ExtractFomJsonFile();
             var logger = new Logger();
             while (true)
             {
@@ -28,6 +28,7 @@ namespace PastriesDelivery
                 {
                     WorkWithBusinessClient(pastry, storage, logger);
                 }
+                StorageSerializer.SaveToJsonFile(storage);
             }
         }
 
