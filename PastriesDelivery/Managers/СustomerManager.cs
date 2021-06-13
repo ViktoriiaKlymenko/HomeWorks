@@ -61,7 +61,7 @@ namespace PastriesDelivery
         public decimal ConvertToUSD(decimal totalPrice)
         {
             var currenciesRate = Converter.DownloadCurrenciesRateAsync().Result;
-            var USDRate = currenciesRate.FirstOrDefault(currenciesRate => currenciesRate.Currency == "USD");
+            var USDRate = currenciesRate.FirstOrDefault(currenciesRate => currenciesRate.CurrencyName == "USD");
             return totalPrice * USDRate.Sale;
         }
     }

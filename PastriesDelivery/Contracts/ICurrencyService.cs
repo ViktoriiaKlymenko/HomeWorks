@@ -8,6 +8,6 @@ namespace PastriesDelivery
 {
     public interface ICurrencyService
     {
-        Task<List<CurrencyDetails>> DownloadCurrenciesRateAsync();
+        Task<List<Currency>> DownloadCurrenciesRateAsync();
     }
 }

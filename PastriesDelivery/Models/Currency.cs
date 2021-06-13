@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 
 namespace PastriesDelivery
 {
-    public class CurrencyDetails
+    public class Currency
     {
         [JsonProperty("ccy")]
-        public string Currency { get; set; }
+        public string CurrencyName { get; set; }
 
         [JsonProperty("base_ccy")]
         public string BaseCurrency { get; set; }
