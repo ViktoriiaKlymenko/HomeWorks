@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace PastriesDelivery
 {
-    public interface ICurrencyConverter
+    public interface ICurrencyService
     {
-        decimal ConvertToUSD(decimal totalPrice, IList<Currency> currenciesRate);
-
+        Task<List<CurrencyDetails>> DownloadCurrenciesRateAsync();
     }
 }

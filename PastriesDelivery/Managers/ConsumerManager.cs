@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PastriesDelivery
 {
@@ -7,7 +8,7 @@ namespace PastriesDelivery
     /// </summary>
     public class ConsumerManager : СustomerManager, ICustomerManager
     {
-        public ConsumerManager(IStorage storage) : base(storage)
+        public ConsumerManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
         {
         }
     }

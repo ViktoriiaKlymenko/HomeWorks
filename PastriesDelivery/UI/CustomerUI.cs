@@ -9,18 +9,10 @@ namespace PastriesDelivery
     internal class CustomerUI : IDataDisplayer
     {
         protected ICustomerManager Manager { get; }
-        protected ICurrencyConverter Converter { get; }
-        protected static IList<Currency> CurrenciesRate { get; set; }
 
-        static CustomerUI()
-        {
-            CurrenciesRate = CurrencyConverter.DownloadCurrenciesRateAsync().GetAwaiter().GetResult();
-        }
-
-        public CustomerUI(ICustomerManager manager, ICurrencyConverter converter)
+        public CustomerUI(ICustomerManager manager)
         {
             Manager = manager;
-            Converter = converter;
         }
 
         public void DisplayAvailableProducts()
@@ -45,7 +37,7 @@ namespace PastriesDelivery
             Console.WriteLine("Pastry weight: " + order.Pastry.Weight + " gr");
             Console.WriteLine("Pastry amount: " + order.Pastry.Amount);
             Console.WriteLine("Pastry price in UAH: " + order.TotalPrice);
-            Console.WriteLine("Pastry price in USD:" + Converter.ConvertToUSD(order.TotalPrice, CurrenciesRate));
+            Console.WriteLine("Pastry price in USD:" + Manager.ConvertToUSD(order.TotalPrice));
         }
     }
 }

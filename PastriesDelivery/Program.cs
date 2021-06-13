@@ -7,7 +7,7 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
-            var currencyConverter = new CurrencyConverter();
+            var currencyConverter = new CurrencyService();
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
             while (true)
@@ -55,16 +55,16 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, ICurrencyConverter currencyConverter)
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage);
+            var consumerManager = new ConsumerManager(storage, currencyConverter);
             var consumer = new User
             {
                 Role = Role.Сustomer
             };
-            var displayer = new CustomerUI(consumerManager, currencyConverter);
+            var displayer = new CustomerUI(consumerManager);
             Messenger.ShowAvailableProductsMessage();
             dataIsPresent = consumerManager.CheckForDataPresence();
 
@@ -101,17 +101,17 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ICurrencyConverter currencyConverter)
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage);
+            var businessClientManager = new BusinessClientManager(storage, currencyConverter);
             var businessClient = new User
             {
                 Role = Role.Сustomer
             };
             Messenger.ShowAvailableProductsMessage();
-            var displayer = new CustomerUI(businessClientManager, currencyConverter);
+            var displayer = new CustomerUI(businessClientManager);
             dataIsPresent = businessClientManager.CheckForDataPresence();
 
             if (dataIsPresent)

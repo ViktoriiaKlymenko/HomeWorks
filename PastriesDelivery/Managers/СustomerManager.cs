@@ -7,10 +7,13 @@ namespace PastriesDelivery
     public class СustomerManager
     {
         protected IStorage Storage { get; }
+        protected ICurrencyService Converter { get; }
 
-        public СustomerManager(IStorage storage)
+        public СustomerManager(IStorage storage, ICurrencyService converter)
         {
+            
             Storage = storage;
+            Converter = converter;
         }
 
         public Pastry ChooseProduct(int id, int amount)
@@ -52,8 +55,14 @@ namespace PastriesDelivery
 
         public List<Product> ExtractProducts()
         {
-            var storage = Storage.Products;
-            return storage;
+            return Storage.Products;
+        }
+
+        public decimal ConvertToUSD(decimal totalPrice)
+        {
+            var currenciesRate = Converter.DownloadCurrenciesRateAsync().Result;
+            var USDRate = currenciesRate.FirstOrDefault(currenciesRate => currenciesRate.Currency == "USD");
+            return totalPrice * USDRate.Sale;
         }
     }
 }
