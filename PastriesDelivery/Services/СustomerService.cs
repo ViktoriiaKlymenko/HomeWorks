@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace PastriesDelivery
 {
-    public class СustomerManager
+    public class СustomerService
     {
         protected IStorage Storage { get; }
         protected ILogger Logger { get; }
         protected ICacheService CacheService { get; }
 
-        public СustomerManager(IStorage storage, ILogger logger, ICacheService cacheService)
+        public СustomerService(IStorage storage, ILogger logger, ICacheService cacheService)
         {
             Storage = storage;
             Logger = logger;
@@ -41,14 +41,14 @@ namespace PastriesDelivery
                 Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
                 product = Storage.Products.FirstOrDefault(product => product.Pastry.Id == id);
                 CacheService.Set(product);
-                Logger.LogChanges($"{amount} units of {pastry.ToString()} were removed from available products.");
+                Logger.Log($"{DateTime.Now.ToShortTimeString()} {amount} units of {pastry.ToString()} were removed from available products.");
                 return pastry;
             }
 
             if (pastry.Amount == amount)
             {
                 Storage.Products.Remove(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
-                Logger.LogChanges($"{pastry.ToString()} was removed from available products.");
+                Logger.Log($"{DateTime.Now.ToShortTimeString()} {pastry.ToString()} was removed from available products.");
                 return pastry;
             }
             CacheService.Set(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
@@ -64,7 +64,7 @@ namespace PastriesDelivery
         {
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
-            Logger.LogChanges($"{pastry.ToString()} and {user.ToString()} were added to orders.");
+            Logger.Log($"{DateTime.Now.ToShortTimeString()} {pastry.ToString()} and {user.ToString()} were added to orders.");
         }
 
         public List<Product> ExtractProducts()

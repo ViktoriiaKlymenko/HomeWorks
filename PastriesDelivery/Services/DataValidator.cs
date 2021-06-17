@@ -13,31 +13,10 @@ namespace PastriesDelivery
             return regex.IsMatch(address) is true;
         }
 
-<<<<<<< HEAD:PastriesDelivery/Services/DataValidator.cs
-        public bool ValidateAddress(string address)
-        {
-            var regex = new Regex(_patterns.Addresses);
-            if (regex.IsMatch(address))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool ValidatePhoneNumber(string phoneNumber)
-        {
-            var regex = new Regex(_patterns.PhoneNumbers);
-            if (regex.IsMatch(phoneNumber))
-            {
-                return true;
-            }
-            return false;
-=======
         public static bool IsPhoneNumberValid(string phoneNumber)
         {
             var regex = new Regex(phoneNumbers);
             return regex.IsMatch(phoneNumber) is false;
->>>>>>> main:PastriesDelivery/Managers/DataValidator.cs
         }
     }
 }

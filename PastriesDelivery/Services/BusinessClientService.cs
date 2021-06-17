@@ -3,9 +3,9 @@
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
-    public class BusinessClientManager : СustomerManager, ICustomerManager
+    public class BusinessClientService : СustomerService, ICustomerManager
     {
-        public BusinessClientManager(IStorage storage, ILogger logger) : base(storage, logger)
+        public BusinessClientService(IStorage storage, ILogger logger, ICacheService cacheService) : base(storage, logger, cacheService)
         {
         }
 
@@ -21,17 +21,17 @@
 
             if (pastry.Amount > 19 && pastry.Amount < 50)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.TwentyUnits;
             }
 
             if (pastry.Amount > 49 && pastry.Amount < 100)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.FiftyUnits;
             }
 
             if (pastry.Amount > 99)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
+                totalPrice -= pastry.Price / 100 * (int)DiscountPercents.HundredUnits;
             }
 
             return totalPrice;

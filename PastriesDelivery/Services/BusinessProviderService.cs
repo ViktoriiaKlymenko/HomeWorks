@@ -5,25 +5,26 @@ namespace PastriesDelivery
     /// <summary>
     /// This class contains methods intended for work with provider.
     /// </summary>
-    public class BusinessProviderManager
+    public class BusinessProviderService
     {
         private readonly IStorage _storage;
+        private readonly ILogger _logger;
+        private readonly ICacheService _cacheService;
 
-        public BusinessProviderManager(IStorage storage, ICacheService cacheService)
+        public BusinessProviderService(IStorage storage, ILogger logger, ICacheService cacheService)
         {
             _storage = storage;
+            _logger = logger;
+            _cacheService = cacheService;
         }
 
         public int SetId()
         {
-            int id = default;
-
             if (_storage.Products.Any())
             {
-                return id = _storage.Products.Max(products => products.Pastry.Id);
+                return _storage.Products.Max(product => product.Pastry.Id) + 1;
             }
-
-            return id;
+            return default;
         }
 
         public void CreateOffer(Pastry pastry, User user)
