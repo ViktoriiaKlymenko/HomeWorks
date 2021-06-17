@@ -12,8 +12,8 @@ namespace PastriesDelivery
             };
 
             var storage = storageSerializer.ExtractFomJsonFile();
-            object lockk = default;
-            var cacheService = new CacheService(new Cache(), lockk, storage);
+            object locker = new object();
+            var cacheService = new CacheService(new Cache(), storage);
             var pastry = new Pastry();
             
             var logger = new Logger

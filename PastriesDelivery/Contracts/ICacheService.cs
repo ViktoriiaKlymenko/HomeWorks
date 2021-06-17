@@ -2,7 +2,7 @@
 {
     public interface ICacheService
     {
-        Pastry GetFromCache(int id, int amount);
-        void SaveToCache(Product product);
+        Pastry Get(int id, int amount);
+        void Set(Product product);
     }
 }

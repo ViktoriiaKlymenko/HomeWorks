@@ -8,7 +8,6 @@ namespace PastriesDelivery
 {
     public interface ICache
     {
-        Queue<Order> Orders { get; set; }
         Queue<Product> Products { get; set; }
     }
 }

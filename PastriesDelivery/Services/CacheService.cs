@@ -11,43 +11,61 @@ namespace PastriesDelivery
         private readonly ICache _cache;
         private readonly IStorage _storage;
 
-
         public CacheService(ICache cache, IStorage storage)
         {
             _cache = cache;
             _storage = storage;
         }
 
-        public Pastry GetFromCache(int id, int amount)
+        public Pastry Get(int id, int amount)
         {
+            var locker = new object();
             var pastry = _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
-
+            if (pastry is null)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             if (amount < pastry.Amount || pastry.Amount == amount)
             {
-                _storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                return pastry;
+                lock (locker)
+                {
+                    _storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                    _cache.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                    return pastry;
+                }
             }
             throw new ArgumentOutOfRangeException();
         }
 
-        public void SaveToCache(Product product)
+        public void Set(Product product)
         {
+            var locker = new object();
             if (_cache.Products.Count == 5)
             {
                 if (_cache.Products.Peek().Pastry.Amount == 0)
                 {
-                    _storage.Products.Remove(_cache.Products.Peek());
+                    lock (locker)
+                    {
+                        _storage.Products.Remove(_cache.Products.Peek());
+                    }
                 }
 
                 if (product.Pastry.Amount < _storage.Products.FirstOrDefault(productFromStorage => productFromStorage == _cache.Products.Peek()).Pastry.Amount)
                 {
-                    _storage.Products.FirstOrDefault(productFromStorage => productFromStorage == _cache.Products.Peek()).Pastry.Amount = product.Pastry.Amount;
+                    lock (locker)
+                    {
+                        _storage.Products.FirstOrDefault(productFromStorage => productFromStorage == _cache.Products.Peek()).Pastry.Amount = product.Pastry.Amount;
+                    }
                 }
-
-                _cache.Products.Dequeue();
+                lock (locker)
+                {
+                    _cache.Products.Dequeue();
+                }
             }
-            _cache.Products.Enqueue(product);
+            lock (locker)
+            {
+                _cache.Products.Enqueue(product);
+            }
         }
     }
 }

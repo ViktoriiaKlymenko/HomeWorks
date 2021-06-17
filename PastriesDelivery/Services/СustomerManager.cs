@@ -23,7 +23,7 @@ namespace PastriesDelivery
             Pastry pastry = default;
             try 
             { 
-                pastry = CacheService.GetFromCache(id, amount);
+                pastry = CacheService.Get(id, amount);
                 return pastry;
             }
             catch(ArgumentOutOfRangeException) { }
@@ -40,7 +40,7 @@ namespace PastriesDelivery
             {
                 Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
                 product = Storage.Products.FirstOrDefault(product => product.Pastry.Id == id);
-                CacheService.SaveToCache(product);
+                CacheService.Set(product);
                 Logger.LogChanges($"{amount} units of {pastry.ToString()} were removed from available products.");
                 return pastry;
             }
@@ -51,7 +51,7 @@ namespace PastriesDelivery
                 Logger.LogChanges($"{pastry.ToString()} was removed from available products.");
                 return pastry;
             }
-            CacheService.SaveToCache(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
+            CacheService.Set(Storage.Products.FirstOrDefault(product => product.Pastry.Id == id));
             return pastry;
         }
 
