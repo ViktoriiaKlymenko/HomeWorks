@@ -4,16 +4,16 @@ namespace PastriesDelivery
 {
     internal class CustomerUI : IDataDisplayer
     {
-        protected readonly ICustomerManager Manager;
+        protected readonly ICustomerManager Service;
 
-        public CustomerUI(ICustomerManager manager)
+        public CustomerUI(ICustomerManager service)
         {
-            Manager = manager;
+            Service = service;
         }
 
         public void DisplayAvailableProducts()
         {
-            var products = Manager.ExtractProducts();
+            var products = Service.ExtractProducts();
 
             foreach (var product in products)
             {
