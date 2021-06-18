@@ -10,6 +10,7 @@ namespace PastriesDelivery
             var currencyConverter = new CurrencyService();
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
+            var logger = new Logger();
             while (true)
             {
                 Messenger.GreetUser();
@@ -17,24 +18,25 @@ namespace PastriesDelivery
 
                 if (user is "provider")
                 {
-                    WorkWithProvider(pastry, storage);
+                    WorkWithProvider(pastry, storage, logger);
                 }
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage, currencyConverter);
+                    WorkWithConsumer(pastry, storage, logger, currencyConverter);
+
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage, currencyConverter);
+                    WorkWithBusinessClient(pastry, storage, logger, currencyConverter);
                 }
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, Storage storage)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
         {
-            var providerManager = new BusinessProviderManager(storage);
+            var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
             {
                 Name = "Some Name",
@@ -55,18 +57,18 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, ILogger logger, ICurrencyService currencyConverter)
         {
             bool dataIsPresent;
             int id, amount;
-            var consumerManager = new ConsumerManager(storage, currencyConverter);
+            var consumerManager = new ConsumerManager(storage, logger, currencyConverter);
             var consumer = new User
             {
                 Role = Role.Сustomer
             };
             var displayer = new CustomerUI(consumerManager);
             Messenger.ShowAvailableProductsMessage();
-            dataIsPresent = consumerManager.CheckForDataPresence();
+            dataIsPresent = consumerManager.CheckForDataPrescence();
 
             if (dataIsPresent)
             {
@@ -101,18 +103,18 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ILogger logger, ICurrencyService currencyConverter)
         {
             bool dataIsPresent;
             int id, amount;
-            var businessClientManager = new BusinessClientManager(storage, currencyConverter);
+            var businessClientManager = new BusinessClientManager(storage, logger, currencyConverter);
             var businessClient = new User
             {
                 Role = Role.Сustomer
             };
             Messenger.ShowAvailableProductsMessage();
             var displayer = new CustomerUI(businessClientManager);
-            dataIsPresent = businessClientManager.CheckForDataPresence();
+            dataIsPresent = businessClientManager.CheckForDataPrescence();
 
             if (dataIsPresent)
             {
@@ -153,30 +155,18 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
-            Messenger.ShowCancelMessage();
+            Messenger.ShowExitMessage();
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-
-                if (user.Address is "stop")
-                {
-                    return null;
-                }
-
-            } while (DataValidator.ValidateAddress(user.Address));
+            } while (!DataValidator.IsAddressValid(user.Address));
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
-
-                if (user.Address is "stop")
-                {
-                    return null;
-                }
-
-            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+            } while (!DataValidator.IsPhoneNumberValid(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
@@ -186,6 +176,7 @@ namespace PastriesDelivery
         private static int GetAmount()
         {
             int amount = default;
+
             do
             {
                 Console.Write("Please, enter amount: ");
@@ -195,14 +186,15 @@ namespace PastriesDelivery
                     amount = res;
                     return amount;
                 }
-
             } while (amount == default);
+
             return amount;
         }
 
         private static int GetId()
         {
             int id = default;
+
             do
             {
                 Console.Write("Please, enter id: ");
@@ -212,8 +204,8 @@ namespace PastriesDelivery
                     id = res;
                     return id;
                 }
-
             } while (id == default);
+
             return id;
         }
     }
