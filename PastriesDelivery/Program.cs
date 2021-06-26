@@ -130,14 +130,11 @@ namespace PastriesDelivery
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);
-
                         if (businessClient is null)
                         {
                             return;
                         }
-
-                        var order = businessClientManager.CreateOrder(pastry, businessClient);
-                        displayer.DisplayOrder(order);
+                        businessClientManager.CreateOrder(pastry, businessClient);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
