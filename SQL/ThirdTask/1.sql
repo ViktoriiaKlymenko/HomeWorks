@@ -4,11 +4,5 @@ SELECT [ProductID]
       ,[CategoryID]
       ,[QuantityPerUnit]
       ,[UnitPrice]
-  FROM [dbo].[Products]
-    GROUP BY [ProductID]
-      ,[ProductName]
-      ,[SupplierID]
-      ,[CategoryID]
-      ,[QuantityPerUnit]
-      ,[UnitPrice]
-	HAVING [UnitPrice] > (SELECT AVG(UnitPrice) FROM [dbo].[Products])
+  FROM [dbo].[Products]  
+  WHERE [UnitPrice] > (SELECT AVG(UnitPrice) FROM [dbo].[Products])
