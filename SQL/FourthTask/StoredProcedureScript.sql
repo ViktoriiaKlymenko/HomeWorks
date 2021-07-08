@@ -1,0 +1,2 @@
+EXEC [AddNewId] 'RegionName', 'RegionDescription'
+
