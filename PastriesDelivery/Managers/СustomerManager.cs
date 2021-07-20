@@ -8,12 +8,13 @@ namespace PastriesDelivery
     {
         protected IStorage Storage { get; }
         protected ICurrencyService Converter { get; }
+        protected readonly ILogger Logger;
 
-        public СustomerManager(IStorage storage, ICurrencyService converter)
-        {
-            
+        public СustomerManager(IStorage storage, ICurrencyService converter, ILogger logger)
+        {            
             Storage = storage;
             Converter = converter;
+            Logger = logger;
         }
 
         public Pastry ChooseProduct(int id, int amount)
@@ -29,19 +30,21 @@ namespace PastriesDelivery
             if (amount < pastry.Amount)
             {
                 Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
+                Logger.Log($"{amount} units of {pastry.ToString()} were removed from available products.");
                 return pastry;
             }
 
             if (pastry.Amount == amount)
             {
                 Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
+                Logger.Log($"{pastry.ToString()} was removed from available products.");
                 return pastry;
             }
 
             return pastry;
         }
 
-        public bool CheckForDataPresence()
+        public bool CheckForDataPrescence()
         {
             return Storage.Products.Count is not 0;
         }
@@ -50,6 +53,7 @@ namespace PastriesDelivery
         {
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            Logger.Log($"{pastry.ToString()} and {user.ToString()} were added to orders.");
             return Storage.Orders.Last();
         }
 
