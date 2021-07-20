@@ -4,9 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThirdModule.Enums
+namespace ThirdModule
 {
-    class OrderStatus
+    public enum OrderStatus
     {
+        ProcessingStock,
+        ReadyForPacking,
+        ReadyToDeliver,
+        DeliveryInProgress,
+        Delivered,
+        Received,
+        Returned
     }
 }
