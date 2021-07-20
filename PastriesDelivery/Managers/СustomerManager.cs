@@ -10,9 +10,8 @@ namespace PastriesDelivery
         protected readonly ILogger Logger;
         protected ICurrencyService Converter { get; }
 
-        public СustomerManager(IStorage storage, ILogger logger, ICurrencyService converter)
-        {
-
+        public СustomerManager(IStorage storage, ICurrencyService converter, ILogger logger)
+        {            
             Storage = storage;
             Converter = converter;
             Logger = logger;

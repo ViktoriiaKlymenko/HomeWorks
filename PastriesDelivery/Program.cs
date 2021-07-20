@@ -23,19 +23,18 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage, logger, currencyConverter);
-
+                    WorkWithConsumer(pastry, storage, currencyConverter, logger);
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage, logger, currencyConverter);
+                    WorkWithBusinessClient(pastry, storage, currencyConverter, logger);
                 }
                 StorageSerializer.SaveToJsonFile(storage);
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
@@ -58,7 +57,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, Storage storage, ILogger logger, ICurrencyService currencyConverter)
+        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -104,7 +103,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ILogger logger, ICurrencyService currencyConverter)
+        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -138,6 +137,14 @@ namespace PastriesDelivery
                         }
                       
                         businessClientManager.CreateOrder(pastry, businessClient);
+
+                        if (businessClient is null)
+                        {
+                            return;
+                        }
+
+                        var order = businessClientManager.CreateOrder(pastry, businessClient);
+                        displayer.DisplayOrder(order);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
@@ -160,8 +167,8 @@ namespace PastriesDelivery
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-             
-                if(user.Address is "stop")
+
+                if (user.Address is "stop")
                 {
                     return null;
                 }
@@ -178,8 +185,8 @@ namespace PastriesDelivery
                     return null;
                 }
 
-            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));          
-          
+            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
             return user;

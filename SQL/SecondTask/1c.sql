@@ -1,0 +1,3 @@
+SELECT *
+INTO Users1
+FROM Users
