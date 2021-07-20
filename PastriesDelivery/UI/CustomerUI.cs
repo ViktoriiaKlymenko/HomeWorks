@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -21,9 +22,19 @@ namespace PastriesDelivery
                 Console.WriteLine("Pastry name: " + product.Pastry.Name);
                 Console.WriteLine("Pastry type: " + product.Pastry.Type);
                 Console.WriteLine("Pastry weight: " + product.Pastry.Weight + " gr");
-                Console.WriteLine("Pastry price: " + product.Pastry.Price + " USD");
+                Console.WriteLine("Pastry price: " + product.Pastry.Price + " UAH");
                 Console.WriteLine("Pastry amount: " + product.Pastry.Amount);
             }
+        }
+
+        internal void DisplayOrder(Order order)
+        {
+            Console.WriteLine("Pastry name: " + order.Pastry.Name);
+            Console.WriteLine("Pastry type: " + order.Pastry.Type);
+            Console.WriteLine("Pastry weight: " + order.Pastry.Weight + " gr");
+            Console.WriteLine("Pastry amount: " + order.Pastry.Amount);
+            Console.WriteLine("Pastry price in UAH: " + order.TotalPrice);
+            Console.WriteLine("Pastry price in USD:" + Manager.ConvertToUSD(order.TotalPrice));
         }
     }
 }

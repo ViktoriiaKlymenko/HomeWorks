@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -6,6 +7,7 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+            var currencyConverter = new CurrencyService();
             Pastry pastry = new Pastry();
             var storage = StorageSerializer.ExtractFomJsonFile();
             var logger = new Logger();
@@ -21,18 +23,18 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
-                    WorkWithConsumer(pastry, storage, logger);
+                    WorkWithConsumer(pastry, storage, currencyConverter, logger);
                 }
 
                 if (user is "business client")
                 {
-                    WorkWithBusinessClient(pastry, storage, logger);
+                    WorkWithBusinessClient(pastry, storage, currencyConverter, logger);
                 }
                 StorageSerializer.SaveToJsonFile(storage);
             }
         }
 
-        private static void WorkWithProvider(Pastry pastry, IStorage storage, ILogger logger)
+        private static void WorkWithProvider(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             var providerManager = new BusinessProviderManager(storage, logger);
             var provider = new User
@@ -55,7 +57,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ILogger logger)
+        private static void WorkWithConsumer(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -84,7 +86,8 @@ namespace PastriesDelivery
                     {
                         pastry = consumerManager.ChooseProduct(id, amount);
                         consumer = GetUserInformation(consumer);
-                        consumerManager.CreateOrder(pastry, consumer);
+                        var order = consumerManager.CreateOrder(pastry, consumer);
+                        displayer.DisplayOrder(order);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
@@ -100,7 +103,7 @@ namespace PastriesDelivery
             }
         }
 
-        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ILogger logger)
+        private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ICurrencyConverter currencyConverter, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
@@ -127,11 +130,14 @@ namespace PastriesDelivery
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);
-                        if(businessClient is null)
+
+                        if (businessClient is null)
                         {
                             return;
                         }
-                        businessClientManager.CreateOrder(pastry, businessClient);
+
+                        var order = businessClientManager.CreateOrder(pastry, businessClient);
+                        displayer.DisplayOrder(order);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
@@ -154,8 +160,8 @@ namespace PastriesDelivery
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
-             
-                if(user.Address is "stop")
+
+                if (user.Address is "stop")
                 {
                     return null;
                 }
@@ -172,8 +178,8 @@ namespace PastriesDelivery
                     return null;
                 }
 
-            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));          
-          
+            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
             return user;

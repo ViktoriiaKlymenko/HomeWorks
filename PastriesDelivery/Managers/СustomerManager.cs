@@ -6,12 +6,14 @@ namespace PastriesDelivery
 {
     public class СustomerManager
     {
-        protected readonly IStorage Storage;
+        protected IStorage Storage { get; }
+        protected ICurrencyService Converter { get; }
         protected readonly ILogger Logger;
 
-        public СustomerManager(IStorage storage, ILogger logger)
-        {
+        public СustomerManager(IStorage storage, ICurrencyService converter, ILogger logger)
+        {            
             Storage = storage;
+            Converter = converter;
             Logger = logger;
         }
 
@@ -47,17 +49,24 @@ namespace PastriesDelivery
             return Storage.Products.Count is not 0;
         }
 
-        public virtual void CreateOrder(Pastry pastry, User user)
+        public virtual Order CreateOrder(Pastry pastry, User user)
         {
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
             Logger.Log($"{pastry.ToString()} and {user.ToString()} were added to orders.");
+            return Storage.Orders.Last();
         }
 
         public List<Product> ExtractProducts()
         {
-            var storage = Storage.Products;
-            return storage;
+            return Storage.Products;
+        }
+
+        public decimal ConvertToUSD(decimal totalPrice)
+        {
+            var currenciesRate = Converter.DownloadCurrenciesRateAsync().Result;
+            var USDRate = currenciesRate.FirstOrDefault(currenciesRate => currenciesRate.CurrencyName == "USD");
+            return totalPrice * USDRate.Sale;
         }
     }
 }

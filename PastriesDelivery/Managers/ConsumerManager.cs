@@ -5,7 +5,7 @@
     /// </summary>
     public class ConsumerManager : СustomerManager, ICustomerManager
     {
-        public ConsumerManager(IStorage storage, ILogger logger) : base(storage, logger)
+        public BusinessClientManager(IStorage storage, ICurrencyService converter,  ILogger logger) : base(storage, converter, logger)
         {
         }
     }
