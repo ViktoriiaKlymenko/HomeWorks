@@ -1,0 +1,5 @@
+SELECT [LastName], [FirstName], [TerritoryDescription], [RegionDescription]
+  FROM [dbo].[Employees]
+  LEFT JOIN [EmployeeTerritories] ON [EmployeeTerritories].[EmployeeID]=[Employees].[EmployeeID]
+  LEFT JOIN [Territories] ON [Territories].[TerritoryID] = [EmployeeTerritories].[TerritoryID]
+  LEFT JOIN [Region] ON [Region].[RegionID]=[Territories].[TerritoryID]
