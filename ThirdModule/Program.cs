@@ -58,7 +58,7 @@ namespace ThirdModule
             }
 
             Console.WriteLine("--------------------------------");
-            var categoriesAndAmountOfProducts = products.GroupBy(product => product.Category).Select(product => new { categoryName = product.Key.Name, productsAmount = product.Count()});
+            var categoriesAndAmountOfProducts = products.GroupBy(product => product.Category).Select(product => new { categoryName = product.Key.Name, productsAmount = product.Count() });
 
             foreach (var categoryAndAmountOfProducts in categoriesAndAmountOfProducts)
             {
@@ -66,13 +66,34 @@ namespace ThirdModule
             }
 
             Console.WriteLine("--------------------------------");
-            var providersAndProducts = products.GroupBy(product => product.Provider).Select(product => new { provider = product.Key.Name, productsAmount = product.Count()}).OrderByDescending(product => product.productsAmount);
+            var providersAndProducts = products.GroupBy(product => product.Provider).Select(product => new { provider = product.Key.Name, productsAmount = product.Count() }).OrderByDescending(product => product.productsAmount);
 
             foreach (var providerAndProducts in providersAndProducts)
             {
                 Console.WriteLine($"{providerAndProducts.provider} - {providerAndProducts.productsAmount}");
             }
 
+            Console.WriteLine("--------------------------------");
+            var productsOfFirstProvider = products.Where(product => product.Provider.Name == "Dinner in the Sky");
+            var productsOfSecondProvider = products.Where(product => product.Provider.Name == "The Disaster Café");
+            var nonUniqueProducts = productsOfFirstProvider.Intersect(productsOfSecondProvider);
+            var uniqueProducts = productsOfFirstProvider.Except(productsOfSecondProvider).Concat(productsOfSecondProvider.Except(productsOfFirstProvider));
+            Console.WriteLine("Unique products:");
+
+            foreach (var uniqueProduct in uniqueProducts)
+            {
+                Console.WriteLine($"{uniqueProduct.Name}");
+            }
+
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("Non-unique products:");
+
+            foreach (var nonUniqueProduct in nonUniqueProducts)
+            {
+                Console.WriteLine($"{nonUniqueProduct.Name}");
+            }
+
+            Console.WriteLine("--------------------------------");
             Console.ReadKey();
         }
     }
