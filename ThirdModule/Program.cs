@@ -139,5 +139,10 @@ namespace ThirdModule
         {
             return products.Select(product => Convert.ToString($"{product.Name} - {product.Provider.Name}")).ToList();
         }
+
+        private static List<string> GetProductsAndProvidersAnother(List<Product> products)
+        {
+            return products.Select(product => Convert.ToString($"{product.Name} - {product.Provider.Name}")).ToList();
+        }
     }
 }
