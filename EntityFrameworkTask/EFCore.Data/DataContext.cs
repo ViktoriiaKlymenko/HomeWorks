@@ -21,7 +21,7 @@ namespace EFCore.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(@"Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EFDatabase; Integrated Security=true");
+            builder.UseSqlServer(@"Data Source=VIKTORIAPC\SQLEXPRESS01; Initial Catalog=EFDatabase; Integrated Security=true");
         }
     }
 }
