@@ -59,6 +59,13 @@ namespace ThirdModule
                 Console.WriteLine($"{productAndProvider}");
             }
 
+            var productsAndProvidersAnother = GetProductsAndProvidersAnother(products, providers);
+
+            foreach (var productAndProvider in productsAndProvidersAnother)
+            {
+                Console.WriteLine($"{productAndProvider}");
+            }
+
             Console.WriteLine("--------------------------------");
             var categoriesAndAmountOfProducts = GetCategoriesAndProductsAmount(products);
 
@@ -140,9 +147,10 @@ namespace ThirdModule
             return products.Select(product => Convert.ToString($"{product.Name} - {product.Provider.Name}")).ToList();
         }
 
-        private static List<string> GetProductsAndProvidersAnother(List<Product> products)
+        private static List<string> GetProductsAndProvidersAnother(List<Product> products, List<Provider> providers)
         {
-            return products.Select(product => Convert.ToString($"{product.Name} - {product.Provider.Name}")).ToList();
+            return products.Join(providers, prod => prod.Provider.Id, prov => prov.Id, (prod, prov) => Convert.ToString($"{prod.Name} - {prov.Name}")).ToList();
         }
+
     }
 }
