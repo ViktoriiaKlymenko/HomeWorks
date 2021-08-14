@@ -8,5 +8,6 @@ namespace EntityFrameworkTask
 {
     public class Client : User
     {
+        public string Address { get; set; }
     }
 }
