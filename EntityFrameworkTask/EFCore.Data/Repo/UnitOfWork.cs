@@ -22,17 +22,17 @@ namespace EFCore.Data.Repo
             Categories = new CategoryRepository(_context);
         }
 
-        public IProductRepository Products { get; }
+        public IProductRepository Products { get; private set; }
 
-        public IOrderRepository Orders { get; }
+        public IOrderRepository Orders { get; private set; }
 
-        public IProviderRepository Providers { get; }
+        public IProviderRepository Providers { get; private set; }
 
-        public IClientRepository Clients { get; }
+        public IClientRepository Clients { get; private set; }
 
-        public ICategoryRepository Categories { get; }
+        public ICategoryRepository Categories { get; private set; }
 
-        public ICourierRepository Couriers { get; }
+        public ICourierRepository Couriers { get; private set; }
 
         public int Complete()
         {

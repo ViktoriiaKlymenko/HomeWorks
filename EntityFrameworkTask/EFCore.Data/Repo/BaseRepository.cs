@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.Data
 {
-    public class BaseRepository<T> : IRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected DataContext Context;
 
