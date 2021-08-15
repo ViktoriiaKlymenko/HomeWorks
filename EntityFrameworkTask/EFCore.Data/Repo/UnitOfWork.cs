@@ -14,34 +14,34 @@ namespace EFCore.Data.Repo
         public UnitOfWork(DataContext context)
         {
             _context = context;
-            var products = new ProductRepository(_context);
-            var providers = new ProviderRepository(_context);
-            var clients = new ClientRepository(_context);
-            var couriers = new CourierRepository(_context);
-            var orders = new OrderRepository(_context);
-            var categories = new CategoryRepository(_context);
+            Products = new ProductRepository(_context);
+            Providers = new ProviderRepository(_context);
+            Clients = new ClientRepository(_context);
+            Couriers = new CourierRepository(_context);
+            Orders = new OrderRepository(_context);
+            Categories = new CategoryRepository(_context);
         }
 
-        public IProductRepository Products => throw new NotImplementedException();
+        public IProductRepository Products { get; }
 
-        public IOrderRepository Orders => throw new NotImplementedException();
+        public IOrderRepository Orders { get; }
 
-        public IProviderRepository Providers => throw new NotImplementedException();
+        public IProviderRepository Providers { get; }
 
-        public IClientRepository Clients => throw new NotImplementedException();
+        public IClientRepository Clients { get; }
 
-        public ICategoryRepository Categories => throw new NotImplementedException();
+        public ICategoryRepository Categories { get; }
 
-        public ICourierRepository Couriers => throw new NotImplementedException();
+        public ICourierRepository Couriers { get; }
 
         public int Complete()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

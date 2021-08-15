@@ -1,4 +1,5 @@
-﻿using EntityFrameworkTask;
+﻿using EFCore.Data.Interfaces;
+using EntityFrameworkTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.Data.Repo
 {
-    public class OrderRepository: BaseRepository<Order>
+    public class OrderRepository: BaseRepository<Order>, IOrderRepository
     {
         public OrderRepository(DataContext context) : base(context)
         {
