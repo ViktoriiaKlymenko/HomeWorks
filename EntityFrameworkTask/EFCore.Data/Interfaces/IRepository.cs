@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.Data.Interfaces
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
         where T : class
     {
         T Get(int id);
