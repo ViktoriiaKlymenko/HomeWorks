@@ -16,5 +16,10 @@ namespace EntityFrameworkTask
         public DateTime DeliveryTime { get; set; }
         public int CourierId { get; set; }
         public decimal DeliveryPrice { get; set; }
+        public DateTime DeliveryTimeEstimated { get; set; }
+        public Order()
+        {
+            DeliveryTimeEstimated = OrderTime.AddDays(3);
+        }
     }
 }
