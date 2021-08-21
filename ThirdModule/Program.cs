@@ -125,31 +125,31 @@ namespace ThirdModule
 
         private static List<string> GetProvidersAndProductsAmount(List<Product> products)
         {
-            var tuple = (products.GroupBy(product => product.Provider)
+            var providersAndProductsSorted = (products.GroupBy(product => product.Provider)
                 .Select(product => product.Key.Name)
                 .OrderByDescending(product => product.Count())
                 .ToList(), products
                 .GroupBy(product => product.Provider)
                 .Select(product => product.Count()).OrderByDescending(product => product).ToList());
-            var providersAndAmountOfProducts = tuple.Item1.Zip(tuple.Item2, (provider, productsAmount) => Convert.ToString($"{provider} - {productsAmount}")).ToList();
+            var providersAndAmountOfProducts = providersAndProductsSorted.Item1.Zip(providersAndProductsSorted.Item2, (provider, productsAmount) => $"{provider} - {productsAmount}").ToList();
             return providersAndAmountOfProducts;
         }
 
         private static List<string> GetCategoriesAndProductsAmount(List<Product> products)
         {
-            var CategoriesAndProductsAmount = products.GroupBy(product => product.Category)
-                .Select(product =>  Convert.ToString($"{product.Key.Name} - {product.Count()}")).ToList();
-                return CategoriesAndProductsAmount;
+            var categoriesAndProductsAmount = products.GroupBy(product => product.Category)
+                .Select(product =>  $"{product.Key.Name} - {product.Count()}").ToList();
+                return categoriesAndProductsAmount;
         }
 
         private static List<string> GetProductsAndProviders(List<Product> products)
         {
-            return products.Select(product => Convert.ToString($"{product.Name} - {product.Provider.Name}")).ToList();
+            return products.Select(product => $"{product.Name} - {product.Provider.Name}").ToList();
         }
 
         private static List<string> GetProductsAndProvidersAnother(List<Product> products, List<Provider> providers)
         {
-            return products.Join(providers, prod => prod.Provider.Id, prov => prov.Id, (prod, prov) => Convert.ToString($"{prod.Name} - {prov.Name}")).ToList();
+            return products.Join(providers, prod => prod.Provider.Id, prov => prov.Id, (prod, prov) => $"{prod.Name} - {prov.Name}").ToList();
         }
 
     }
