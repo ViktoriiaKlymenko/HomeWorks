@@ -20,7 +20,7 @@ namespace EFCore.UI
                 {
                     Console.WriteLine(product);
                 }
-                unitOfWork.Products.RemoveRange(sortedProducts); //
+                unitOfWork.Products.RemoveRange(sortedProducts);
             }
                 
                 Console.ReadKey();
