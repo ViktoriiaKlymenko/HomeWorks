@@ -15,7 +15,7 @@ namespace DapperTask
             var repository = new Repository(configuration.GetConnectionString("ConnectionString"));
 
             var some = repository.GetProductById(1);
-            Console.WriteLine(some);
+            Console.WriteLine(some.Name);
             Console.ReadKey();
         }
         private static IConfiguration Initialize()
