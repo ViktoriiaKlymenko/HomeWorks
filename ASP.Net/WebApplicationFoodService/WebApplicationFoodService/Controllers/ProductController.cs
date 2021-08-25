@@ -13,17 +13,17 @@ namespace WebApplicationFoodService.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
-
-        public ProductController(ILogger<ProductController> logger)
+        private readonly ICustomerManager _customerManager;
+        public ProductController(ILogger<ProductController> logger, ICustomerManager customerManager)
         {
             _logger = logger;
+            _customerManager = customerManager;
         }
         // GET 
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            var customerManager = new СustomerManager(new Storage(), new CurrencyService());
-            return customerManager.ExtractProducts().ToArray();
+            return _customerManager.ExtractProducts().ToArray();
         }
     }
 }
