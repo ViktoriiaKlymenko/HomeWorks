@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationFoodService", "WebApplicationFoodService\WebApplicationFoodService.csproj", "{7C7ECF3E-67CF-41D4-B3D5-E9DDD6D373D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PastriesDelivery", "..\..\PastriesDelivery\PastriesDelivery.csproj", "{506D7281-6F42-4C79-891B-1C64A8FB6518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL+DAL", "..\..\PastriesDelivery\BLL+DAL.csproj", "{506D7281-6F42-4C79-891B-1C64A8FB6518}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
