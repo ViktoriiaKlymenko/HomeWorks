@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityFrameworkTask;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace EFCore.Data.Interfaces
 {
     public interface ICourierRepository
     {
+        public IEnumerable<Courier> SortBySalary();
     }
 }

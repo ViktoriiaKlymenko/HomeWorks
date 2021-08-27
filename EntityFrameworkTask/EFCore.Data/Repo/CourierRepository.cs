@@ -13,5 +13,10 @@ namespace EFCore.Data.Repo
         public CourierRepository(DataContext context) : base(context)
         {
         }
+
+        public IEnumerable<Courier> SortBySalary()
+        {
+            return Context.Set<Courier>().OrderBy(c => c.Salary);
+        }
     }
 }
