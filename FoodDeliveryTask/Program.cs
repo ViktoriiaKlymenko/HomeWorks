@@ -6,6 +6,7 @@ namespace FoodDeliveryTask
 {
     internal class HomeWork
     {
+        public const double USDCoefficient = 1.19;
         private static IEnumerable<decimal> NormalizeCurrencies(IEnumerable<decimal> prices, IEnumerable<string> currencies)
         {
             var currenciesList = currencies.ToList();
@@ -15,10 +16,11 @@ namespace FoodDeliveryTask
             {
                 if (currenciesList[i] is not "USD")
                 {
-                    discountedPricesList[i] = discountedPricesList[i] * Convert.ToDecimal(1.19);
+                    discountedPricesList[i] = discountedPricesList[i] * (decimal)USDCoefficient;
                     currenciesList[i] = "USD";
                 }
             }
+
             return discountedPricesList;
         }
 
@@ -57,6 +59,7 @@ namespace FoodDeliveryTask
                 }
                 i++;
             }
+
             return discountedPrices;
         }
 
@@ -72,6 +75,7 @@ namespace FoodDeliveryTask
                     discountedPricesList[i + 1] -= discountedPricesList[i + 1] / 100 * 15;
                 }
             }
+
             return discountedPricesList;
         }
 
@@ -88,10 +92,12 @@ namespace FoodDeliveryTask
             {
                 discountedPrices[id] -= discountedPrices[id] / 100 * 50;
             }
+
             foreach (var id in childrenIdsList)
             {
                 discountedPrices[id] -= discountedPrices[id] / 100 * 25;
             }
+
             return discountedPrices;
         }
 
@@ -101,6 +107,7 @@ namespace FoodDeliveryTask
             {
                 return true;
             }
+
             return false;
         }
 
@@ -133,6 +140,7 @@ namespace FoodDeliveryTask
             {
                 fullPrice += discountedPrice[i];
             }
+
             return fullPrice;
         }
 

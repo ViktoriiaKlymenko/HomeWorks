@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
     public class ConsumerManager : СustomerManager, ICustomerManager
     {
-        public ConsumerManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
+        public BusinessClientManager(IStorage storage, ICurrencyService converter,  ILogger logger) : base(storage, converter, logger)
         {
         }
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PastriesDelivery
+﻿namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains consumer's main information to embody b2c deals.

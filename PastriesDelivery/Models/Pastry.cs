@@ -12,5 +12,11 @@
         public string Type { get; set; }
         public decimal Price { get; set; }
         public int Amount { get; set; }
+
+        public override string ToString()
+        {
+            var str = $"Id: {Id}; name: {Name}; type: {Type}; weight: {Weight}; price: {Price}; amount: {Amount};";
+            return str;
+        }
     }
 }
