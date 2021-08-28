@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EntityFrameworkTask;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery;
 using System;
@@ -23,7 +24,7 @@ namespace WebApplicationFoodService.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            return _customerManager.ExtractProducts().ToArray();
+            return _customerManager.ExtractProducts();
         }
     }
 }

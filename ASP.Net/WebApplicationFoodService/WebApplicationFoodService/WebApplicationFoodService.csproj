@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\PastriesDelivery\BLL+DAL.csproj" />
+    <ProjectReference Include="..\..\..\PastriesDelivery\PastriesDelivery.csproj" />
   </ItemGroup>
 
 </Project>

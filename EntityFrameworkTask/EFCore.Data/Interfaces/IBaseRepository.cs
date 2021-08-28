@@ -8,12 +8,13 @@ namespace EFCore.Data.Interfaces
     {
         T Get(int id);
         IEnumerable<T> GetAll();
-        IEnumerable<T> Find(Func<T, bool> predicate);
+        T Find(Func<T, bool> predicate);
 
         void Add(T item); 
         void AddRange(IEnumerable<T> item); 
 
         void Remove(T item); 
-        void RemoveRange(IEnumerable<T> item); 
+        void RemoveRange(IEnumerable<T> item);
+        int Count();
     }
 }

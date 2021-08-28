@@ -1,71 +1,63 @@
 ﻿using EFCore.Data.Interfaces;
+using EntityFrameworkTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntityFrameworkTask;
 
 namespace PastriesDelivery
 {
     public class СustomerManager
     {
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IStorage Storage { get; }
-        protected ICurrencyService Converter { get; }
+        protected readonly IUnitOfWork UnitOfWork;
+        protected readonly ILogger Logger;
 
-        public СustomerManager(IStorage storage, ICurrencyService converter)
+        public СustomerManager(IUnitOfWork unitOfWork, ILogger logger)
         {
-            
-            Storage = storage;
-            Converter = converter;
+            UnitOfWork = unitOfWork;
+            Logger = logger;
         }
 
-        public Pastry ChooseProduct(int id, int amount)
+        public Product ChooseProduct(int id, int amount)
         {
             var availableProducts = ExtractProducts();
-            var pastry = availableProducts.FirstOrDefault(product => product.Pastry.Id == id).Pastry;
+            var product = availableProducts.FirstOrDefault(p => p.Id == id);
 
-            if (amount > pastry.Amount || amount <= 0)
+            if (amount > product.Amount || amount <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (amount < pastry.Amount)
+            if (amount < product.Amount)
             {
-                Storage.Products.FirstOrDefault(product => product.Pastry.Id == id).Pastry.Amount -= amount;
-                return pastry;
+                UnitOfWork.Products.Find(p => p.Id == id).Amount -= amount;
+                Logger.Log($"{amount} units of {product.ToString()} were removed from available products.");
+                return product;
             }
 
-            if (pastry.Amount == amount)
+            if (product.Amount == amount)
             {
-                Storage.Products.Remove(availableProducts.FirstOrDefault(product => product.Pastry.Id == id));
-                return pastry;
+                UnitOfWork.Products.Remove(availableProducts.FirstOrDefault(product => product.Id == id));
+                Logger.Log($"{product.ToString()} was removed from available products.");
+                return product;
             }
 
-            return pastry;
+            return product;
         }
 
-        public bool CheckForDataPresence()
+        public bool CheckForDataPrescence()
         {
-            return Storage.Products.Count is not 0;
+            return UnitOfWork.Products.Count() is not 0;
         }
 
-        public virtual Order CreateOrder(Pastry pastry, User user)
+        public virtual void CreateOrder(Order order)
         {
-            var totalPrice = pastry.Price * pastry.Amount;
-            Storage.Orders.Add(new Order(pastry, user, totalPrice));
-            return Storage.Orders.Last();
+            UnitOfWork.Orders.Add(order);
+            Logger.Log($"{order.ToString()} was added to orders.");
         }
 
         public List<Product> ExtractProducts()
         {
-            return UnitOfWork.Products.GetAll();
-        }
-
-        public decimal ConvertToUSD(decimal totalPrice)
-        {
-            var currenciesRate = Converter.DownloadCurrenciesRateAsync().Result;
-            var USDRate = currenciesRate.FirstOrDefault(currenciesRate => currenciesRate.CurrencyName == "USD");
-            return totalPrice * USDRate.Sale;
+            return UnitOfWork.Products.GetAll().ToList();
         }
     }
 }

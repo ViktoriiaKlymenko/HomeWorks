@@ -1,47 +1,45 @@
-﻿using System;
+﻿using EntityFrameworkTask;
+using System;
 
 namespace PastriesDelivery
 {
     public class ProviderUI
     {
-        public static Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
+        public static Product AcceptData(Product product)
         {
-            Console.WriteLine();
-            pastry.Id = manager.SetId() + 1;
-            pastry.Name = Console.ReadLine();
-            pastry.Type = Console.ReadLine();
+            product.Name = Console.ReadLine();
 
             do
             {
 
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
-                    pastry.Weight = result;
+                    product.Weight = result;
                 }
 
-            } while (pastry.Weight == default);
+            } while (product.Weight == default);
 
             do
             {
 
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
-                    pastry.Price = result;
+                    product.Price = result;
                 }
 
-            } while (pastry.Price == default);
+            } while (product.Price == default);
 
             do
             {
 
                 if (int.TryParse(Console.ReadLine(), out int result))
                 {
-                    pastry.Amount = result;
+                    product.Amount = result;
                 }
 
-            } while (pastry.Amount == default);
+            } while (product.Amount == default);
 
-            return pastry;
+            return product;
         }
     }
 }

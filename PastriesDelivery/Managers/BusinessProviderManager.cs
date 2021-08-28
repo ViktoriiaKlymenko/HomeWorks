@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using EFCore.Data.Interfaces;
+using EntityFrameworkTask;
+using System.Linq;
 
 namespace PastriesDelivery
 {
@@ -7,25 +9,19 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessProviderManager
     {
-        private readonly IStorage _storage;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public BusinessProviderManager(IStorage storage)
+        public BusinessProviderManager(IUnitOfWork unitOfWork, ILogger logger)
         {
-            _storage = storage;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
-        public int SetId()
-        {
-            if (_storage.Products.Any())
-            {
-                return _storage.Products.Max(product => product.Pastry.Id) + 1;
-            }
-            return default;
-        }
 
-        public void CreateOffer(Pastry pastry, User user)
+        public void CreateOffer(Product product, Provider provider)
         {
-            _storage.Products.Add(new Product(pastry, user));
+            _unitOfWork.Products.Add(product);
         }
     }
 }

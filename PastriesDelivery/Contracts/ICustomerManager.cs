@@ -1,3 +1,4 @@
+﻿using EntityFrameworkTask;
 using System.Collections.Generic;
 
 namespace PastriesDelivery
@@ -5,6 +6,5 @@ namespace PastriesDelivery
     public interface ICustomerManager
     {
         List<Product> ExtractProducts();
-        decimal ConvertToUSD(decimal totalPrice);
     }
 }

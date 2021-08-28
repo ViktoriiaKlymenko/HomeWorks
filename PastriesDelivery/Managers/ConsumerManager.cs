@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using EFCore.Data.Interfaces;
 
 namespace PastriesDelivery
 {
@@ -8,7 +7,7 @@ namespace PastriesDelivery
     /// </summary>
     public class ConsumerManager : СustomerManager, ICustomerManager
     {
-        public ConsumerManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
+        public ConsumerManager(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
         {
         }
     }

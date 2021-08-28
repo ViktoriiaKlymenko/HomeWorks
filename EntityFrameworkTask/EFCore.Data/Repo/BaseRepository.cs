@@ -38,9 +38,9 @@ namespace EFCore.Data
             return Context.Set<T>().ToList();
         }
 
-        public IEnumerable<T> Find(Func<T, bool> predicate)
+        public T Find(Func<T, bool> predicate)
         {
-            return Context.Set<T>().Where(predicate);
+            return Context.Set<T>().Where(predicate).FirstOrDefault();
         }
 
         public void Remove(T item)
@@ -51,6 +51,11 @@ namespace EFCore.Data
         public void RemoveRange(IEnumerable<T> item)
         {
             Context.Set<T>().RemoveRange(item);
+        }
+
+        public int Count()
+        {
+            return Context.Set<T>().Count<T>();
         }
     }
 }

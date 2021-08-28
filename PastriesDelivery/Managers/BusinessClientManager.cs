@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using EFCore.Data.Interfaces;
+using EFCore.Data.Repo;
+using EntityFrameworkTask;
 
 namespace PastriesDelivery
 {
@@ -8,37 +9,37 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessClientManager : СustomerManager, ICustomerManager
     {
-        public BusinessClientManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
+        private const int twentyUnitsConstant = 3;
+        private const int fiftyUnitsConstant = 4;
+        private const int hundredUnitsConstant = 5;
+        public BusinessClientManager(IUnitOfWork unitOfWork, ILogger logger) : base(unitOfWork, logger)
         {
         }
 
-        public override Order CreateOrder(Pastry pastry, User user)
+        public override void CreateOrder(Order order)
         {
-            var totalPrice = ApplyDiscount(pastry);
-            Storage.Orders.Add(new Order(pastry, user, totalPrice));
-            return Storage.Orders.Last();
+            var totalPrice = ApplyDiscount(order);
+            UnitOfWork.Orders.Add(order);
         }
 
-        private decimal ApplyDiscount(Pastry pastry)
+        private Order ApplyDiscount(Order order)
         {
-            decimal totalPrice = default;
-
-            if (pastry.Amount > 19 && pastry.Amount < 50)
+            if (UnitOfWork.Products.Find(p => p.Id == order.ProductId).Amount > 19 && UnitOfWork.Products.Find(p => p.Id == order.ProductId).Amount < 50)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.TwentyUnits;
+                order.TotalPrice -= order.TotalPrice / 100 * twentyUnitsConstant;
             }
 
-            if (pastry.Amount > 49 && pastry.Amount < 100)
+            if (UnitOfWork.Products.Find(p => p.Id == order.ProductId).Amount > 49 && UnitOfWork.Products.Find(p => p.Id == order.ProductId).Amount < 100)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.FiftyUnits;
+                order.TotalPrice -= order.TotalPrice / 100 * fiftyUnitsConstant;
             }
 
-            if (pastry.Amount > 99)
+            if (UnitOfWork.Products.Find(p => p.Id == order.ProductId).Amount > 99)
             {
-                totalPrice -= pastry.Price / 100 * (int)DiscountPercentEnum.HundredUnits;
+                order.TotalPrice -= order.TotalPrice / 100 * hundredUnitsConstant;
             }
 
-            return totalPrice;
+            return order;
         }
     }
 }
