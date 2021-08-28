@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EntityFrameworkTask\EntityFrameworkTask.csproj" />
+    <ProjectReference Include="..\EFCore.Data\EFCore.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using EFCore.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using EntityFrameworkTask;
 
 namespace PastriesDelivery
 {
     public class СustomerManager
     {
+        protected IUnitOfWork UnitOfWork { get; }
         protected IStorage Storage { get; }
         protected ICurrencyService Converter { get; }
 
@@ -55,7 +58,7 @@ namespace PastriesDelivery
 
         public List<Product> ExtractProducts()
         {
-            return Storage.Products;
+            return UnitOfWork.Products.GetAll();
         }
 
         public decimal ConvertToUSD(decimal totalPrice)
