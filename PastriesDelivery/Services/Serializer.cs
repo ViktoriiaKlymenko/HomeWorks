@@ -7,7 +7,7 @@ using EFCore.Data;
 
 namespace PastriesDelivery
 {
-    public static class StorageSerializer
+    public static class Serializer
     {
         private static string fileName = "serialized_storage.json";
 

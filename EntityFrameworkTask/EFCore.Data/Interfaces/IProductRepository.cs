@@ -6,6 +6,7 @@ namespace EFCore.Data
 {
     public interface IProductRepository: IBaseRepository<Product>
     {
-        public IEnumerable<Product> SortByPrice();
+        IEnumerable<Product> SortByPrice();
+        int GetMaxId();
     }
 }

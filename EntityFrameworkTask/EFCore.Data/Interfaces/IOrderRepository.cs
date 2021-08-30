@@ -9,5 +9,6 @@ namespace EFCore.Data.Interfaces
 {
     public interface IOrderRepository: IBaseRepository<Order>
     {
+        int GetMaxId();
     }
 }

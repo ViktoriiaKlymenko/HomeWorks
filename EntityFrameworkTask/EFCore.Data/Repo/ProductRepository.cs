@@ -17,5 +17,10 @@ namespace EFCore.Data.Repo
         {
             return Context.Set<Product>().OrderBy(product => product).ToList();
         }
+
+        public int GetMaxId()
+        {
+            return Context.Set<Product>().Max<Product>(p => p.Id);
+        }
     }
 }

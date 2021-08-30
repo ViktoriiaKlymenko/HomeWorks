@@ -14,13 +14,22 @@ namespace EntityFrameworkTask
         public decimal TotalPrice { get; set; }
         public DateTime OrderTime { get; set; }
         public OrderStatus Status { get; set; }
-        public DateTime DeliveryTime { get; set; }
+        public int DeliveryDays { get; set; }
         public int CourierId { get; set; }
         public decimal DeliveryPrice { get; set; }
         public DateTime DeliveryTimeEstimated { get; set; }
-        public Order()
+        public Order(int id, int clientId, int productId, decimal totalPrice, OrderStatus status, int courierId, decimal deliveryPrice)
         {
-            DeliveryTimeEstimated = OrderTime.AddDays(3);
+            Id = id;
+            ClientId = clientId;
+            ProductId = productId;
+            TotalPrice = totalPrice;
+            OrderTime = new DateTime();
+            DeliveryDays = 3;
+            Status = status;
+            CourierId = courierId;
+            DeliveryPrice = 30;
+            DeliveryTimeEstimated = OrderTime.AddDays(DeliveryDays);
         }
     }
 }

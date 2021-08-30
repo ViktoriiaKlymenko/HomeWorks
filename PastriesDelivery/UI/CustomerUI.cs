@@ -4,9 +4,9 @@ namespace PastriesDelivery
 {
     internal class CustomerUI : IDataDisplayer
     {
-        protected readonly ICustomerManager Manager;
+        protected readonly IProductService Manager;
 
-        public CustomerUI(ICustomerManager manager)
+        public CustomerUI(IProductService manager)
         {
             Manager = manager;
         }

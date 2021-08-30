@@ -12,6 +12,11 @@ namespace EFCore.Data.Repo
     {
         public OrderRepository(DataContext context) : base(context)
         {
+           
+        }
+        public int GetMaxId()
+        {
+            return Context.Set<Order>().Max<Order>(p => p.Id);
         }
     }
 }

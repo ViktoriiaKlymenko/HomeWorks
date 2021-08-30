@@ -16,5 +16,15 @@ namespace EntityFrameworkTask
         public int CategoryId { get; set; }
         public int ProviderId { get; set; }
 
+        public Product(int id, string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        {
+            Id = id;
+            Price = price;
+            Amount = amount;
+            Weight = weight;
+            CategoryId = categoryId;
+            ProviderId = providerId;
+        }
+
     }
 }      
