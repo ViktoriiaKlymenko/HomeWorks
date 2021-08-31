@@ -53,5 +53,15 @@ namespace PastriesDelivery
         {
             _unitOfWork.Orders.Add(new Order(_unitOfWork.Orders.GetMaxId() + 1, clientId, productId, totalPrice, status, courierId, deliveryPrice));
         }
+
+        public IEnumerable<Order> GetAll()
+        {
+            return _unitOfWork.Orders.GetAll();
+        }
+
+        public void Remove(Order order)
+        {
+            _unitOfWork.Orders.Remove(order);
+        }
     }
 }

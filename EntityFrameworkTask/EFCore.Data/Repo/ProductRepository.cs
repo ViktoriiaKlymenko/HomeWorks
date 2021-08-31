@@ -22,5 +22,6 @@ namespace EFCore.Data.Repo
         {
             return Context.Set<Product>().Max<Product>(p => p.Id);
         }
+
     }
 }

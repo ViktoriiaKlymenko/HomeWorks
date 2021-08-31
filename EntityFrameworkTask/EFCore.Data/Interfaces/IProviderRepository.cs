@@ -9,5 +9,6 @@ namespace EFCore.Data.Interfaces
 {
     public interface IProviderRepository: IBaseRepository<Provider>
     {
+        IEnumerable<string> GetAllNames();
     }
 }

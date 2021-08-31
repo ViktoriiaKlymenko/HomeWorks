@@ -8,7 +8,7 @@ namespace PastriesDelivery
     /// <summary>
     /// This class contains methods intended for work with provider.
     /// </summary>
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
@@ -26,6 +26,21 @@ namespace PastriesDelivery
         public void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             _unitOfWork.Products.Add(new Product(_unitOfWork.Products.GetMaxId() + 1, name, price, amount, weight, categoryId, providerId));
+        }
+
+        public IEnumerable<string> GetProviders()
+        {
+            return _unitOfWork.Providers.GetAllNames();
+        }
+
+        public void Remove(Product product)
+        {
+            _unitOfWork.Products.Remove(product);
+        }
+
+        public IEnumerable<Product> SortByPrice()
+        {
+            return _unitOfWork.Products.SortByPrice();
         }
     }
 }

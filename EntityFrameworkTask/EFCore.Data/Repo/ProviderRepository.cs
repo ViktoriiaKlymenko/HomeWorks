@@ -13,5 +13,11 @@ namespace EFCore.Data.Repo
         public ProviderRepository(DataContext context) : base(context)
         {
         }
+
+        public IEnumerable<string> GetAllNames()
+        {
+            return Context.Set<Provider>().Select(p => p.Name);
+        }
+
     }
 }
