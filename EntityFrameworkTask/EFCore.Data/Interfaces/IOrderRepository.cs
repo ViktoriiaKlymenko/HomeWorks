@@ -1,14 +1,14 @@
-﻿using EntityFrameworkTask;
+﻿using EFCore.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.Data.Interfaces
+namespace EntityFrameworkTask.EFCore.Data.Interfaces
 {
     public interface IOrderRepository: IBaseRepository<Order>
     {
-        int GetMaxId();
+        void ChangeOrderStatus(Order order, OrderStatus newStatus);
     }
 }

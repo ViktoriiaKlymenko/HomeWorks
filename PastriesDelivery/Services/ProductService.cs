@@ -25,22 +25,29 @@ namespace PastriesDelivery
         }
         public void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
-            _unitOfWork.Products.Add(new Product(_unitOfWork.Products.GetMaxId() + 1, name, price, amount, weight, categoryId, providerId));
+            _unitOfWork.Products.Add(new Product(_unitOfWork.Products.GetAll().Max<Product>(p => p.Id) + 1, name, price, amount, weight, categoryId, providerId));
+            _unitOfWork.Complete();
         }
 
         public IEnumerable<string> GetProviders()
         {
-            return _unitOfWork.Providers.GetAllNames();
+            return _unitOfWork.Providers.GetAll().Select(p => p.Name);
         }
 
         public void Remove(Product product)
         {
             _unitOfWork.Products.Remove(product);
+            _unitOfWork.Complete();
         }
 
         public IEnumerable<Product> SortByPrice()
         {
-            return _unitOfWork.Products.SortByPrice();
+            return _unitOfWork.Products.GetAll().OrderBy(p => p.Price);
+        }
+
+        public IEnumerable<Product> GetProviderDishes(int id)
+        {
+            return _unitOfWork.Products.GetAll().Where(p => p.ProviderId == id);
         }
     }
 }

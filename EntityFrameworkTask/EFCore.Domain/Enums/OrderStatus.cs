@@ -13,6 +13,7 @@ namespace EntityFrameworkTask
         ReadyToDeliver,
         DeliveryInProgress,
         Delivered,
+        Ordered,
         Received,
         Returned
     }

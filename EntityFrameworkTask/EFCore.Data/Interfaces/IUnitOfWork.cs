@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EntityFrameworkTask;
+using EntityFrameworkTask.EFCore.Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +12,10 @@ namespace EFCore.Data.Interfaces
     {
         IProductRepository Products { get; }
         IOrderRepository Orders { get; }
-        IProviderRepository Providers { get; }
-        IClientRepository Clients { get; }
-        ICategoryRepository Categories { get; }
-        ICourierRepository Couriers { get; }
+        IBaseRepository<Provider> Providers { get; }
+        IBaseRepository<Client> Clients { get; }
+        IBaseRepository<Category> Categories { get; }
+        IBaseRepository<Courier> Couriers { get; }
         int Complete();
     }
 }

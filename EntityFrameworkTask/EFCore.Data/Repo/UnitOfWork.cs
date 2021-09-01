@@ -1,4 +1,7 @@
 ﻿using EFCore.Data.Interfaces;
+using EntityFrameworkTask;
+using EntityFrameworkTask.EFCore.Data;
+using EntityFrameworkTask.EFCore.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +18,24 @@ namespace EFCore.Data.Repo
         {
             _context = context;
             Products = new ProductRepository(_context);
-            Providers = new ProviderRepository(_context);
-            Clients = new ClientRepository(_context);
-            Couriers = new CourierRepository(_context);
+            Providers = new BaseRepository<Provider>(_context);
+            Clients = new BaseRepository<Client>(_context);
+            Couriers = new BaseRepository<Courier>(_context);
             Orders = new OrderRepository(_context);
-            Categories = new CategoryRepository(_context);
+            Categories = new BaseRepository<Category>(_context);
         }
 
         public IProductRepository Products { get; private set; }
 
         public IOrderRepository Orders { get; private set; }
 
-        public IProviderRepository Providers { get; private set; }
+        public IBaseRepository<Provider> Providers { get; private set; }
 
-        public IClientRepository Clients { get; private set; }
+        public IBaseRepository<Client> Clients { get; private set; }
 
-        public ICategoryRepository Categories { get; private set; }
+        public IBaseRepository<Category> Categories { get; private set; }
 
-        public ICourierRepository Couriers { get; private set; }
+        public IBaseRepository<Courier> Couriers { get; private set; }
 
         public int Complete()
         {

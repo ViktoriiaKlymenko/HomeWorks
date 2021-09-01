@@ -1,4 +1,5 @@
-﻿using EntityFrameworkTask;
+﻿using EFCore.Data.Interfaces;
+using EntityFrameworkTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;

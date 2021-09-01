@@ -1,12 +1,13 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
+using PastriesDelivery.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PastriesDelivery
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly ILogger _logger;
@@ -49,9 +50,15 @@ namespace PastriesDelivery
             return _unitOfWork.Products.Count() is not 0;
         }
 
-        public virtual void CreateOrder(int clientId, int productId, decimal totalPrice, OrderStatus status, int courierId, decimal deliveryPrice)
+        public virtual void CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
-            _unitOfWork.Orders.Add(new Order(_unitOfWork.Orders.GetMaxId() + 1, clientId, productId, totalPrice, status, courierId, deliveryPrice));
+            _unitOfWork.Orders.Add(new Order(_unitOfWork.Orders.GetAll().Max<Order>(o => o.Id) + 1, clientId, productId, amount, totalPrice, courierId));
+            _unitOfWork.Complete();
+        }
+
+        public void ChangeOrderStatus(Order order, OrderStatus newStatus)
+        {
+            _unitOfWork.Orders.ChangeOrderStatus(order, newStatus);
         }
 
         public IEnumerable<Order> GetAll()
@@ -62,6 +69,12 @@ namespace PastriesDelivery
         public void Remove(Order order)
         {
             _unitOfWork.Orders.Remove(order);
+            _unitOfWork.Complete();
+        }
+
+        public IEnumerable<Order> GetClientOrders(int clientId)
+        {
+            return _unitOfWork.Orders.GetAll().Where(o => o.ClientId == clientId);
         }
     }
 }

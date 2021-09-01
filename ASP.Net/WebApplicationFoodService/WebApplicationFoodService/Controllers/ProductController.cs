@@ -28,9 +28,15 @@ namespace WebApplicationFoodService.Controllers
             return _productService.GetProviders();
         }
 
+        public IEnumerable<Product> GetProviderDishes(int id)
+        {
+            return _productService.GetProviderDishes(id);
+        }
+
         public IEnumerable<Product> SortByPrice()
         {
             return _productService.SortByPrice();
         }
+
     }
 }

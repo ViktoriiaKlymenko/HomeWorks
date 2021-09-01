@@ -1,12 +1,17 @@
 ﻿using EFCore.Data.Interfaces;
-using EntityFrameworkTask;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EFCore.Data
+namespace EntityFrameworkTask.EFCore.Data.Interfaces
 {
     public interface IProductRepository: IBaseRepository<Product>
     {
-        IEnumerable<Product> SortByPrice();
-        int GetMaxId();
+        void ChangeProductAmount(Product product, int newValue);
+        void ChangeProductName(Product product, string newValue);
+        void ChangeProductPrice(Product product, decimal newValue);
+        void ChangeProductWeight(Product product, int newValue);
     }
 }

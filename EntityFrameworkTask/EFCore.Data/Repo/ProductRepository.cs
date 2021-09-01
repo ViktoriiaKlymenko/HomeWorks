@@ -1,27 +1,41 @@
-﻿using EntityFrameworkTask;
+﻿using EFCore.Data;
+using EntityFrameworkTask;
+using EntityFrameworkTask.EFCore.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.Data.Repo
+namespace EFCore.Data
 {
     public class ProductRepository: BaseRepository<Product>, IProductRepository
     {
         public ProductRepository(DataContext context) : base(context)
         {
+
         }
 
-        public IEnumerable<Product> SortByPrice()
+        public void ChangeProductAmount(Product product, int newValue)
         {
-            return Context.Set<Product>().OrderBy(product => product).ToList();
+            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Amount = newValue);
         }
 
-        public int GetMaxId()
+        public void ChangeProductName(Product product, string newValue)
         {
-            return Context.Set<Product>().Max<Product>(p => p.Id);
+            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Name = newValue);
         }
+
+        public void ChangeProductPrice(Product product, decimal newValue)
+        {
+            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Price = newValue);
+        }
+
+        public void ChangeProductWeight(Product product, int newValue)
+        {
+            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Weight = newValue);
+        }
+
 
     }
 }
