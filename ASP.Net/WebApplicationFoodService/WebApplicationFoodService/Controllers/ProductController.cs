@@ -25,6 +25,7 @@ namespace WebApplicationFoodService.Controllers
 
         public IEnumerable<string> GetProviders()
         {
+            
             return _productService.GetProviders();
         }
 
