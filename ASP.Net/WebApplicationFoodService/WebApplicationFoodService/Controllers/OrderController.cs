@@ -1,12 +1,7 @@
 ﻿using EntityFrameworkTask;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PastriesDelivery.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 
 namespace WebApplicationFoodService.Controllers
 {
@@ -18,6 +13,7 @@ namespace WebApplicationFoodService.Controllers
         {
             return _orderService.GetAll();
         }
+
         public void DeleteOrder(Order order)
         {
             _orderService.Remove(order);
@@ -25,13 +21,14 @@ namespace WebApplicationFoodService.Controllers
 
         public IEnumerable<Order> GetClientOrders(int clientId)
         {
-           return _orderService.GetClientOrders(clientId);
+            return _orderService.GetClientOrders(clientId);
         }
 
         public void CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
             _orderService.CreateOrder(clientId, productId, amount, totalPrice, courierId);
         }
+
         public void ChangeOrderStatus(Order order, OrderStatus newStatus)
         {
             _orderService.ChangeOrderStatus(order, newStatus);
@@ -40,6 +37,6 @@ namespace WebApplicationFoodService.Controllers
         public void UpdateOrder(Order order, Order newOrder)
         {
             _orderService.UpdateOrder(order, newOrder);
-        }            
+        }
     }
 }

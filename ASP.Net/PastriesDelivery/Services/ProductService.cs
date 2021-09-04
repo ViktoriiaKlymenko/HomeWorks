@@ -1,6 +1,5 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,6 +23,7 @@ namespace PastriesDelivery
         {
             return _unitOfWork.Products.GetAll().ToList();
         }
+
         public void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             _unitOfWork.Products.Add(new Product(name, price, amount, weight, categoryId, providerId));

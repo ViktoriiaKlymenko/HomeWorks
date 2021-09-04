@@ -1,17 +1,14 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
 using PastriesDelivery.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery.Services
 {
-    public class ProviderService: IProviderService
+    public class ProviderService : IProviderService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public ProviderService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -39,7 +36,7 @@ namespace PastriesDelivery.Services
             return _unitOfWork.Providers.Get(id);
         }
 
-        public IEnumerable<Provider> GetClients()
+        public IEnumerable<Provider> GetProviders()
         {
             return _unitOfWork.Providers.GetAll();
         }

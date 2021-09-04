@@ -1,12 +1,6 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
-using EntityFrameworkTask.EFCore.Data;
 using EntityFrameworkTask.EFCore.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFCore.Data.Repo
 {

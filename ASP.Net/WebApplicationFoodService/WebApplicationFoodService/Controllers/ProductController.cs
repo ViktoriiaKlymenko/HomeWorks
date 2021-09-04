@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery;
-using System;
 using System.Collections.Generic;
 
 namespace WebApplicationFoodService.Controllers
@@ -13,11 +12,13 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductService _productService;
+
         public ProductController(ILogger<ProductController> logger, IProductService productService)
         {
             _logger = logger;
             _productService = productService;
         }
+
         [HttpGet]
         public IEnumerable<Product> Get()
         {
@@ -26,7 +27,6 @@ namespace WebApplicationFoodService.Controllers
 
         public IEnumerable<string> GetProviders()
         {
-            
             return _productService.GetProviders();
         }
 

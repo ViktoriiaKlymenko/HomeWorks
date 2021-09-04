@@ -13,6 +13,7 @@ namespace EFCore.Data
         {
             Context = context;
         }
+
         public void Add(T item)
         {
             Context.Set<T>().Add(item);

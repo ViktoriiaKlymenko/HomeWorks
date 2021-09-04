@@ -1,14 +1,10 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PastriesDelivery.Services
 {
-    public class ClientService: IClientService
+    public class ClientService : IClientService
     {
         private readonly IUnitOfWork _unitOfWork;
 

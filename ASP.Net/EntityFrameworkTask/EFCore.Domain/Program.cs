@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace EFCore.Domain
+﻿namespace EFCore.Domain
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
         }
     }

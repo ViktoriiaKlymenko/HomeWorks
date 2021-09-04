@@ -1,13 +1,5 @@
-﻿using EFCore.Data;
+﻿using EntityFrameworkTask;
 using EntityFrameworkTask.EFCore.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFrameworkTask.EFCore.Data;
-using EntityFrameworkTask;
-using EFCore.Data.Interfaces;
 
 namespace EFCore.Data
 {
@@ -15,7 +7,6 @@ namespace EFCore.Data
     {
         public OrderRepository(DataContext context) : base(context)
         {
-
         }
 
         public void ChangeOrderStatus(Order order, OrderStatus newStatus)
