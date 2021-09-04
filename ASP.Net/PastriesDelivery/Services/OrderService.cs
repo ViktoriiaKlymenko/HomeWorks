@@ -52,7 +52,7 @@ namespace PastriesDelivery
 
         public virtual void CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
-            _unitOfWork.Orders.Add(new Order(_unitOfWork.Orders.GetAll().Max<Order>(o => o.Id) + 1, clientId, productId, amount, totalPrice, courierId));
+            _unitOfWork.Orders.Add(new Order(clientId, productId, amount, totalPrice, courierId));
             _unitOfWork.Complete();
         }
 
@@ -75,6 +75,12 @@ namespace PastriesDelivery
         public IEnumerable<Order> GetClientOrders(int clientId)
         {
             return _unitOfWork.Orders.GetAll().Where(o => o.ClientId == clientId);
+        }
+
+        public void UpdateOrder(Order order, Order newOrder)
+        {
+            _unitOfWork.Orders.Update(order, newOrder);
+            _unitOfWork.Complete();
         }
     }
 }

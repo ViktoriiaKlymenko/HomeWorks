@@ -13,12 +13,12 @@ namespace WebApplicationFoodService.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
-        // GET: OrderController
+
         public IEnumerable<Order> GetAll()
         {
             return _orderService.GetAll();
         }
-        public void Remove(Order order)
+        public void DeleteOrder(Order order)
         {
             _orderService.Remove(order);
         }
@@ -36,5 +36,10 @@ namespace WebApplicationFoodService.Controllers
         {
             _orderService.ChangeOrderStatus(order, newStatus);
         }
+
+        public void UpdateOrder(Order order, Order newOrder)
+        {
+            _orderService.UpdateOrder(order, newOrder);
+        }            
     }
 }

@@ -9,9 +9,5 @@ namespace EntityFrameworkTask.EFCore.Data.Interfaces
 {
     public interface IProductRepository: IBaseRepository<Product>
     {
-        void ChangeProductAmount(Product product, int newValue);
-        void ChangeProductName(Product product, string newValue);
-        void ChangeProductPrice(Product product, decimal newValue);
-        void ChangeProductWeight(Product product, int newValue);
     }
 }

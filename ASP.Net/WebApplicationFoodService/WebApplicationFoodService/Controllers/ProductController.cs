@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery;
+using System;
 using System.Collections.Generic;
 
 namespace WebApplicationFoodService.Controllers
@@ -39,5 +40,14 @@ namespace WebApplicationFoodService.Controllers
             return _productService.SortByPrice();
         }
 
+        public void UpdateProduct(Product product, Product newProduct)
+        {
+            _productService.UpdateProduct(product, newProduct);
+        }
+
+        public void DeleteProduct(Product product)
+        {
+            _productService.Remove(product);
+        }
     }
 }

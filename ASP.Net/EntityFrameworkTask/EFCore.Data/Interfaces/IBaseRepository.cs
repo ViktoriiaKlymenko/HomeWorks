@@ -16,5 +16,6 @@ namespace EFCore.Data.Interfaces
         void Remove(T item); 
         void RemoveRange(IEnumerable<T> item);
         int Count();
+        void Update(T item, T newItem);
     }
 }

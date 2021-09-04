@@ -15,27 +15,5 @@ namespace EFCore.Data
         {
 
         }
-
-        public void ChangeProductAmount(Product product, int newValue)
-        {
-            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Amount = newValue);
-        }
-
-        public void ChangeProductName(Product product, string newValue)
-        {
-            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Name = newValue);
-        }
-
-        public void ChangeProductPrice(Product product, decimal newValue)
-        {
-            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Price = newValue);
-        }
-
-        public void ChangeProductWeight(Product product, int newValue)
-        {
-            Context.Set<Product>().Update(product).CurrentValues.SetValues(product.Weight = newValue);
-        }
-
-
     }
 }

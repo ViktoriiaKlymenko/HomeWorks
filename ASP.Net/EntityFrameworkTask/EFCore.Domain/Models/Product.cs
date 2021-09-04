@@ -16,9 +16,9 @@ namespace EntityFrameworkTask
         public int CategoryId { get; set; }
         public int ProviderId { get; set; }
 
-        public Product(int id, string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        public Product(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
-            Id = id;
+            Id = new int();
             Price = price;
             Amount = amount;
             Weight = weight;

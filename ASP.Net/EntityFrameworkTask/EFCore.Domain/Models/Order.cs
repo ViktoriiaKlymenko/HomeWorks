@@ -19,9 +19,9 @@ namespace EntityFrameworkTask
         public int CourierId { get; set; }
         public decimal DeliveryPrice { get; set; }
         public DateTime DeliveryTimeEstimated { get; set; }
-        public Order(int id, int clientId, int productId, int amount, decimal totalPrice, int courierId)
+        public Order(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
-            Id = id;
+            Id = new int();
             ClientId = clientId;
             ProductId = productId;
             Amount = amount;

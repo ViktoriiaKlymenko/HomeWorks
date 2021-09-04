@@ -57,5 +57,10 @@ namespace EFCore.Data
         {
             return Context.Set<T>().Count<T>();
         }
+
+        public void Update(T item, T newItem)
+        {
+            Context.Set<T>().Update(item).CurrentValues.SetValues(item = newItem);
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EntityFrameworkTask.EFCore.Data;
 using EntityFrameworkTask;
+using EFCore.Data.Interfaces;
 
 namespace EFCore.Data
 {

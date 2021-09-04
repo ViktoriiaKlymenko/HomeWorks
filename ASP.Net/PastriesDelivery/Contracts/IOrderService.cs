@@ -14,5 +14,6 @@ namespace PastriesDelivery.Contracts
         void Remove(Order order);
         IEnumerable<Order> GetClientOrders(int clientId);
         void ChangeOrderStatus(Order order, OrderStatus newStatus);
+        void UpdateOrder(Order order, Order newOrder);
     }
 }

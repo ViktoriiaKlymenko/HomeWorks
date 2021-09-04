@@ -1,5 +1,6 @@
 ﻿using EFCore.Data.Interfaces;
 using EntityFrameworkTask;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace PastriesDelivery
         }
         public void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
-            _unitOfWork.Products.Add(new Product(_unitOfWork.Products.GetAll().Max<Product>(p => p.Id) + 1, name, price, amount, weight, categoryId, providerId));
+            _unitOfWork.Products.Add(new Product(name, price, amount, weight, categoryId, providerId));
             _unitOfWork.Complete();
         }
 
@@ -48,6 +49,12 @@ namespace PastriesDelivery
         public IEnumerable<Product> GetProviderDishes(int id)
         {
             return _unitOfWork.Products.GetAll().Where(p => p.ProviderId == id);
+        }
+
+        public void UpdateProduct(Product product, Product newProduct)
+        {
+            _unitOfWork.Products.Update(product, newProduct);
+            _unitOfWork.Complete();
         }
     }
 }
