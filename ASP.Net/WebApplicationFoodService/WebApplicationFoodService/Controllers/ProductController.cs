@@ -30,6 +30,11 @@ namespace WebApplicationFoodService.Controllers
             return _productService.GetProviders();
         }
 
+        public void CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        {
+            _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
+        }
+
         public IEnumerable<Product> GetProviderDishes(int id)
         {
             return _productService.GetProviderDishes(id);
