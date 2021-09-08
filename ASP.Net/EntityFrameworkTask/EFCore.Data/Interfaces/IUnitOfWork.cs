@@ -9,6 +9,7 @@ namespace EFCore.Data.Interfaces
         IProductRepository Products { get; }
         IOrderRepository Orders { get; }
         IBaseRepository<Provider> Providers { get; }
+
         IBaseRepository<Client> Clients { get; }
         IBaseRepository<Category> Categories { get; }
         IBaseRepository<Courier> Couriers { get; }

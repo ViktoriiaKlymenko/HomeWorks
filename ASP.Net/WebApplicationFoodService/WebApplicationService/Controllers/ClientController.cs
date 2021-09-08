@@ -19,19 +19,22 @@ namespace WebApplicationService.Controllers
             return _clientService.GetClient(id);
         }
 
-        public void CreateClient(Client client)
+        public IActionResult CreateClient(Client client)
         {
             _clientService.AddClient(client);
+            return new OkResult();
         }
 
-        public void UpdateClient(Client client, Client newClient)
+        public IActionResult UpdateClient(Client client, Client newClient)
         {
             _clientService.UpdateClient(client, newClient);
+            return new OkResult();
         }
 
-        public void DeleteClient(Client client)
+        public IActionResult DeleteClient(Client client)
         {
             _clientService.DeleteClient(client);
+            return new OkResult();
         }
     }
 }

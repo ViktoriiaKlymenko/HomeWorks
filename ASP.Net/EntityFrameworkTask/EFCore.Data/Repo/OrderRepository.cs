@@ -13,10 +13,5 @@ namespace EFCore.Data
         {
             Context.Set<Order>().Update(order).CurrentValues.SetValues(order.Status = newStatus);
         }
-
-        public void ChangeOrderAmount(Order order, int newValue)
-        {
-            Context.Set<Order>().Update(order).CurrentValues.SetValues(order.Amount = newValue);
-        }
     }
 }

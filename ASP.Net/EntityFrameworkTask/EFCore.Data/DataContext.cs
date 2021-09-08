@@ -8,9 +8,11 @@ namespace EFCore.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Courier> Couriers { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Product> Products { get; set; }
+
+        //   public DbSet<Order> Orders { get; set; }
+        //    public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }
+
         public DbSet<ProviderType> ProviderTypes { get; set; }
         public DbSet<User> Users { get; set; }
 

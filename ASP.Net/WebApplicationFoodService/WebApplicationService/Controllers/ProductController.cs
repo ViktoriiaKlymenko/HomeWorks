@@ -9,7 +9,7 @@ using WebApplicationService.Models;
 namespace WebApplicationService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("mvc/[controller]")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -28,12 +28,13 @@ namespace WebApplicationService.Controllers
         }
 
         [HttpPost]
-        public void CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        public IActionResult CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             if (ModelState.IsValid)
             {
                 _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
             }
+            return new OkResult();
         }
 
         public IEnumerable<string> GetProviders()
@@ -52,15 +53,17 @@ namespace WebApplicationService.Controllers
         }
 
         [HttpPut]
-        public void UpdateProduct([FromBody] Product product, [FromQuery] Product newProduct)
+        public IActionResult UpdateProduct([FromBody] Product product, [FromQuery] Product newProduct)
         {
             _productService.UpdateProduct(product, newProduct);
+            return new OkResult();
         }
 
         [HttpDelete]
-        public void DeleteProduct(Product product)
+        public IActionResult DeleteProduct(Product product)
         {
             _productService.Remove(product);
+            return new OkResult();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

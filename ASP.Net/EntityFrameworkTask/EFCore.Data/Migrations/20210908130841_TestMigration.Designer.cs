@@ -4,14 +4,16 @@ using EFCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210908130841_TestMigration")]
+    partial class TestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,46 +57,6 @@ namespace EFCore.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("EntityFrameworkTask.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourierId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeliveryDays")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("DeliveryPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("DeliveryTimeEstimated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("OrderTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("CourierId");
-
-                    b.ToTable("Order");
-                });
-
             modelBuilder.Entity("EntityFrameworkTask.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -111,9 +73,6 @@ namespace EFCore.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -126,8 +85,6 @@ namespace EFCore.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProviderId");
 
@@ -218,30 +175,11 @@ namespace EFCore.Data.Migrations
                     b.HasDiscriminator().HasValue("Courier");
                 });
 
-            modelBuilder.Entity("EntityFrameworkTask.Order", b =>
-                {
-                    b.HasOne("EntityFrameworkTask.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("EntityFrameworkTask.Courier", "Courier")
-                        .WithMany("Orders")
-                        .HasForeignKey("CourierId");
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Courier");
-                });
-
             modelBuilder.Entity("EntityFrameworkTask.Product", b =>
                 {
                     b.HasOne("EntityFrameworkTask.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("EntityFrameworkTask.Order", null)
-                        .WithMany("Product")
-                        .HasForeignKey("OrderId");
 
                     b.HasOne("EntityFrameworkTask.Provider", "Provider")
                         .WithMany()
@@ -273,16 +211,6 @@ namespace EFCore.Data.Migrations
             modelBuilder.Entity("EntityFrameworkTask.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("EntityFrameworkTask.Order", b =>
-                {
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("EntityFrameworkTask.Courier", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
