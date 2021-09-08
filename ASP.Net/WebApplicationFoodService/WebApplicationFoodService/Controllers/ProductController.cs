@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery;
 using System.Collections.Generic;
+using System.Net;
 
 namespace WebApplicationFoodService.Controllers
 {
@@ -22,17 +23,18 @@ namespace WebApplicationFoodService.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            return _productService.ExtractProducts();
+           return _productService.ExtractProducts();
         }
 
         public IEnumerable<string> GetProviders()
         {
-            return _productService.GetProviders();
+           return _productService.GetProviders();
         }
 
-        public void CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        public IActionResult CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
+            return new OkResult();
         }
 
         public IEnumerable<Product> GetProviderDishes(int id)
@@ -45,14 +47,16 @@ namespace WebApplicationFoodService.Controllers
             return _productService.SortByPrice();
         }
 
-        public void UpdateProduct(Product product, Product newProduct)
+        public IActionResult UpdateProduct(Product product, Product newProduct)
         {
             _productService.UpdateProduct(product, newProduct);
+            return new OkResult();
         }
 
-        public void DeleteProduct(Product product)
+        public IActionResult DeleteProduct(Product product)
         {
             _productService.Remove(product);
+            return new OkResult();
         }
     }
 }

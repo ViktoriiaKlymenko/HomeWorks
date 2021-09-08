@@ -22,19 +22,22 @@ namespace WebApplicationFoodService.Controllers
             return _providerService.GetProvider(id);
         }
 
-        public void CreateProvider(Provider provider)
+        public IActionResult CreateProvider(Provider provider)
         {
             _providerService.AddProvider(provider);
+            return new OkResult();
         }
 
-        public void UpdateProvider(Provider provider, Provider newProvider)
+        public IActionResult UpdateProvider(Provider provider, Provider newProvider)
         {
             _providerService.UpdateProvider(provider, newProvider);
+            return new OkResult();
         }
 
-        public void DeleteProvider(Provider provider)
+        public IActionResult DeleteProvider(Provider provider)
         {
             _providerService.DeleteProvider(provider);
+            return new OkResult();
         }
     }
 }

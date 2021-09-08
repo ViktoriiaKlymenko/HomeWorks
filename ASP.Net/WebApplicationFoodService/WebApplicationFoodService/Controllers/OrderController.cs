@@ -14,9 +14,10 @@ namespace WebApplicationFoodService.Controllers
             return _orderService.GetAll();
         }
 
-        public void DeleteOrder(Order order)
+        public IActionResult DeleteOrder(Order order)
         {
             _orderService.Remove(order);
+            return new OkResult();
         }
 
         public IEnumerable<Order> GetClientOrders(int clientId)
@@ -24,19 +25,22 @@ namespace WebApplicationFoodService.Controllers
             return _orderService.GetClientOrders(clientId);
         }
 
-        public void CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
+        public IActionResult CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
             _orderService.CreateOrder(clientId, productId, amount, totalPrice, courierId);
+            return new OkResult();
         }
 
-        public void ChangeOrderStatus(Order order, OrderStatus newStatus)
+        public IActionResult ChangeOrderStatus(Order order, OrderStatus newStatus)
         {
             _orderService.ChangeOrderStatus(order, newStatus);
+            return new OkResult();
         }
 
-        public void UpdateOrder(Order order, Order newOrder)
+        public IActionResult UpdateOrder(Order order, Order newOrder)
         {
             _orderService.UpdateOrder(order, newOrder);
+            return new OkResult();
         }
     }
 }
