@@ -10,7 +10,7 @@ namespace EntityFrameworkTask
     {
         public int Id { get; set; }
         public Client Client { get; set; }
-        public List<Product> Product { get; set; }
+        public Product Product { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime OrderTime { get; set; }
         public OrderStatus Status { get; set; }

@@ -1,8 +1,6 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PastriesDelivery;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace WebApplicationFoodService.ApiControllers
@@ -31,7 +29,7 @@ namespace WebApplicationFoodService.ApiControllers
         {
             if (ModelState.IsValid)
             {
-               _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
+                _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
             }
             return JsonSerializer.Serialize(new Product(name, price, amount, weight, categoryId, providerId));
         }

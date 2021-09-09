@@ -28,11 +28,11 @@ namespace WebApplicationService.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        public IActionResult CreateProduct(Product product)
         {
             if (ModelState.IsValid)
             {
-                _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
+                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider);
             }
             return new OkResult();
         }
