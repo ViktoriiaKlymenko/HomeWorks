@@ -19,7 +19,7 @@ namespace WebApplicationFoodService.Controllers
             _logger = logger;
             _customerManager = customerManager;
         }
-        // GET 
+
         [HttpGet]
         public IEnumerable<Product> Get()
         {
