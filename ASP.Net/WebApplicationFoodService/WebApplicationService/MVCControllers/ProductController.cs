@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery.Contracts;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using WebApplicationService.Models;
 
 namespace WebApplicationService.Controllers
 {
@@ -40,7 +37,6 @@ namespace WebApplicationService.Controllers
         }
 
         [HttpPost]
-        [ActionName("Create")]
         public IActionResult Create(Product product)
         {
             product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);
@@ -49,44 +45,73 @@ namespace WebApplicationService.Controllers
             if (ModelState.IsValid)
             {
                 _productService.AddProduct(product);
+                return RedirectToAction("Get", "Product");
             }
+
             return RedirectToAction("Index", "Home");
         }
 
         //public IActionResult Update(int id)
         //{
-        //    ViewData["Categories"] = _categoryService.GetCategories();
-        //    ViewData["Providers"] = _providerService.GetProviders();
-        //    return View("Create", _productService.GetById(id));
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var product = _productService.GetById(id);
+        //    return View(product);
         //}
 
-        //[HttpPut]
-        //public IActionResult Update(int id, Product newProduct)
+        //[HttpPost]
+        //[ActionName("Update")]
+        //public IActionResult UpdatePost(int id)
         //{
+        //    var productToUpdate = _productService.GetById(id);
+
         //    if (ModelState.IsValid)
         //    {
-        //        _productService.UpdateProduct(id, newProduct);
+        //        //_productService.UpdateProduct(id, newProduct);
+        //        return RedirectToAction("Index", "Home");
         //    }
-        //    return RedirectToAction("Index", "Home");
+
+        //    return new BadRequestResult();
         //}
 
-        //public IActionResult Delete(int id)
-        //{
-        //    return View("Delete");
-        //}
-
-        //[HttpDelete("{id}")]
-        //[ActionName("Delete")]
-        //public IActionResult Delete()
-        //{
-        //    _productService.Remove(id);
-        //    return RedirectToAction("Index", "Home");
-        //}
-        [HttpGet("Delete/{id}")]
-        public ActionResult Delete(int id)
+        public IActionResult Update(int id)
         {
-            _productService.Remove(id);
+            if (id! <= 0)
+            {
+                Product product = _productService.GetById(id);
 
+                if (product != null)
+                {
+                    ViewData["Categories"] = _categoryService.GetCategories();
+                    ViewData["Providers"] = _providerService.GetProviders();
+                    ViewData["Ids"] = _productService.ExtractProducts().Select(p => p.Id);
+                    return View(product);
+                }
+
+            }
+            return NotFound();
+        }
+
+        [HttpPut]
+        public IActionResult Update(Product product)
+        {
+            _productService.UpdateProduct(product);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            _productService.Remove(id);
             return RedirectToAction("Index", "Home");
         }
     }

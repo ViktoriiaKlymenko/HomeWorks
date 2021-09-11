@@ -10,30 +10,34 @@
             <td>Name: </td>
             <td>
                 @Html.TextBoxFor(m => m.Name)
+                @Html.ValidationMessageFor(m => m.Name)
             </td>
         </tr>
         <tr>
             <td>Price: </td>
             <td>
                 @Html.TextBoxFor(m => m.Price)
+                @Html.ValidationMessageFor(m => m.Price)
             </td>
         </tr>
         <tr>
             <td>Amount: </td>
             <td>
                 @Html.TextBoxFor(m => m.Amount)
+                @Html.ValidationMessageFor(m => m.Amount)
             </td>
         </tr>
         <tr>
             <td>Weight: </td>
             <td>
                 @Html.TextBoxFor(m => m.Weight)
+                @Html.ValidationMessageFor(m => m.Weight)
             </td>
         </tr>
         <tr>
             <td>Provider: </td>
             <td>
-                @Html.DropDownListFor(m => m.Provider.Id, new SelectList(ViewBag.Providers, "Id" , "Name"))
+                @Html.DropDownListFor(m => m.Provider.Id, new SelectList(ViewBag.Providers, "Id", "Name"))
             </td>
         </tr>
         <tr>

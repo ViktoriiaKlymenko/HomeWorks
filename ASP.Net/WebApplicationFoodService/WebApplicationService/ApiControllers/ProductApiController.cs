@@ -1,7 +1,6 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
 using PastriesDelivery.Contracts;
-using System.Text.Json;
 
 namespace WebApplicationFoodService.ApiControllers
 {
@@ -19,7 +18,6 @@ namespace WebApplicationFoodService.ApiControllers
         [HttpGet("Get")]
         public IActionResult Get()
         {
-            //return JsonSerializer.Serialize(_productService.ExtractProducts());
             return Ok(_productService.ExtractProducts());
         }
 
@@ -29,20 +27,32 @@ namespace WebApplicationFoodService.ApiControllers
             if (ModelState.IsValid)
             {
                 _productService.AddProduct(product);
+                return Ok(product);
             }
-            return Ok(product);
+
+            return new BadRequestResult();
         }
 
         [HttpPut("Update")]
-        public IActionResult UpdateProduct(int id, [FromBody] Product newProduct)
+        public IActionResult UpdateProduct([FromBody] Product newProduct)
         {
-            _productService.UpdateProduct(id, newProduct);
-            return Ok(newProduct);
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(newProduct);
+                return Ok(newProduct);
+            }
+
+            return new BadRequestResult();
         }
 
         [HttpDelete("Delete")]
-        public IActionResult DeleteProduct([FromBody] int id)
+        public IActionResult DeleteProduct(int id)
         {
+            if (id == 0 || _productService.GetById(id) == null)
+            {
+                return new BadRequestResult();
+            }
+
             _productService.Remove(id);
             return Ok(_productService.GetById(id));
         }

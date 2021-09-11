@@ -15,9 +15,10 @@ namespace PastriesDelivery.Contracts
 
         void AddProduct(Product product);
 
-        void UpdateProduct(int id, Product newProduct);
+        void UpdateProduct(Product newProduct);
 
         void Remove(int id);
+
         Product GetById(int id);
     }
 }

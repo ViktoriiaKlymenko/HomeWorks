@@ -50,15 +50,15 @@ namespace PastriesDelivery
             return _unitOfWork.Products.GetAll().Where(p => p.Provider.Id == id);
         }
 
-        public void UpdateProduct(int id, Product newProduct)
+        public void UpdateProduct(Product newProduct)
         {
-            _unitOfWork.Products.Update(_unitOfWork.Products.Get(id), newProduct);
+            _unitOfWork.Products.Update(_unitOfWork.Products.Get(newProduct.Id), newProduct);
             _unitOfWork.Complete();
         }
 
         public Product GetById(int id)
         {
-           return _unitOfWork.Products.Get(id);
+            return _unitOfWork.Products.Get(id);
         }
     }
 }

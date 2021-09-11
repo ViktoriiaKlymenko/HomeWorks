@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using PastriesDelivery;
 using PastriesDelivery.Contracts;
 using PastriesDelivery.Services;
-using Swashbuckle.Application;
-using System.Web.Http;
 
 namespace WebApplicationService
 {
@@ -31,6 +30,10 @@ namespace WebApplicationService
             services.AddTransient<IProviderService, ProviderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<DataContext>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationFoodService", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,9 +41,8 @@ namespace WebApplicationService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                GlobalConfiguration.Configuration
-  .EnableSwagger(c => c.SingleApiVersion("v1", "WebApplication FoodService"))
-  .EnableSwaggerUi();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApplicationFoodService v1"));
             }
             else
             {
