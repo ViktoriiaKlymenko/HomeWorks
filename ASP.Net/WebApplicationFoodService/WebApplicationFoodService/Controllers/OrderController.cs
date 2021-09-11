@@ -9,34 +9,27 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly IOrderService _orderService;
 
+        [HttpGet]
         public IEnumerable<Order> GetAll()
         {
             return _orderService.GetAll();
         }
 
+        [HttpDelete]
         public IActionResult DeleteOrder(Order order)
         {
             _orderService.Remove(order);
             return new OkResult();
         }
 
-        public IEnumerable<Order> GetClientOrders(int clientId)
-        {
-            return _orderService.GetClientOrders(clientId);
-        }
-
+        [HttpPost]
         public IActionResult CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
             _orderService.CreateOrder(clientId, productId, amount, totalPrice, courierId);
             return new OkResult();
         }
 
-        public IActionResult ChangeOrderStatus(Order order, OrderStatus newStatus)
-        {
-            _orderService.ChangeOrderStatus(order, newStatus);
-            return new OkResult();
-        }
-
+        [HttpPut]
         public IActionResult UpdateOrder(Order order, Order newOrder)
         {
             _orderService.UpdateOrder(order, newOrder);

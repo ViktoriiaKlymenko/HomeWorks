@@ -12,28 +12,27 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly IProviderService _providerService;
 
+        [HttpGet]
         public IEnumerable<Provider> GetAll()
         {
             return _providerService.GetProviders();
         }
 
-        public Provider GetById(int id)
-        {
-            return _providerService.GetProvider(id);
-        }
-
+        [HttpPost]
         public IActionResult CreateProvider(Provider provider)
         {
             _providerService.AddProvider(provider);
             return new OkResult();
         }
 
+        [HttpPut]
         public IActionResult UpdateProvider(Provider provider, Provider newProvider)
         {
             _providerService.UpdateProvider(provider, newProvider);
             return new OkResult();
         }
 
+        [HttpDelete]
         public IActionResult DeleteProvider(Provider provider)
         {
             _providerService.DeleteProvider(provider);

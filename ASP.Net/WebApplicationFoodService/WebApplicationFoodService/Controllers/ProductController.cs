@@ -26,33 +26,21 @@ namespace WebApplicationFoodService.Controllers
            return _productService.ExtractProducts();
         }
 
-        public IEnumerable<string> GetProviders()
-        {
-           return _productService.GetProviders();
-        }
-
+        [HttpPost]
         public IActionResult CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
             return new OkResult();
         }
 
-        public IEnumerable<Product> GetProviderDishes(int id)
-        {
-            return _productService.GetProviderDishes(id);
-        }
-
-        public IEnumerable<Product> SortByPrice()
-        {
-            return _productService.SortByPrice();
-        }
-
-        public IActionResult UpdateProduct(Product product, Product newProduct)
+        [HttpPut]
+        public IActionResult UpdateProduct([FromQuery]Product product, [FromBody] Product newProduct)
         {
             _productService.UpdateProduct(product, newProduct);
             return new OkResult();
         }
 
+        [HttpDelete]
         public IActionResult DeleteProduct(Product product)
         {
             _productService.Remove(product);
