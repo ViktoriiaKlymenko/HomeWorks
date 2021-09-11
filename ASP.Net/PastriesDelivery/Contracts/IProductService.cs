@@ -1,7 +1,7 @@
 ﻿using EntityFrameworkTask;
 using System.Collections.Generic;
 
-namespace PastriesDelivery
+namespace PastriesDelivery.Contracts
 {
     public interface IProductService
     {
@@ -13,7 +13,7 @@ namespace PastriesDelivery
 
         IEnumerable<Product> GetProviderDishes(int id);
 
-        void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId);
+        void AddProduct(string name, decimal price, int amount, double weight, Category category, Provider provider);
 
         void UpdateProduct(Product product, Product newProduct);
 

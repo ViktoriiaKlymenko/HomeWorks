@@ -1,19 +1,22 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PastriesDelivery;
+using PastriesDelivery.Contracts;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using WebApplicationService.Models;
 
 namespace WebApplicationService.Controllers
 {
-    [ApiController]
+    [Controller]
     [Route("mvc/[controller]")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        private readonly IProviderService _providerService;
 
         public ProductController(ILogger<ProductController> logger, IProductService productService)
         {
@@ -30,9 +33,12 @@ namespace WebApplicationService.Controllers
         [HttpPost]
         public IActionResult CreateProduct(Product product)
         {
+            var category = _categoryService.GetAll().FirstOrDefault(c => c.Id == product.Category.Id);
+            var provider = _providerService.GetProviders().FirstOrDefault(p => p.Id == product.Provider.Id);
+
             if (ModelState.IsValid)
             {
-                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider);
+                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, category, provider);
             }
             return new OkResult();
         }

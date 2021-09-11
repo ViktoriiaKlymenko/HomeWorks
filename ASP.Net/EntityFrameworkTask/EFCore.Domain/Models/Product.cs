@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EntityFrameworkTask
+﻿namespace EntityFrameworkTask
 {
     public class Product
     {
@@ -15,5 +9,14 @@ namespace EntityFrameworkTask
         public double Weight { get; set; }
         public Category Category { get; set; }
         public Provider Provider { get; set; }
+
+        public Product(string name, decimal price, int amount, double weight, Category category, Provider provider)
+        {
+            Name = name;
+            Amount = amount;
+            Weight = weight;
+            Category = category;
+            Provider = provider;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace PastriesDelivery
+﻿namespace PastriesDelivery.Contracts
 {
     public interface IDataDisplayer
     {

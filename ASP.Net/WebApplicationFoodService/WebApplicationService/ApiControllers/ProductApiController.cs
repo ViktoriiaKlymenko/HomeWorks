@@ -1,20 +1,18 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
-using PastriesDelivery;
+using PastriesDelivery.Contracts;
 using System.Text.Json;
 
 namespace WebApplicationFoodService.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ProductApiController : ControllerBase
     {
-        //private readonly ILogger _logger;
         private readonly IProductService _productService;
 
         public ProductApiController(IProductService productService)
         {
-            //_logger = logger;
             _productService = productService;
         }
 
@@ -25,13 +23,13 @@ namespace WebApplicationFoodService.ApiControllers
         }
 
         [HttpPost]
-        public string CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
+        public string CreateProduct(Product product)
         {
             if (ModelState.IsValid)
             {
-                _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
+                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider);
             }
-            return JsonSerializer.Serialize(new Product(name, price, amount, weight, categoryId, providerId));
+            return JsonSerializer.Serialize(new Product(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider));
         }
 
         [HttpPut]

@@ -10,13 +10,11 @@ namespace PastriesDelivery
     public class OrderService : IOrderService
     {
         protected readonly IUnitOfWork _unitOfWork;
-        protected readonly ILogger _logger;
         protected readonly IProductService _productService;
 
-        public OrderService(IUnitOfWork unitOfWork, ILogger logger)
+        public OrderService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
 
         public Product ChooseProduct(int id, int amount)
@@ -31,14 +29,12 @@ namespace PastriesDelivery
             if (amount < product.Amount)
             {
                 _unitOfWork.Products.Find(p => p.Id == id).Amount -= amount;
-                _logger.Log($"{amount} units of {product.ToString()} were removed from available products.");
                 return product;
             }
 
             if (product.Amount == amount)
             {
                 _unitOfWork.Products.Remove(availableProducts.FirstOrDefault(product => product.Id == id));
-                _logger.Log($"{product.ToString()} was removed from available products.");
                 return product;
             }
 
@@ -52,7 +48,7 @@ namespace PastriesDelivery
 
         public virtual void CreateOrder(int clientId, int productId, int amount, decimal totalPrice, int courierId)
         {
-            _unitOfWork.Orders.Add(new Order(clientId, productId, amount, totalPrice, courierId));
+            _unitOfWork.Orders.Add(new Order());
             _unitOfWork.Complete();
         }
 
@@ -74,7 +70,7 @@ namespace PastriesDelivery
 
         public IEnumerable<Order> GetClientOrders(int clientId)
         {
-            return _unitOfWork.Orders.GetAll().Where(o => o.ClientId == clientId);
+            return _unitOfWork.Orders.GetAll().Where(o => o.Client.Id == clientId);
         }
 
         public void UpdateOrder(Order order, Order newOrder)

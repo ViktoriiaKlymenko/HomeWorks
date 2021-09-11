@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplicationService.Controllers
 {
+    [Controller]
     public class ProviderController : Controller
     {
         private readonly IProviderService _providerService;

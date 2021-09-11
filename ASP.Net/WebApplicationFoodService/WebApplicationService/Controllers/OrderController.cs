@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplicationService.Controllers
 {
+    [Controller]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;

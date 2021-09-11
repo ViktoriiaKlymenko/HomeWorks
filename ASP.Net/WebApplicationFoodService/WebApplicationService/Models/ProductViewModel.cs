@@ -19,8 +19,15 @@ namespace WebApplicationService.Models
         [Range(0, 200)]
         public int Amount { get; set; }
 
+        [Required]
         public double Weight { get; set; }
+
+        [Required]
+        [Range(1, 3)]
         public int CategoryId { get; set; }
+
+        [Required]
+        [Range(1, 3)]
         public int ProviderId { get; set; }
     }
 }

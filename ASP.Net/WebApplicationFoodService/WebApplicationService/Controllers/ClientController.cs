@@ -1,10 +1,11 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
-using PastriesDelivery.Services;
+using PastriesDelivery.Contracts;
 using System.Collections.Generic;
 
 namespace WebApplicationService.Controllers
 {
+    [Controller]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
