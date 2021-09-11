@@ -5,7 +5,7 @@ namespace PastriesDelivery.Contracts
 {
     public interface IProductService
     {
-        List<Product> ExtractProducts();
+        IEnumerable<Product> ExtractProducts();
 
         IEnumerable<string> GetProviders();
 
@@ -13,10 +13,11 @@ namespace PastriesDelivery.Contracts
 
         IEnumerable<Product> GetProviderDishes(int id);
 
-        void AddProduct(string name, decimal price, int amount, double weight, Category category, Provider provider);
+        void AddProduct(Product product);
 
-        void UpdateProduct(Product product, Product newProduct);
+        void UpdateProduct(int id, Product newProduct);
 
-        void Remove(Product product);
+        void Remove(int id);
+        Product GetById(int id);
     }
 }

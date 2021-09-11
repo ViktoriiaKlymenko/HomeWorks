@@ -16,34 +16,35 @@ namespace WebApplicationFoodService.ApiControllers
             _productService = productService;
         }
 
-        [HttpGet]
-        public string Get()
+        [HttpGet("Get")]
+        public IActionResult Get()
         {
-            return JsonSerializer.Serialize(_productService.ExtractProducts());
+            //return JsonSerializer.Serialize(_productService.ExtractProducts());
+            return Ok(_productService.ExtractProducts());
         }
 
-        [HttpPost]
-        public string CreateProduct(Product product)
+        [HttpPost("Create")]
+        public IActionResult CreateProduct([FromBody] Product product)
         {
             if (ModelState.IsValid)
             {
-                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider);
+                _productService.AddProduct(product);
             }
-            return JsonSerializer.Serialize(new Product(product.Name, product.Price, product.Amount, product.Weight, product.Category, product.Provider));
+            return Ok(product);
         }
 
-        [HttpPut]
-        public string UpdateProduct([FromQuery] Product product, [FromBody] Product newProduct)
+        [HttpPut("Update")]
+        public IActionResult UpdateProduct(int id, [FromBody] Product newProduct)
         {
-            _productService.UpdateProduct(product, newProduct);
-            return JsonSerializer.Serialize(newProduct);
+            _productService.UpdateProduct(id, newProduct);
+            return Ok(newProduct);
         }
 
-        [HttpDelete]
-        public string DeleteProduct(Product product)
+        [HttpDelete("Delete")]
+        public IActionResult DeleteProduct([FromBody] int id)
         {
-            _productService.Remove(product);
-            return JsonSerializer.Serialize(product);
+            _productService.Remove(id);
+            return Ok(_productService.GetById(id));
         }
     }
 }

@@ -1,11 +1,50 @@
-﻿@model ProductViewModel
-<form method="post">
-    <input asp-for="@Model.Id" /><br />
-    <input asp-for="@Model.Name" /><br />
-    <input asp-for="@Model.Price" /><br />
-    <input asp-for="@Model.Amount" /><br />
-    <input asp-for="@Model.Weight" /><br />
-    <input asp-for="@Model.CategoryId" /><br />
-    <input asp-for="@Model.ProviderId" /><br />
-    <button>Submit</button>
-</form>
+﻿@model EntityFrameworkTask.Product
+
+@using (Html.BeginForm("Create", "Product", FormMethod.Post))
+{
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th colspan="2" align="center">Create product</th>
+        </tr>
+        <tr>
+            <td>Name: </td>
+            <td>
+                @Html.TextBoxFor(m => m.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>Price: </td>
+            <td>
+                @Html.TextBoxFor(m => m.Price)
+            </td>
+        </tr>
+        <tr>
+            <td>Amount: </td>
+            <td>
+                @Html.TextBoxFor(m => m.Amount)
+            </td>
+        </tr>
+        <tr>
+            <td>Weight: </td>
+            <td>
+                @Html.TextBoxFor(m => m.Weight)
+            </td>
+        </tr>
+        <tr>
+            <td>Provider: </td>
+            <td>
+                @Html.DropDownListFor(m => m.Provider.Id, new SelectList(ViewBag.Providers, "Id" , "Name"))
+            </td>
+        </tr>
+        <tr>
+            <td>Category: </td>
+            <td>
+                @Html.DropDownListFor(m => m.Category.Id, new SelectList(ViewBag.Categories, "Id", "Name"))
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+}

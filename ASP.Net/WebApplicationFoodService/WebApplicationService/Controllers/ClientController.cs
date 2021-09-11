@@ -10,28 +10,32 @@ namespace WebApplicationService.Controllers
     {
         private readonly IClientService _clientService;
 
+        public ClientController(IClientService clientService)
+        {
+            _clientService = clientService;
+        }
+
+        [HttpGet]
         public IEnumerable<Client> GetAll()
         {
             return _clientService.GetClients();
         }
 
-        public Client GetById(int id)
-        {
-            return _clientService.GetClient(id);
-        }
-
+        [HttpPost]
         public IActionResult CreateClient(Client client)
         {
             _clientService.AddClient(client);
             return new OkResult();
         }
 
+        [HttpPut]
         public IActionResult UpdateClient(Client client, Client newClient)
         {
             _clientService.UpdateClient(client, newClient);
             return new OkResult();
         }
 
+        [HttpDelete]
         public IActionResult DeleteClient(Client client)
         {
             _clientService.DeleteClient(client);

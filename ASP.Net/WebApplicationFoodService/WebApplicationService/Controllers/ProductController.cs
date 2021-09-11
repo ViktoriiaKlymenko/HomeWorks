@@ -18,64 +18,76 @@ namespace WebApplicationService.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IProviderService _providerService;
 
-        public ProductController(ILogger<ProductController> logger, IProductService productService)
+        public ProductController(ILogger<ProductController> logger, IProductService productService, ICategoryService categoryService, IProviderService providerService)
         {
             _logger = logger;
             _productService = productService;
+            _categoryService = categoryService;
+            _providerService = providerService;
         }
 
-        [HttpGet]
+        [HttpGet("Get")]
         public IActionResult Get()
         {
-            return View("Product", _productService.ExtractProducts());
+            return View("Get", _productService.ExtractProducts());
+        }
+
+        public IActionResult Create()
+        {
+            ViewData["Categories"] = _categoryService.GetCategories();
+            ViewData["Providers"] = _providerService.GetProviders();
+            return View();
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(Product product)
+        [ActionName("Create")]
+        public IActionResult Create(Product product)
         {
-            var category = _categoryService.GetAll().FirstOrDefault(c => c.Id == product.Category.Id);
-            var provider = _providerService.GetProviders().FirstOrDefault(p => p.Id == product.Provider.Id);
+            product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);
+            product.Provider = _providerService.GetProviders().FirstOrDefault(p => p.Id == product.Provider.Id);
 
             if (ModelState.IsValid)
             {
-                _productService.AddProduct(product.Name, product.Price, product.Amount, product.Weight, category, provider);
+                _productService.AddProduct(product);
             }
-            return new OkResult();
+            return RedirectToAction("Index", "Home");
         }
 
-        public IEnumerable<string> GetProviders()
-        {
-            return _productService.GetProviders();
-        }
+        //public IActionResult Update(int id)
+        //{
+        //    ViewData["Categories"] = _categoryService.GetCategories();
+        //    ViewData["Providers"] = _providerService.GetProviders();
+        //    return View("Create", _productService.GetById(id));
+        //}
 
-        public IEnumerable<Product> GetProviderDishes(int id)
-        {
-            return _productService.GetProviderDishes(id);
-        }
+        //[HttpPut]
+        //public IActionResult Update(int id, Product newProduct)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _productService.UpdateProduct(id, newProduct);
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
 
-        public IEnumerable<Product> SortByPrice()
-        {
-            return _productService.SortByPrice();
-        }
+        //public IActionResult Delete(int id)
+        //{
+        //    return View("Delete");
+        //}
 
-        [HttpPut]
-        public IActionResult UpdateProduct([FromBody] Product product, [FromQuery] Product newProduct)
+        //[HttpDelete("{id}")]
+        //[ActionName("Delete")]
+        //public IActionResult Delete()
+        //{
+        //    _productService.Remove(id);
+        //    return RedirectToAction("Index", "Home");
+        //}
+        [HttpGet("Delete/{id}")]
+        public ActionResult Delete(int id)
         {
-            _productService.UpdateProduct(product, newProduct);
-            return new OkResult();
-        }
+            _productService.Remove(id);
 
-        [HttpDelete]
-        public IActionResult DeleteProduct(Product product)
-        {
-            _productService.Remove(product);
-            return new OkResult();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return RedirectToAction("Index", "Home");
         }
     }
 }

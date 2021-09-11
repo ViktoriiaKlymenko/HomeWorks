@@ -5,6 +5,6 @@ namespace PastriesDelivery.Contracts
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetAll();
+        IEnumerable<Category> GetCategories();
     }
 }

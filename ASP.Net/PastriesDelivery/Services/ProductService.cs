@@ -18,14 +18,14 @@ namespace PastriesDelivery
             _unitOfWork = unitOfWork;
         }
 
-        public List<Product> ExtractProducts()
+        public IEnumerable<Product> ExtractProducts()
         {
-            return _unitOfWork.Products.GetAll().ToList();
+            return _unitOfWork.Products.GetAll();
         }
 
-        public void AddProduct(string name, decimal price, int amount, double weight, Category category, Provider provider)
+        public void AddProduct(Product product)
         {
-            _unitOfWork.Products.Add(new Product(name, price, amount, weight, category, provider));
+            _unitOfWork.Products.Add(product);
             _unitOfWork.Complete();
         }
 
@@ -34,9 +34,9 @@ namespace PastriesDelivery
             return _unitOfWork.Providers.GetAll().Select(p => p.Name);
         }
 
-        public void Remove(Product product)
+        public void Remove(int id)
         {
-            _unitOfWork.Products.Remove(product);
+            _unitOfWork.Products.Remove(_unitOfWork.Products.Get(id));
             _unitOfWork.Complete();
         }
 
@@ -50,10 +50,15 @@ namespace PastriesDelivery
             return _unitOfWork.Products.GetAll().Where(p => p.Provider.Id == id);
         }
 
-        public void UpdateProduct(Product product, Product newProduct)
+        public void UpdateProduct(int id, Product newProduct)
         {
-            _unitOfWork.Products.Update(product, newProduct);
+            _unitOfWork.Products.Update(_unitOfWork.Products.Get(id), newProduct);
             _unitOfWork.Complete();
+        }
+
+        public Product GetById(int id)
+        {
+           return _unitOfWork.Products.Get(id);
         }
     }
 }
