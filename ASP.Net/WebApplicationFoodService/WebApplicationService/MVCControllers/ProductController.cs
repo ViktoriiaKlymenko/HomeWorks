@@ -29,6 +29,7 @@ namespace WebApplicationService.Controllers
             return View("Get", _productService.ExtractProducts());
         }
 
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             ViewData["Categories"] = _categoryService.GetCategories();
@@ -36,7 +37,7 @@ namespace WebApplicationService.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public IActionResult Create(Product product)
         {
             product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);
@@ -51,51 +52,24 @@ namespace WebApplicationService.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //public IActionResult Update(int id)
-        //{
-        //    if (id == null || id == 0)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var product = _productService.GetById(id);
-        //    return View(product);
-        //}
-
-        //[HttpPost]
-        //[ActionName("Update")]
-        //public IActionResult UpdatePost(int id)
-        //{
-        //    var productToUpdate = _productService.GetById(id);
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        //_productService.UpdateProduct(id, newProduct);
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-        //    return new BadRequestResult();
-        //}
-
+        [HttpGet("Update/{id}")]
         public IActionResult Update(int id)
         {
-            if (id! <= 0)
+            if (id > 0)
             {
-                Product product = _productService.GetById(id);
+                var product = _productService.GetById(id);
 
                 if (product != null)
                 {
                     ViewData["Categories"] = _categoryService.GetCategories();
                     ViewData["Providers"] = _providerService.GetProviders();
-                    ViewData["Ids"] = _productService.ExtractProducts().Select(p => p.Id);
-                    return View(product);
+                    return View("Create", product);
                 }
-
             }
             return NotFound();
         }
 
-        [HttpPut]
+        [HttpPost("Update")]
         public IActionResult Update(Product product)
         {
             _productService.UpdateProduct(product);
@@ -106,7 +80,7 @@ namespace WebApplicationService.Controllers
         public IActionResult Delete(int id)
         {
 
-            if (id == null || id == 0)
+            if (_productService.GetById(id) == null || id == 0)
             {
                 return NotFound();
             }
