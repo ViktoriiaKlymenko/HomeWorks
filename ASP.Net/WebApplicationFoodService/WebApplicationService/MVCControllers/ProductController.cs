@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery.Contracts;
 using System.Linq;
+using WebApplicationFoodService.Filters;
 
 namespace WebApplicationService.Controllers
 {
     [Controller]
     [Route("mvc/[controller]")]
+    [ServiceFilter(typeof(GeneralExceptionFilter))]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -38,6 +40,7 @@ namespace WebApplicationService.Controllers
         }
 
         [HttpPost("Create")]
+        [ServiceFilter(typeof(CreateActionFilter))]
         public IActionResult Create(Product product)
         {
             product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);

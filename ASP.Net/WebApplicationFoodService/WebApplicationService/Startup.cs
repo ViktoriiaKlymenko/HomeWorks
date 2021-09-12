@@ -3,6 +3,7 @@ using EFCore.Data.Interfaces;
 using EFCore.Data.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using PastriesDelivery;
 using PastriesDelivery.Contracts;
 using PastriesDelivery.Services;
+using WebApplicationFoodService.Filters;
 
 namespace WebApplicationService
 {
@@ -34,6 +36,8 @@ namespace WebApplicationService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationFoodService", Version = "v1" });
             });
+            services.AddScoped<GeneralExceptionFilter>();
+            services.AddScoped<CreateActionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -55,6 +59,11 @@ namespace WebApplicationService
             app.UseRouting();
 
             app.UseAuthorization();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
             app.UseEndpoints(endpoints =>
             {
