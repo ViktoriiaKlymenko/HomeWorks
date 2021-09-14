@@ -63,7 +63,7 @@ namespace WebApplicationService.Controllers
                 {
                     ViewData["Categories"] = _categoryService.GetCategories();
                     ViewData["Providers"] = _providerService.GetProviders();
-                    return View("Update");
+                    return View("Update", product);
                 }
             }
             return NotFound();
