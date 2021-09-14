@@ -16,9 +16,8 @@ namespace EFCore.Data
         public DbSet<ProviderType> ProviderTypes { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            builder.UseSqlServer(@"Data Source=VIKTORIAPC; Initial Catalog=EFDatabase; Integrated Security=true");
         }
     }
 }
