@@ -66,7 +66,7 @@ namespace WebApplicationService.Controllers
                 {
                     ViewData["Categories"] = _categoryService.GetCategories();
                     ViewData["Providers"] = _providerService.GetProviders();
-                    return View("Create", product);
+                    return View("Update", product);
                 }
             }
             return NotFound();
@@ -75,8 +75,12 @@ namespace WebApplicationService.Controllers
         [HttpPost("Update")]
         public IActionResult Update(Product product)
         {
-            _productService.UpdateProduct(product);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(product);
+                return RedirectToAction("Get", "Product");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("Delete/{id}")]

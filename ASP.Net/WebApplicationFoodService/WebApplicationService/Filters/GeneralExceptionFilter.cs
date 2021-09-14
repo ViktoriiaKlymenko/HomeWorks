@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApplicationFoodService.Filters
 {
-    public class GeneralExceptionFilter : ExceptionFilterAttribute, IExceptionFilter
+    public class GeneralExceptionFilter : ExceptionFilterAttribute
     {
         private readonly ILogger<GeneralExceptionFilter> _logger;
 
@@ -19,7 +19,7 @@ namespace WebApplicationFoodService.Filters
         public void OnException(ExceptionContext filterContext)
         {          
             filterContext.ExceptionHandled = true;
-            _logger.LogError($"{DateTime.Now}: Exception {filterContext.Exception} occurs. {filterContext.Exception.StackTrace}");
+            _logger.LogError($"{DateTime.Now}: Exception {filterContext.Exception.Message} occurs. {filterContext.Exception.StackTrace}");
         }
     }
 }
