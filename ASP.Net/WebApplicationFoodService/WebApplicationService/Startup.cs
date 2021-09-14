@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using PastriesDelivery;
 using PastriesDelivery.Contracts;
 using PastriesDelivery.Services;
+using WebApplicationFoodService.Filters;
 
 namespace WebApplicationService
 {
@@ -37,6 +38,7 @@ namespace WebApplicationService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationFoodService", Version = "v1" });
             });
+            services.AddScoped<ProductExceptionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

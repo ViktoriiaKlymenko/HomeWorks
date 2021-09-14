@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery.Contracts;
 using System.Linq;
+using WebApplicationFoodService.Filters;
 
 namespace WebApplicationService.Controllers
 {
     [Controller]
     [Route("mvc/[controller]")]
+    [ServiceFilter(typeof(ProductExceptionFilter))]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
