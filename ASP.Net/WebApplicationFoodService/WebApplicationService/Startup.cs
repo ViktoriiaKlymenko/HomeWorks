@@ -4,6 +4,7 @@ using EFCore.Data.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +40,8 @@ namespace WebApplicationService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationFoodService", Version = "v1" });
             });
             services.AddScoped<ProductExceptionFilter>();
+            services.AddMemoryCache();
+            services.AddSingleton<IMemoryCache, MemoryCache>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

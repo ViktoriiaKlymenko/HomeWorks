@@ -1,7 +1,10 @@
 ﻿using EntityFrameworkTask;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using NHibernate.Cache;
 using PastriesDelivery.Contracts;
+using System;
 using System.Linq;
 using WebApplicationFoodService.Filters;
 
@@ -16,13 +19,14 @@ namespace WebApplicationService.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IProviderService _providerService;
-
-        public ProductController(ILogger<ProductController> logger, IProductService productService, ICategoryService categoryService, IProviderService providerService)
+        private readonly IMemoryCache _cache;
+        public ProductController(ILogger<ProductController> logger, IProductService productService, ICategoryService categoryService, IProviderService providerService, IMemoryCache cache)
         {
             _logger = logger;
             _productService = productService;
             _categoryService = categoryService;
             _providerService = providerService;
+            _cache = cache;
         }
 
         [HttpGet("Get")]
@@ -47,6 +51,10 @@ namespace WebApplicationService.Controllers
 
             if (ModelState.IsValid)
             {
+                _cache.Set(product.Id, product, new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2)
+                });
                 _productService.AddProduct(product);
                 return RedirectToAction("Get", "Product");
             }
