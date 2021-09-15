@@ -51,11 +51,11 @@ namespace WebApplicationService.Controllers
 
             if (ModelState.IsValid)
             {
+                _productService.AddProduct(product);
                 _cache.Set(product.Id, product, new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2)
                 });
-                _productService.AddProduct(product);
                 return RedirectToAction("Get", "Product");
             }
 
