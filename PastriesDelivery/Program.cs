@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PastriesDelivery
 {
@@ -163,7 +162,6 @@ namespace PastriesDelivery
                 {
                     return null;
                 }
-
             } while (DataValidator.ValidateAddress(user.Address));
 
             do
@@ -175,7 +173,6 @@ namespace PastriesDelivery
                 {
                     return null;
                 }
-
             } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
 
             Messenger.ShowEnterNameMessage();
@@ -195,7 +192,6 @@ namespace PastriesDelivery
                     amount = res;
                     return amount;
                 }
-
             } while (amount == default);
             return amount;
         }
@@ -212,7 +208,6 @@ namespace PastriesDelivery
                     id = res;
                     return id;
                 }
-
             } while (id == default);
             return id;
         }

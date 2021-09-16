@@ -11,7 +11,6 @@ namespace PastriesDelivery
 
         public СustomerManager(IStorage storage, ICurrencyService converter)
         {
-            
             Storage = storage;
             Converter = converter;
         }

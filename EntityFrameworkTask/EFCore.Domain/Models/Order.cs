@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EntityFrameworkTask
 {
@@ -17,6 +13,7 @@ namespace EntityFrameworkTask
         public int CourierId { get; set; }
         public decimal DeliveryPrice { get; set; }
         public DateTime DeliveryTimeEstimated { get; set; }
+
         public Order()
         {
             DeliveryTimeEstimated = OrderTime.AddDays(3);

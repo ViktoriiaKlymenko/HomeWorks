@@ -1,10 +1,7 @@
 ﻿using EFCore.Data.Interfaces;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EFCore.Data
 {
@@ -16,6 +13,7 @@ namespace EFCore.Data
         {
             Context = context;
         }
+
         public void Add(T item)
         {
             Context.Set<T>().Add(item);

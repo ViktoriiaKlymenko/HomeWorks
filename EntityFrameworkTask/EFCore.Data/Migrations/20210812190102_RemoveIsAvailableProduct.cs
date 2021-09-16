@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFCore.Data.Migrations
 {
@@ -23,7 +22,6 @@ namespace EFCore.Data.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                 });
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
