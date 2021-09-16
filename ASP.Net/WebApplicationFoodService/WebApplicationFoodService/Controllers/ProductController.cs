@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery;
 using System.Collections.Generic;
-using System.Net;
 
 namespace WebApplicationFoodService.Controllers
 {
@@ -23,7 +22,7 @@ namespace WebApplicationFoodService.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-           return _productService.ExtractProducts();
+            return _productService.ExtractProducts();
         }
 
         [HttpPost]
@@ -34,7 +33,7 @@ namespace WebApplicationFoodService.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateProduct([FromQuery]Product product, [FromBody] Product newProduct)
+        public IActionResult UpdateProduct([FromQuery] Product product, [FromBody] Product newProduct)
         {
             _productService.UpdateProduct(product, newProduct);
             return new OkResult();

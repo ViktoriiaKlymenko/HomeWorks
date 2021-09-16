@@ -13,8 +13,6 @@ namespace PastriesDelivery.Contracts
 
         IEnumerable<Order> GetClientOrders(int clientId);
 
-        void ChangeOrderStatus(Order order, OrderStatus newStatus);
-
         void UpdateOrder(Order order, Order newOrder);
     }
 }
