@@ -13,8 +13,7 @@ namespace EFCore.UI
             _context = new DataContext();
             _context.Database.EnsureCreated();
             Console.WriteLine("Bye World!");
-               
-                Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
