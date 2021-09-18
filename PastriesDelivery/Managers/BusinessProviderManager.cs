@@ -8,10 +8,12 @@ namespace PastriesDelivery
     public class BusinessProviderManager
     {
         private readonly IStorage _storage;
+        private readonly ILogger _logger;
 
-        public BusinessProviderManager(IStorage storage)
+        public BusinessProviderManager(IStorage storage, ILogger logger)
         {
             _storage = storage;
+            _logger = logger;
         }
 
         public int SetId()

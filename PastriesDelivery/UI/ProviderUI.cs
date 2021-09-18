@@ -6,8 +6,7 @@ namespace PastriesDelivery
     {
         public static Pastry AcceptData(BusinessProviderManager manager, Pastry pastry)
         {
-            Console.WriteLine();
-            pastry.Id = manager.SetId() + 1;
+            pastry.Id = manager.SetId();
             pastry.Name = Console.ReadLine();
             pastry.Type = Console.ReadLine();
 

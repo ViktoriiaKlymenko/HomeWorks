@@ -7,7 +7,11 @@ namespace PastriesDelivery
     /// </summary>
     public class BusinessClientManager : СustomerManager, ICustomerManager
     {
+<<<<<<< HEAD
         public BusinessClientManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
+=======
+        public BusinessClientManager(IStorage storage, ILogger logger) : base(storage, logger)
+>>>>>>> main
         {
         }
 
