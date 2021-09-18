@@ -37,9 +37,9 @@ namespace WebApplicationFoodService.Filters
                     _logger.LogInformation($"{DateTime.Now}: {RequestBody}");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex.Message);
             }
         }
     }
