@@ -23,13 +23,13 @@ namespace WebApplicationService.Controllers
             _providerService = providerService;
         }
 
-        [HttpGet("Get")]
+        [HttpGet]
         public IActionResult Get()
         {
             return View("Get", _productService.ExtractProducts());
         }
 
-        [HttpGet("Create")]
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["Categories"] = _categoryService.GetCategories();
@@ -37,7 +37,7 @@ namespace WebApplicationService.Controllers
             return View();
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         public IActionResult Create(Product product)
         {
             product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);
@@ -63,16 +63,20 @@ namespace WebApplicationService.Controllers
                 {
                     ViewData["Categories"] = _categoryService.GetCategories();
                     ViewData["Providers"] = _providerService.GetProviders();
-                    return View("Update");
+                    return View("Update", product);
                 }
             }
             return NotFound();
         }
 
-        [HttpPost("Update")]
+        [HttpPost]
         public IActionResult Update(Product product)
         {
-            _productService.UpdateProduct(product);
+            if (ModelState.IsValid)
+            {
+                _productService.UpdateProduct(product);
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
 
