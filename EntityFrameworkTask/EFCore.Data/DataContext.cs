@@ -1,4 +1,4 @@
-﻿wusing EntityFrameworkTask;
+﻿using EntityFrameworkTask;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.Data
