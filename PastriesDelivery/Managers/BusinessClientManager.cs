@@ -1,18 +1,25 @@
-﻿namespace PastriesDelivery
+﻿using System.Linq;
+
+namespace PastriesDelivery
 {
     /// <summary>
     /// This class contains methods intended for work with consumer.
     /// </summary>
     public class BusinessClientManager : СustomerManager, ICustomerManager
     {
+<<<<<<< HEAD
+        public BusinessClientManager(IStorage storage, ICurrencyService converter) : base(storage, converter)
+=======
         public BusinessClientManager(IStorage storage, ILogger logger) : base(storage, logger)
+>>>>>>> main
         {
         }
 
-        public override void CreateOrder(Pastry pastry, User user)
+        public override Order CreateOrder(Pastry pastry, User user)
         {
             var totalPrice = ApplyDiscount(pastry);
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
+            return Storage.Orders.Last();
         }
 
         private decimal ApplyDiscount(Pastry pastry)

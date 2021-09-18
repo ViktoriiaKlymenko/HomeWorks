@@ -8,6 +8,7 @@ namespace PastriesDelivery
         public Pastry Pastry { get; set; }
         public User User { get; set; }
         public decimal TotalPrice { get; set; }
+        public DateTime DeliveryTime { get; set; }
 
         public Order(Pastry pastry, User user, decimal totalPrice)
         {

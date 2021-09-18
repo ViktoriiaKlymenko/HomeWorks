@@ -67,9 +67,15 @@ namespace PastriesDelivery
             Console.Write("Please, enter your name and surname: ");
         }
 
+<<<<<<< HEAD
+        internal static void ShowCancelMessage()
+        {
+            Console.WriteLine("If you want to cancel your order, please enter \"stop\"");
+=======
         internal static void ShowExitMessage()
         {
             Console.WriteLine("If you want to stop, please enter STOP.");
+>>>>>>> main
         }
     }
 }

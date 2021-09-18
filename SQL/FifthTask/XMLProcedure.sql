@@ -1,0 +1,14 @@
+CREATE PROC AddDataFromXML @Request XML
+AS
+BEGIN TRANSACTION
+BEGIN TRY
+INSERT INTO [dbo].[PastryTypes] ([Id], [Name])
+
+
+END TRY
+
+BEGIN CATCH
+ROLLBACK
+EXEC sp_XML_removedocument @Request
+END CATCH
+COMMIT

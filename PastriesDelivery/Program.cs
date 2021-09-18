@@ -6,6 +6,7 @@ namespace PastriesDelivery
     {
         private static void Main(string[] args)
         {
+            var currencyConverter = new CurrencyService();
             Pastry pastry = new Pastry();
             Storage storage = new Storage();
             var logger = new Logger();
@@ -21,12 +22,20 @@ namespace PastriesDelivery
 
                 if (user is "consumer")
                 {
+<<<<<<< HEAD
+                    WorkWithConsumer(pastry, storage, currencyConverter);
+=======
                     WorkWithConsumer(pastry, storage, logger);
+>>>>>>> main
                 }
 
                 if (user is "business client")
                 {
+<<<<<<< HEAD
+                    WorkWithBusinessClient(pastry, storage, currencyConverter);
+=======
                     WorkWithBusinessClient(pastry, storage, logger);
+>>>>>>> main
                 }
             }
         }
@@ -54,11 +63,19 @@ namespace PastriesDelivery
             }
         }
 
+<<<<<<< HEAD
+        private static void WorkWithConsumer(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
+        {
+            bool dataIsPresent;
+            int id, amount;
+            var consumerManager = new ConsumerManager(storage, currencyConverter);
+=======
         private static void WorkWithConsumer(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
             var consumerManager = new ConsumerManager(storage, logger);
+>>>>>>> main
             var consumer = new User
             {
                 Role = Role.Сustomer
@@ -83,7 +100,8 @@ namespace PastriesDelivery
                     {
                         pastry = consumerManager.ChooseProduct(id, amount);
                         consumer = GetUserInformation(consumer);
-                        consumerManager.CreateOrder(pastry, consumer);
+                        var order = consumerManager.CreateOrder(pastry, consumer);
+                        displayer.DisplayOrder(order);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
@@ -99,11 +117,19 @@ namespace PastriesDelivery
             }
         }
 
+<<<<<<< HEAD
+        private static void WorkWithBusinessClient(Pastry pastry, Storage storage, ICurrencyService currencyConverter)
+        {
+            bool dataIsPresent;
+            int id, amount;
+            var businessClientManager = new BusinessClientManager(storage, currencyConverter);
+=======
         private static void WorkWithBusinessClient(Pastry pastry, IStorage storage, ILogger logger)
         {
             bool dataIsPresent;
             int id, amount;
             var businessClientManager = new BusinessClientManager(storage, logger);
+>>>>>>> main
             var businessClient = new User
             {
                 Role = Role.Сustomer
@@ -126,7 +152,14 @@ namespace PastriesDelivery
                     {
                         pastry = businessClientManager.ChooseProduct(id, amount);
                         businessClient = GetUserInformation(businessClient);
-                        businessClientManager.CreateOrder(pastry, businessClient);
+
+                        if (businessClient is null)
+                        {
+                            return;
+                        }
+
+                        var order = businessClientManager.CreateOrder(pastry, businessClient);
+                        displayer.DisplayOrder(order);
                         Messenger.ShowOrderAcceptedMessage();
                     }
                     catch (ArgumentOutOfRangeException)
@@ -144,18 +177,40 @@ namespace PastriesDelivery
 
         private static User GetUserInformation(User user)
         {
+<<<<<<< HEAD
+            Messenger.ShowCancelMessage();
+=======
             Messenger.ShowExitMessage();
+>>>>>>> main
             do
             {
                 Messenger.ShowEnterAddressMessage();
                 user.Address = Console.ReadLine();
+<<<<<<< HEAD
+
+                if (user.Address is "stop")
+                {
+                    return null;
+                }
+            } while (DataValidator.ValidateAddress(user.Address));
+=======
             } while (!DataValidator.IsAddressValid(user.Address));
+>>>>>>> main
 
             do
             {
                 Messenger.ShowEnterPhoneNumberMessage();
                 user.PhoneNumber = Console.ReadLine();
+<<<<<<< HEAD
+
+                if (user.Address is "stop")
+                {
+                    return null;
+                }
+            } while (DataValidator.ValidatePhoneNumber(user.PhoneNumber));
+=======
             } while (!DataValidator.IsPhoneNumberValid(user.PhoneNumber));
+>>>>>>> main
 
             Messenger.ShowEnterNameMessage();
             user.Name = Console.ReadLine();
