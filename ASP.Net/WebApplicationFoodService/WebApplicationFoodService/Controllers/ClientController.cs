@@ -19,21 +19,21 @@ namespace WebApplicationFoodService.Controllers
         public IActionResult CreateClient(Client client)
         {
             _clientService.AddClient(client);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateClient(Client client, Client newClient)
         {
             _clientService.UpdateClient(client, newClient);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteClient(Client client)
         {
             _clientService.DeleteClient(client);
-            return new OkResult();
+            return Ok();
         }
     }
 }

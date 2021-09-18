@@ -19,21 +19,21 @@ namespace WebApplicationFoodService.Controllers
         public IActionResult CreateProvider(Provider provider)
         {
             _providerService.AddProvider(provider);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateProvider(Provider provider, Provider newProvider)
         {
             _providerService.UpdateProvider(provider, newProvider);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteProvider(Provider provider)
         {
             _providerService.DeleteProvider(provider);
-            return new OkResult();
+            return Ok();
         }
     }
 }

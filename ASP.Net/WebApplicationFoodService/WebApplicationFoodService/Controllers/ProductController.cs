@@ -29,21 +29,21 @@ namespace WebApplicationFoodService.Controllers
         public IActionResult CreateProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId)
         {
             _productService.AddProduct(name, price, amount, weight, categoryId, providerId);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateProduct([FromQuery] Product product, [FromBody] Product newProduct)
         {
             _productService.UpdateProduct(product, newProduct);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteProduct(Product product)
         {
             _productService.Remove(product);
-            return new OkResult();
+            return Ok();
         }
     }
 }
