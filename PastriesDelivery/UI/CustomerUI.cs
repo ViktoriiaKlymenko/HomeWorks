@@ -4,9 +4,13 @@ namespace PastriesDelivery
 {
     internal class CustomerUI : IDataDisplayer
     {
+<<<<<<< HEAD
         protected readonly ICustomerManager Manager;
+=======
+        protected readonly IProductService Manager;
+>>>>>>> Task4-APILayer
 
-        public CustomerUI(ICustomerManager manager)
+        public CustomerUI(IProductService manager)
         {
             Manager = manager;
         }
@@ -17,23 +21,12 @@ namespace PastriesDelivery
 
             foreach (var product in products)
             {
-                Console.WriteLine("Pastry Id: " + product.Pastry.Id);
-                Console.WriteLine("Pastry name: " + product.Pastry.Name);
-                Console.WriteLine("Pastry type: " + product.Pastry.Type);
-                Console.WriteLine("Pastry weight: " + product.Pastry.Weight + " gr");
-                Console.WriteLine("Pastry price: " + product.Pastry.Price + " UAH");
-                Console.WriteLine("Pastry amount: " + product.Pastry.Amount);
+                Console.WriteLine("Pastry Id: " + product.Id);
+                Console.WriteLine("Pastry name: " + product.Name);
+                Console.WriteLine("Pastry weight: " + product.Weight + " gr");
+                Console.WriteLine("Pastry price: " + product.Price + " USD");
+                Console.WriteLine("Pastry amount: " + product.Amount);
             }
-        }
-
-        internal void DisplayOrder(Order order)
-        {
-            Console.WriteLine("Pastry name: " + order.Pastry.Name);
-            Console.WriteLine("Pastry type: " + order.Pastry.Type);
-            Console.WriteLine("Pastry weight: " + order.Pastry.Weight + " gr");
-            Console.WriteLine("Pastry amount: " + order.Pastry.Amount);
-            Console.WriteLine("Pastry price in UAH: " + order.TotalPrice);
-            Console.WriteLine("Pastry price in USD:" + Manager.ConvertToUSD(order.TotalPrice));
         }
     }
 }

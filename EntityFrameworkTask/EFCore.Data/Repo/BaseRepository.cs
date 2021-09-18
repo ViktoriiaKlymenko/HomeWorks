@@ -13,7 +13,10 @@ namespace EFCore.Data
         {
             Context = context;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> Task4-APILayer
         public void Add(T item)
         {
             Context.Set<T>().Add(item);
@@ -39,9 +42,15 @@ namespace EFCore.Data
             return Context.Set<T>().ToList();
         }
 
+<<<<<<< HEAD
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
             return Context.Set<T>().Where(predicate);
+=======
+        public T Find(Func<T, bool> predicate)
+        {
+            return Context.Set<T>().Where(predicate).FirstOrDefault();
+>>>>>>> Task4-APILayer
         }
 
         public void Remove(T item)
@@ -53,5 +62,15 @@ namespace EFCore.Data
         {
             Context.Set<T>().RemoveRange(item);
         }
+<<<<<<< HEAD
     }
 }
+=======
+
+        public int Count()
+        {
+            return Context.Set<T>().Count<T>();
+        }
+    }
+}
+>>>>>>> Task4-APILayer

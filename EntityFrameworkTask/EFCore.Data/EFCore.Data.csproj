@@ -2,14 +2,20 @@
 
   <PropertyGroup>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Task4-APILayer
     <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+<<<<<<< HEAD
 =======
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
 >>>>>>> b570995b4acb0dc6aa8f439c08b1c3f6635fcf8c
+=======
+>>>>>>> Task4-APILayer
   </PropertyGroup>
 
   <ItemGroup>

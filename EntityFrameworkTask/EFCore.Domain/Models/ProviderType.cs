@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 ﻿namespace EntityFrameworkTask
+=======
+﻿using System;
+
+namespace EntityFrameworkTask
+>>>>>>> Task4-APILayer
 {
    public class ProviderType
     {

@@ -69,6 +69,7 @@ namespace PastriesDelivery
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         internal static void ShowCancelMessage()
         {
             Console.WriteLine("If you want to cancel your order, please enter \"stop\"");
@@ -82,6 +83,11 @@ namespace PastriesDelivery
         {
             Console.WriteLine("If you want to cancel your order, please enter \"stop\"");
 >>>>>>> b570995b4acb0dc6aa8f439c08b1c3f6635fcf8c
+=======
+        internal static void ShowExitMessage()
+        {
+            Console.WriteLine("If you want to stop, please enter STOP.");
+>>>>>>> Task4-APILayer
         }
     }
 }
