@@ -9,6 +9,11 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly IProviderService _providerService;
 
+        public ProviderController(IProviderService providerService)
+        {
+            _providerService = providerService;
+        }
+
         [HttpGet]
         public IEnumerable<Provider> GetAll()
         {

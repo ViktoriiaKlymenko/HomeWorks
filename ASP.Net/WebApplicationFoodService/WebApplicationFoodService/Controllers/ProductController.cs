@@ -11,15 +11,9 @@ namespace WebApplicationFoodService.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
-<<<<<<< HEAD
-        private readonly ICustomerManager _customerManager;
-
-        public ProductController(ILogger<ProductController> logger, ICustomerManager customerManager)
-=======
         private readonly IProductService _productService;
 
         public ProductController(ILogger<ProductController> logger, IProductService productService)
->>>>>>> Task4-APILayer
         {
             _logger = logger;
             _productService = productService;

@@ -9,13 +9,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
-<<<<<<< HEAD
-</Project>
-=======
   <ItemGroup>
-    <ProjectReference Include="..\..\EntityFrameworkTask\EntityFrameworkTask.csproj" />
     <ProjectReference Include="..\..\PastriesDelivery\PastriesDelivery.csproj" />
   </ItemGroup>
-
 </Project>
->>>>>>> Task4-APILayer

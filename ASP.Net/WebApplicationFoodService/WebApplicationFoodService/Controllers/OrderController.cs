@@ -9,6 +9,11 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly IOrderService _orderService;
 
+        public OrderController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+
         [HttpGet]
         public IEnumerable<Order> GetAll()
         {

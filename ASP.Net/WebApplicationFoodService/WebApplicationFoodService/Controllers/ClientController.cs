@@ -9,6 +9,11 @@ namespace WebApplicationFoodService.Controllers
     {
         private readonly IClientService _clientService;
 
+        public ClientController(IClientService clientService)
+        {
+            _clientService = clientService;
+        }
+
         [HttpGet]
         public IEnumerable<Client> GetAll()
         {
