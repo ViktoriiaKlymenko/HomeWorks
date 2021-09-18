@@ -30,7 +30,7 @@ namespace WebApplicationFoodService.ApiControllers
                 return Ok(product);
             }
 
-            return new BadRequestResult();
+            return BadRequest();
         }
 
         [HttpPut("Update")]
@@ -42,7 +42,7 @@ namespace WebApplicationFoodService.ApiControllers
                 return Ok(newProduct);
             }
 
-            return new BadRequestResult();
+            return BadRequest();
         }
 
         [HttpDelete("Delete")]
@@ -50,7 +50,7 @@ namespace WebApplicationFoodService.ApiControllers
         {
             if (id == 0 || _productService.GetById(id) == null)
             {
-                return new BadRequestResult();
+                return BadRequest();
             }
 
             _productService.Remove(id);

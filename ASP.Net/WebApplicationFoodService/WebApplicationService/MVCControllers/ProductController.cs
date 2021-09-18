@@ -23,13 +23,13 @@ namespace WebApplicationService.Controllers
             _providerService = providerService;
         }
 
-        [HttpGet]
+        [HttpGet("GetProduct")]
         public IActionResult Get()
         {
             return View("Get", _productService.ExtractProducts());
         }
 
-        [HttpGet]
+        [HttpGet("CreateProduct")]
         public IActionResult Create()
         {
             ViewData["Categories"] = _categoryService.GetCategories();
@@ -37,7 +37,7 @@ namespace WebApplicationService.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public IActionResult Create(Product product)
         {
             product.Category = _categoryService.GetCategories().FirstOrDefault(c => c.Id == product.Category.Id);
@@ -69,7 +69,7 @@ namespace WebApplicationService.Controllers
             return NotFound();
         }
 
-        [HttpPost]
+        [HttpPut("UpdateProduct")]
         public IActionResult Update(Product product)
         {
             if (ModelState.IsValid)
@@ -83,7 +83,6 @@ namespace WebApplicationService.Controllers
         [HttpGet("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-
             if (_productService.GetById(id) == null || id == 0)
             {
                 return NotFound();

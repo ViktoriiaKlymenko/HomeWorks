@@ -6,7 +6,7 @@ namespace EFCore.Data.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IProductRepository Products { get; }
+        IBaseRepository<Product> Products { get; }
         IOrderRepository Orders { get; }
         IBaseRepository<Provider> Providers { get; }
 

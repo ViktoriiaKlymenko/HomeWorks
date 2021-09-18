@@ -26,7 +26,7 @@ namespace EFCore.Data
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Context.Dispose();
         }
 
         public T Get(int id)

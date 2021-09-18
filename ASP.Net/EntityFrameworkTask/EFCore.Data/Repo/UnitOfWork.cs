@@ -8,18 +8,26 @@ namespace EFCore.Data.Repo
     {
         private readonly DataContext _context;
 
-        public UnitOfWork(DataContext context)
+        public UnitOfWork(
+            DataContext context,
+            IBaseRepository<Product> productRepository, 
+            IBaseRepository<Provider> providerRepository, 
+            IBaseRepository<Client> clientRepository,
+            IBaseRepository<Courier> courierRepository,
+            IOrderRepository orderRepository,
+            IBaseRepository<Category> categoryRepository
+            )
         {
             _context = context;
-            Products = new ProductRepository(_context);
-            Providers = new BaseRepository<Provider>(_context);
-            Clients = new BaseRepository<Client>(_context);
-            Couriers = new BaseRepository<Courier>(_context);
-            Orders = new OrderRepository(_context);
-            Categories = new BaseRepository<Category>(_context);
+            Products = productRepository;
+            Providers = providerRepository;
+            Clients = clientRepository;
+            Couriers = courierRepository;
+            Orders = orderRepository;
+            Categories = categoryRepository;
         }
 
-        public IProductRepository Products { get; private set; }
+        private readonly IBaseRepository<Product> Products;
 
         public IOrderRepository Orders { get; private set; }
 
