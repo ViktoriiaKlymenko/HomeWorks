@@ -7,9 +7,14 @@ namespace PastriesDelivery
     public class СustomerManager
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b570995b4acb0dc6aa8f439c08b1c3f6635fcf8c
         protected IStorage Storage { get; }
         protected ICurrencyService Converter { get; }
+        protected readonly ILogger Logger;
 
+<<<<<<< HEAD
         public СustomerManager(IStorage storage, ICurrencyService converter)
         {
             Storage = storage;
@@ -23,6 +28,13 @@ namespace PastriesDelivery
             Storage = storage;
             Logger = logger;
 >>>>>>> main
+=======
+        public СustomerManager(IStorage storage, ICurrencyService converter, ILogger logger)
+        {            
+            Storage = storage;
+            Converter = converter;
+            Logger = logger;
+>>>>>>> b570995b4acb0dc6aa8f439c08b1c3f6635fcf8c
         }
 
         public Pastry ChooseProduct(int id, int amount)
@@ -62,10 +74,15 @@ namespace PastriesDelivery
             var totalPrice = pastry.Price * pastry.Amount;
             Storage.Orders.Add(new Order(pastry, user, totalPrice));
 <<<<<<< HEAD
+<<<<<<< HEAD
             return Storage.Orders.Last();
 =======
             Logger.Log($"{pastry.ToString()} and {user.ToString()} were added to orders.");
 >>>>>>> main
+=======
+            Logger.Log($"{pastry.ToString()} and {user.ToString()} were added to orders.");
+            return Storage.Orders.Last();
+>>>>>>> b570995b4acb0dc6aa8f439c08b1c3f6635fcf8c
         }
 
         public List<Product> ExtractProducts()

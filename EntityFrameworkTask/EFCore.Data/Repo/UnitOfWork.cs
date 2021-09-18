@@ -10,15 +10,15 @@ namespace EFCore.Data.Repo
         public UnitOfWork(DataContext context)
         {
             _context = context;
-            Products = new ProductRepository(_context);
+            Products = new BaseRepository<Product>(_context);
             Providers = new BaseRepository<Provider>(_context);
             Clients = new BaseRepository<Client>(_context);
-            Couriers = new CourierRepository(_context);
+            Couriers = new BaseRepository<Courier>(_context);
             Orders = new BaseRepository<Order>(_context);
             Categories = new BaseRepository<Category>(_context);
         }
 
-        public IProductRepository Products { get; private set; }
+        public IBaseRepository<Product> Products { get; private set; }
 
         public IBaseRepository<Order> Orders { get; private set; }
 
@@ -28,7 +28,7 @@ namespace EFCore.Data.Repo
 
         public IBaseRepository<Category> Categories { get; private set; }
 
-        public ICourierRepository Couriers { get; private set; }
+        public IBaseRepository<Courier> Couriers { get; private set; }
 
         public int Complete()
         {

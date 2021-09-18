@@ -8,4 +8,4 @@
         public int CategoryId { get; set; }
         public int ProviderId { get; set; }
     }
-}
+}      

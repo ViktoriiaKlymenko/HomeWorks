@@ -41,43 +41,50 @@ namespace ThirdModule
                 new Product() {Id = new Guid(), Name="Cinnamon Bun", Category=categories.ElementAt(3), Price=40, Provider = providers.ElementAt(2) },
                 new Product() {Id = new Guid(), Name="Puff Snowmen", Category=categories.ElementAt(4), Price=50, Provider = providers.ElementAt(4) }
             };
+
             Console.WriteLine("--------------------------------");
             Console.WriteLine("List of products sorted by name:");
+            var sortedProducts = SortProducts(products);
 
-            foreach (var product in products.OrderBy(product => product.Name))
+            foreach (var product in sortedProducts)
             {
                 Console.WriteLine(product.Name);
             }
 
             Console.WriteLine("--------------------------------");
-            var productsAndProviders = products.Select(product => new { productName = product.Name, productProvider = product.Provider.Name });
+            var productsAndProviders = GetProductsAndProviders(products);
 
             foreach (var productAndProvider in productsAndProviders)
             {
-                Console.WriteLine($"{productAndProvider.productName} - {productAndProvider.productProvider}");
+                Console.WriteLine($"{productAndProvider}");
+            }
+
+            var productsAndProvidersAnother = GetProductsAndProvidersAnother(products, providers);
+
+            foreach (var productAndProvider in productsAndProvidersAnother)
+            {
+                Console.WriteLine($"{productAndProvider}");
             }
 
             Console.WriteLine("--------------------------------");
-            var categoriesAndAmountOfProducts = products.GroupBy(product => product.Category).Select(product => new { categoryName = product.Key.Name, productsAmount = product.Count() });
+            var categoriesAndAmountOfProducts = GetCategoriesAndProductsAmount(products);
 
             foreach (var categoryAndAmountOfProducts in categoriesAndAmountOfProducts)
             {
-                Console.WriteLine($"{categoryAndAmountOfProducts.categoryName} - {categoryAndAmountOfProducts.productsAmount}");
+                Console.WriteLine($"{categoryAndAmountOfProducts}");
             }
 
             Console.WriteLine("--------------------------------");
-            var providersAndProducts = products.GroupBy(product => product.Provider).Select(product => new { provider = product.Key.Name, productsAmount = product.Count() }).OrderByDescending(product => product.productsAmount);
-
-            foreach (var providerAndProducts in providersAndProducts)
+            var providersAndProductsAmount = GetProvidersAndProductsAmount(products);
+            foreach (var providerAndProductAmount in providersAndProductsAmount)
             {
-                Console.WriteLine($"{providerAndProducts.provider} - {providerAndProducts.productsAmount}");
+                Console.WriteLine($"{providerAndProductAmount}");
             }
 
             Console.WriteLine("--------------------------------");
-            var productsOfFirstProvider = products.Where(product => product.Provider.Name == "Dinner in the Sky");
-            var productsOfSecondProvider = products.Where(product => product.Provider.Name == "The Disaster Café");
-            var nonUniqueProducts = productsOfFirstProvider.Intersect(productsOfSecondProvider);
-            var uniqueProducts = productsOfFirstProvider.Except(productsOfSecondProvider).Concat(productsOfSecondProvider.Except(productsOfFirstProvider));
+           
+            var nonUniqueProducts = GetNonUniqueProducts(products); 
+            var uniqueProducts = GetUniqueProducts(products); 
             Console.WriteLine("Unique products:");
 
             foreach (var uniqueProduct in uniqueProducts)
@@ -96,5 +103,54 @@ namespace ThirdModule
             Console.WriteLine("--------------------------------");
             Console.ReadKey();
         }
+
+        public static List<Product> SortProducts(List<Product> products)
+        {
+            return products.OrderBy(product => product.Name).ToList();
+        }
+
+        private static List<Product> GetUniqueProducts(List<Product> products)
+        {
+            var productsOfFirstProvider = products.Where(product => product.Provider.Name == "Dinner in the Sky");
+            var productsOfSecondProvider = products.Where(product => product.Provider.Name == "The Disaster Café");
+            return productsOfFirstProvider.Except(productsOfSecondProvider).Concat(productsOfSecondProvider.Except(productsOfFirstProvider)).ToList();
+        }
+
+        private static List<Product> GetNonUniqueProducts(List<Product> products)
+        {
+            var productsOfFirstProvider = products.Where(product => product.Provider.Name == "Dinner in the Sky");
+            var productsOfSecondProvider = products.Where(product => product.Provider.Name == "The Disaster Café");
+            return productsOfFirstProvider.Intersect(productsOfSecondProvider).ToList();
+        }
+
+        private static List<string> GetProvidersAndProductsAmount(List<Product> products)
+        {
+            var providersAndProductsSorted = (products.GroupBy(product => product.Provider)
+                .Select(product => product.Key.Name)
+                .OrderByDescending(product => product.Count())
+                .ToList(), products
+                .GroupBy(product => product.Provider)
+                .Select(product => product.Count()).OrderByDescending(product => product).ToList());
+            var providersAndAmountOfProducts = providersAndProductsSorted.Item1.Zip(providersAndProductsSorted.Item2, (provider, productsAmount) => $"{provider} - {productsAmount}").ToList();
+            return providersAndAmountOfProducts;
+        }
+
+        private static List<string> GetCategoriesAndProductsAmount(List<Product> products)
+        {
+            var categoriesAndProductsAmount = products.GroupBy(product => product.Category)
+                .Select(product =>  $"{product.Key.Name} - {product.Count()}").ToList();
+                return categoriesAndProductsAmount;
+        }
+
+        private static List<string> GetProductsAndProviders(List<Product> products)
+        {
+            return products.Select(product => $"{product.Name} - {product.Provider.Name}").ToList();
+        }
+
+        private static List<string> GetProductsAndProvidersAnother(List<Product> products, List<Provider> providers)
+        {
+            return products.Join(providers, prod => prod.Provider.Id, prov => prov.Id, (prod, prov) => $"{prod.Name} - {prov.Name}").ToList();
+        }
+
     }
 }
