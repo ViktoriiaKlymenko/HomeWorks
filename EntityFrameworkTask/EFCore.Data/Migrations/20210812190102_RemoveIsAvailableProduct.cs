@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+=======
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+>>>>>>> Task4-APILayer
 
 namespace EFCore.Data.Migrations
 {
@@ -23,7 +27,10 @@ namespace EFCore.Data.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> Task4-APILayer
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -47,4 +54,8 @@ namespace EFCore.Data.Migrations
                 name: "ProviderTypes");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Task4-APILayer

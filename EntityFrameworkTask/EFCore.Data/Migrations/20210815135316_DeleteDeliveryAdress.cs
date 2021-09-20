@@ -20,4 +20,8 @@ namespace EFCore.Data.Migrations
                 nullable: true);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Task4-APILayer

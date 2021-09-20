@@ -19,4 +19,8 @@ namespace EFCore.Data
             builder.UseSqlServer(@"Data Source=VIKTORIAPC; Initial Catalog=EFDatabase; Integrated Security=true");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Task4-APILayer

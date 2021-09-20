@@ -30,4 +30,8 @@ namespace EFCore.Data.Migrations
                 table: "Users");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Task4-APILayer

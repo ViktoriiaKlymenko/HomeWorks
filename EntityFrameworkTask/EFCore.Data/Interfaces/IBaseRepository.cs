@@ -7,6 +7,22 @@ namespace EFCore.Data.Interfaces
         where T : class
     {
         T Get(int id);
+<<<<<<< HEAD
+
+        IEnumerable<T> GetAll();
+
+        IEnumerable<T> Find(Func<T, bool> predicate);
+
+        void Add(T item); 
+
+        void AddRange(IEnumerable<T> item); 
+
+        void Remove(T item); 
+
+        void RemoveRange(IEnumerable<T> item); 
+    }
+}
+=======
         IEnumerable<T> GetAll();
         T Find(Func<T, bool> predicate);
 
@@ -18,3 +34,4 @@ namespace EFCore.Data.Interfaces
         int Count();
     }
 }
+>>>>>>> Task4-APILayer

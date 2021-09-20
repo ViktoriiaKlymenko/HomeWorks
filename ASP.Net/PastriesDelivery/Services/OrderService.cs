@@ -53,11 +53,6 @@ namespace PastriesDelivery
             _unitOfWork.Complete();
         }
 
-        public void ChangeOrderStatus(Order order, OrderStatus newStatus)
-        {
-            _unitOfWork.Orders.ChangeOrderStatus(order, newStatus);
-        }
-
         public IEnumerable<Order> GetAll()
         {
             return _unitOfWork.Orders.GetAll();

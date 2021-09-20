@@ -41,30 +41,45 @@ namespace EFCore.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<< HEAD
+=======
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+>>>>>>> Task4-APILayer
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<int>("CourierId")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
+                    b.Property<decimal>("DeliveryPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DeliveryTime")
+                        .HasColumnType("datetime2");
+
+=======
                     b.Property<int>("DeliveryDays")
                         .HasColumnType("int");
 
                     b.Property<decimal>("DeliveryPrice")
                         .HasColumnType("decimal(18,2)");
 
+>>>>>>> Task4-APILayer
                     b.Property<DateTime>("DeliveryTimeEstimated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderTime")
                         .HasColumnType("datetime2");
 
+<<<<<<< HEAD
+=======
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+>>>>>>> Task4-APILayer
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -83,9 +98,12 @@ namespace EFCore.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<< HEAD
+=======
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+>>>>>>> Task4-APILayer
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -98,9 +116,12 @@ namespace EFCore.Data.Migrations
                     b.Property<int>("ProviderId")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
+=======
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
+>>>>>>> Task4-APILayer
                     b.HasKey("Id");
 
                     b.ToTable("Products");
@@ -158,9 +179,12 @@ namespace EFCore.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD
+=======
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+>>>>>>> Task4-APILayer
                     b.HasKey("Id");
 
                     b.ToTable("Users");

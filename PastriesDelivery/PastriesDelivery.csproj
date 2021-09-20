@@ -11,8 +11,11 @@
     <PackageReference Include="NHibernate" Version="5.3.8" />
   </ItemGroup>
 
+<<<<<<< HEAD
+=======
   <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkTask\EntityFrameworkTask.csproj" />
   </ItemGroup>
 
+>>>>>>> Task4-APILayer
 </Project>

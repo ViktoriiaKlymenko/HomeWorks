@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+=======
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+>>>>>>> Task4-APILayer
 
 namespace EFCore.Data.Migrations
 {
@@ -22,4 +27,8 @@ namespace EFCore.Data.Migrations
                 table: "Orders");
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Task4-APILayer
