@@ -27,7 +27,12 @@ namespace WebApplicationFoodService.Filters
             {
                 filterContext.ExceptionHandled = true;
                 _logger.LogError($"{DateTime.Now}: Exception {filterContext.Exception.Message} occurs. {filterContext.Exception.StackTrace}");
-            }         
+            }     
+            else
+            {
+                filterContext.ExceptionHandled = true;
+                _logger.LogError($"{DateTime.Now}: {filterContext.Exception.HResult}.");
+            }
         }
     }
 }
