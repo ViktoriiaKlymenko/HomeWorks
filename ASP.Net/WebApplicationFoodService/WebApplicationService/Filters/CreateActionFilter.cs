@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApplicationFoodService.Filters
 {
-    public class CreateActionFilter : IActionFilter
+    public class CreateActionFilter : ActionFilterAttribute
     {
         private readonly ILogger<CreateActionFilter> _logger;
 
@@ -17,14 +17,10 @@ namespace WebApplicationFoodService.Filters
         {
             _logger = logger;
         }
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
-            return;
-        }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            var RequestBody = string.Empty;
+            var requestBody = string.Empty;
 
             try
             {
@@ -33,8 +29,8 @@ namespace WebApplicationFoodService.Filters
 
                 using (var reader = new StreamReader(context.HttpContext.Request.Body))
                 {
-                    RequestBody = reader.ReadToEnd();
-                    _logger.LogInformation($"{DateTime.Now}: {RequestBody}");
+                    requestBody = reader.ReadToEnd();
+                    _logger.LogInformation($"{DateTime.Now}: {requestBody}");
                 }
             }
             catch (Exception ex)

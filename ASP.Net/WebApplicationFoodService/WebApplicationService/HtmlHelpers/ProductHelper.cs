@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Html;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebApplicationFoodService.HtmlHelpers
@@ -11,19 +12,21 @@ namespace WebApplicationFoodService.HtmlHelpers
     {
         public static HtmlString GetProductList(IEnumerable<Product> products)
         {
-            var result = "<ul>";
+            var stringBuilder = new StringBuilder();
+            stringBuilder = stringBuilder.Append($"<ul>");
+
             foreach (var product in products)
             {
-                result = $"{result}<li>{product.Id}</li>" +
-                    $"<li>{product.Name}</li>" +
-                    $"<li>{product.Price}</li>" +
-                    $"<li>{product.Amount}</li>" +
-                    $"<li>{product.Weight}</li>" +
-                    $"<li>{product.Category.Name}</li>" +
-                    $"<li>{product.Provider.Name}</li>";
+                stringBuilder = stringBuilder.Append($"<li> {product.Id} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Name} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Price} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Amount} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Weight} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Category.Name} </li>");
+                stringBuilder = stringBuilder.Append($"<li> {product.Provider.Name} </li>");
             }
-            result = $"{result}</ul>";
-            return new HtmlString(result);
+            stringBuilder = stringBuilder.Append($"</ul>");
+            return new HtmlString(stringBuilder.ToString());
         }
     }
 }
