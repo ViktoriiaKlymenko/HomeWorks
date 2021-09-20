@@ -1,5 +1,6 @@
 ﻿using EFCore.Data.Interfaces;
-using EntityFrameworkTask;
+using EntityFrameworkTask.EFCore.Data.Interfaces;
+using EntityFrameworkTask.Models;
 
 namespace EFCore.Data.Repo
 {
@@ -14,13 +15,13 @@ namespace EFCore.Data.Repo
             Providers = new BaseRepository<Provider>(_context);
             Clients = new BaseRepository<Client>(_context);
             Couriers = new BaseRepository<Courier>(_context);
-            Orders = new BaseRepository<Order>(_context);
+            Orders = new OrderRepository(_context);
             Categories = new BaseRepository<Category>(_context);
         }
 
         public IBaseRepository<Product> Products { get; private set; }
 
-        public IBaseRepository<Order> Orders { get; private set; }
+        public IOrderRepository Orders { get; private set; }
 
         public IBaseRepository<Provider> Providers { get; private set; }
 

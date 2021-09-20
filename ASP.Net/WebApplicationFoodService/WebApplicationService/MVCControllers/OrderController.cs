@@ -1,10 +1,11 @@
-﻿using EntityFrameworkTask;
+﻿using EntityFrameworkTask.Models;
 using Microsoft.AspNetCore.Mvc;
 using PastriesDelivery.Contracts;
 using System.Collections.Generic;
 
-namespace WebApplicationFoodService.Controllers
+namespace WebApplicationService.Controllers
 {
+    [Controller]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;

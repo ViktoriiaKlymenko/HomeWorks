@@ -1,11 +1,11 @@
-﻿using EntityFrameworkTask;
+﻿using EntityFrameworkTask.Models;
 using System.Collections.Generic;
 
-namespace PastriesDelivery
+namespace PastriesDelivery.Contracts
 {
     public interface IProductService
     {
-        List<Product> ExtractProducts();
+        IEnumerable<Product> ExtractProducts();
 
         IEnumerable<string> GetProviders();
 
@@ -13,10 +13,12 @@ namespace PastriesDelivery
 
         IEnumerable<Product> GetProviderDishes(int id);
 
-        void AddProduct(string name, decimal price, int amount, double weight, int categoryId, int providerId);
+        void AddProduct(Product product);
 
-        void UpdateProduct(Product product, Product newProduct);
+        void UpdateProduct(Product newProduct);
 
-        void Remove(Product product);
+        void Remove(int id);
+
+        Product GetById(int id);
     }
 }

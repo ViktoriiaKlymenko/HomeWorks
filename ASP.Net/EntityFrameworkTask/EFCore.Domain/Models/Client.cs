@@ -1,7 +1,7 @@
-﻿namespace EntityFrameworkTask
+﻿namespace EntityFrameworkTask.Models
 {
     public class Client : User
     {
-        public int AddressId { get; set; }
+        public Address Address { get; set; }
     }
 }

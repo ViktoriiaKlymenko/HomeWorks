@@ -1,0 +1,16 @@
+﻿@model IEnumerable<EntityFrameworkTask.Models.Product>
+<br />
+<h3>Available products:</h3>
+<br />
+@foreach (var product in Model)
+{
+    <span>@product.Id</span>
+    <span>@product.Name</span>
+    <span>@product.Amount</span>
+    <span>@product.Price</span>
+    <a href='@Url.ActionLink("Update", "Product", new { id = product.Id})'>Update</a>
+    <a href='@Url.ActionLink("Delete", "Product", new { id = product.Id })'>Delete</a>
+    <br />
+}
+<br />
+<p><a href='@Url.Action("Create", "Product")'>Add new product</a></p>

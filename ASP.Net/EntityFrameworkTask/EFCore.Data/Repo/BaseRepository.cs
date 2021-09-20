@@ -26,7 +26,7 @@ namespace EFCore.Data
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Context.Dispose();
         }
 
         public T Get(int id)
@@ -36,7 +36,7 @@ namespace EFCore.Data
 
         public IEnumerable<T> GetAll()
         {
-            return Context.Set<T>().ToList();
+            return Context.Set<T>();
         }
 
         public T Find(Func<T, bool> predicate)

@@ -1,23 +1,28 @@
-﻿namespace EntityFrameworkTask
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EntityFrameworkTask.Models
 {
     public class Product
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int Amount { get; set; }
-        public double Weight { get; set; }
-        public int CategoryId { get; set; }
-        public int ProviderId { get; set; }
 
-        public Product(string name, decimal price, int amount, double weight, int categoryId, int providerId)
-        {
-            Id = new int();
-            Price = price;
-            Amount = amount;
-            Weight = weight;
-            CategoryId = categoryId;
-            ProviderId = providerId;
-        }
+        [Required]
+        [StringLength(20)]
+        public string Name { get; set; }
+
+        [Required]
+        [Range(0, 999)]
+        public decimal Price { get; set; }
+
+        [Required]
+        [Range(0, 999)]
+        public int Amount { get; set; }
+
+        [Required]
+        [Range(0, 10)]
+        public double Weight { get; set; }
+
+        public Category Category { get; set; }
+        public Provider Provider { get; set; }
     }
 }

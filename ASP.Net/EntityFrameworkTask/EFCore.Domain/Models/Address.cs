@@ -1,4 +1,4 @@
-﻿namespace EFCore.Domain.Models
+﻿namespace EntityFrameworkTask.Models
 {
     public class Address
     {

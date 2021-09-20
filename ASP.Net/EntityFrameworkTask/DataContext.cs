@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkTask.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkTask
 {

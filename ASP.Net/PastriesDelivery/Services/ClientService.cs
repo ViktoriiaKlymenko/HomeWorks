@@ -1,5 +1,6 @@
 ﻿using EFCore.Data.Interfaces;
-using EntityFrameworkTask;
+using EntityFrameworkTask.Models;
+using PastriesDelivery.Contracts;
 using System.Collections.Generic;
 
 namespace PastriesDelivery.Services
