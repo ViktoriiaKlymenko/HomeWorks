@@ -1,4 +1,4 @@
-﻿using EntityFrameworkTask;
+﻿using EntityFrameworkTask.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.Data

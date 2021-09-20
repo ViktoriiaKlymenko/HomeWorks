@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EntityFrameworkTask
+namespace EntityFrameworkTask.Models
 {
     public class Category
     {

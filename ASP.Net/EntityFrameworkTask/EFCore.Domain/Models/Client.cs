@@ -1,4 +1,4 @@
-﻿namespace EntityFrameworkTask
+﻿namespace EntityFrameworkTask.Models
 {
     public class Client : User
     {

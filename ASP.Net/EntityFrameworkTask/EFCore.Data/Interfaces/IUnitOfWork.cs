@@ -1,5 +1,5 @@
-﻿using EntityFrameworkTask;
-using EntityFrameworkTask.EFCore.Data.Interfaces;
+﻿using EntityFrameworkTask.EFCore.Data.Interfaces;
+using EntityFrameworkTask.Models;
 using System;
 
 namespace EFCore.Data.Interfaces

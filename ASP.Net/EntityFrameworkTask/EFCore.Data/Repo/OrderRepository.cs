@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkTask;
 using EntityFrameworkTask.EFCore.Data.Interfaces;
+using EntityFrameworkTask.Models;
 
 namespace EFCore.Data
 {

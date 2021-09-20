@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityFrameworkTask
+namespace EntityFrameworkTask.Models
 {
     public class Order
     {

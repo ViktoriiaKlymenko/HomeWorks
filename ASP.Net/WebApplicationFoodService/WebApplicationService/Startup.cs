@@ -1,6 +1,8 @@
 using EFCore.Data;
 using EFCore.Data.Interfaces;
 using EFCore.Data.Repo;
+using EntityFrameworkTask.EFCore.Data.Interfaces;
+using EntityFrameworkTask.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +31,8 @@ namespace WebApplicationService
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
             services.AddTransient<DataContext>();
             services.AddSwaggerGen(c =>
             {

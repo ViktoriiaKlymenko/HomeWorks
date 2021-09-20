@@ -1,4 +1,4 @@
-﻿using EntityFrameworkTask;
+﻿using EntityFrameworkTask.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PastriesDelivery.Contracts;

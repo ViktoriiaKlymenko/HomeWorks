@@ -1,4 +1,4 @@
-﻿using EntityFrameworkTask;
+﻿using EntityFrameworkTask.Models;
 using System.Collections.Generic;
 
 namespace PastriesDelivery.Contracts

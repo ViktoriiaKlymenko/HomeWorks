@@ -1,6 +1,6 @@
 ﻿using EFCore.Data.Interfaces;
-using EntityFrameworkTask;
 using EntityFrameworkTask.EFCore.Data.Interfaces;
+using EntityFrameworkTask.Models;
 
 namespace EFCore.Data.Repo
 {
@@ -8,26 +8,18 @@ namespace EFCore.Data.Repo
     {
         private readonly DataContext _context;
 
-        public UnitOfWork(
-            DataContext context,
-            IBaseRepository<Product> productRepository, 
-            IBaseRepository<Provider> providerRepository, 
-            IBaseRepository<Client> clientRepository,
-            IBaseRepository<Courier> courierRepository,
-            IOrderRepository orderRepository,
-            IBaseRepository<Category> categoryRepository
-            )
+        public UnitOfWork(DataContext context)
         {
             _context = context;
-            Products = productRepository;
-            Providers = providerRepository;
-            Clients = clientRepository;
-            Couriers = courierRepository;
-            Orders = orderRepository;
-            Categories = categoryRepository;
+            Products = new BaseRepository<Product>(_context);
+            Providers = new BaseRepository<Provider>(_context);
+            Clients = new BaseRepository<Client>(_context);
+            Couriers = new BaseRepository<Courier>(_context);
+            Orders = new OrderRepository(_context);
+            Categories = new BaseRepository<Category>(_context);
         }
 
-        private readonly IBaseRepository<Product> Products;
+        public IBaseRepository<Product> Products { get; private set; }
 
         public IOrderRepository Orders { get; private set; }
 
